@@ -51,8 +51,8 @@
           default = nvim;
         };
         nixosModules.nvim = {
-            imports = [./config]
-        }
+            imports = [./config];
+        };
         devShells.default = pkgs.mkShell {
           packages = [
             pkgs.bashInteractive
