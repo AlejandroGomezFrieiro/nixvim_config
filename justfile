@@ -1,2 +1,2 @@
 test_neovim:
-    nix flake check .
+    nix flake check . --all-systems
