@@ -27,3 +27,7 @@ jobs:
     steps:
     - name: Run tests
       run: just test
+    - name: Run example tests
+      run: just test_rust
+    - name: Run example tests
+      run: just cargo_version

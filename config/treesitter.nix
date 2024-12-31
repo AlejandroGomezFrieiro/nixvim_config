@@ -10,5 +10,6 @@
     settings.indent = {
       enable = true;
     };
+    settings.highlight.enable = true;
   };
 }

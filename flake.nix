@@ -12,8 +12,6 @@
       "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
     ];
   };
-  inputs.nix-github-actions.url = "github:nix-community/nix-github-actions";
-  inputs.nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.systems.url = "github:nix-systems/default";
@@ -28,7 +26,6 @@
     nixpkgs,
     nixvim,
     flake-utils,
-    nix-github-actions,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -62,7 +59,7 @@
         };
         devShells.default = pkgs.mkShell {
           packages = [
-            pkgs.bashInteractive
+            pkgs.zsh
             pkgs.just
             pkgs.alejandra
           ];
