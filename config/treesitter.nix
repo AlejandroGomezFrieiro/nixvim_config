@@ -5,11 +5,10 @@
   inputs,
   ...
 }: {
-    plugins.treesitter = {
-        enable = true;
-        settings.indent = {
-            enable = true;
-        };
+  plugins.treesitter = {
+    enable = true;
+    settings.indent = {
+      enable = true;
     };
-
+  };
 }

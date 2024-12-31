@@ -12,7 +12,7 @@
       "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
     ];
   };
-inputs.nix-github-actions.url = "github:nix-community/nix-github-actions";
+  inputs.nix-github-actions.url = "github:nix-community/nix-github-actions";
   inputs.nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -30,7 +30,7 @@ inputs.nix-github-actions.url = "github:nix-community/nix-github-actions";
     flake-utils,
     nix-github-actions,
     ...
-  }@inputs:
+  } @ inputs:
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -50,20 +50,21 @@ inputs.nix-github-actions.url = "github:nix-community/nix-github-actions";
         nvim = nixvim'.makeNixvimWithModule nixvimModule;
       in {
         checks = {
-          default=nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
+          default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
         };
         packages = {
           default = nvim;
         };
         nixosModules = {
-            nvim = {
-                imports = [./config];
-            };
+          nvim = {
+            imports = [./config];
+          };
         };
         devShells.default = pkgs.mkShell {
           packages = [
             pkgs.bashInteractive
             pkgs.just
+            pkgs.alejandra
           ];
         };
       }

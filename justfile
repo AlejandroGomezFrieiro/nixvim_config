@@ -1,2 +1,5 @@
-test_neovim:
-    nix flake check . --all-systems
+test:
+    nix flake check .
+
+format:
+    alejandra -c .
