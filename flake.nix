@@ -12,6 +12,9 @@
       "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
     ];
   };
+inputs.nix-github-actions.url = "github:nix-community/nix-github-actions";
+  inputs.nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.systems.url = "github:nix-systems/default";
   inputs.nixvim.url = "github:nix-community/nixvim";
@@ -24,6 +27,7 @@
     nixpkgs,
     nixvim,
     flake-utils,
+    nix-github-actions,
     ...
   }@inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -50,6 +54,8 @@
         packages = {
           default = nvim;
         };
+        githubActions = nix-github-actions.lib.mkGithubMatrix { inherit (self) checks};
+      };
         nixosModules = {
             nvim = {
                 imports = [./config];
