@@ -3,18 +3,6 @@ on:
   pull_request:
   push:
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: "write"
-      contents: "read"
-    steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
-      - uses: DeterminateSystems/flake-checker-action@main
-      - uses: nicknovitski/nix-develop@v1
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -35,5 +23,5 @@ jobs:
       run: just test
     - name: Run example tests
       run: just test_rust
-    - name: Run example tests
+    - name: Check cargo is installed
       run: just cargo_version

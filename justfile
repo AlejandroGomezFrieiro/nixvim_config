@@ -6,7 +6,7 @@ test:
 test_rust:
     nix flake check ./examples/rust_environment
 
-format:
+lint:
     alejandra -c .
 
 develop_rust:
