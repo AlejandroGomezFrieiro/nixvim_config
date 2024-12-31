@@ -24,6 +24,7 @@ inputs.nix-github-actions.url = "github:nix-community/nix-github-actions";
   };
 
   outputs = {
+    self,
     nixpkgs,
     nixvim,
     flake-utils,
