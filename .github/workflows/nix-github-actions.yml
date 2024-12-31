@@ -8,21 +8,16 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        stage: [test, lint]
     steps:
     - uses: actions/checkout@v4
     - uses: DeterminateSystems/nix-installer-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
     - uses: nicknovitski/nix-develop@v1
     - name: Run linter
-      if: ${{ matrix.lint }}
       run: just lint
     - name: Run tests
-      if: ${{ matrix.test }}
       run: just test
     - name: Run example tests
-      if: ${{ matrix.test }}
       run: just test_rust
     - name: Check cargo is installed
-      if: ${{ matrix.test }}
       run: just cargo_version
