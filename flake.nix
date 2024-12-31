@@ -55,8 +55,7 @@ inputs.nix-github-actions.url = "github:nix-community/nix-github-actions";
         packages = {
           default = nvim;
         };
-        githubActions = nix-github-actions.lib.mkGithubMatrix { inherit (self) checks};
-      };
+        githubActions = nix-github-actions.lib.mkGithubMatrix { inherit (self) checks;};
         nixosModules = {
             nvim = {
                 imports = [./config];
