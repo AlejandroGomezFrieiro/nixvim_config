@@ -1,22 +1,3 @@
-# Nixvim Configuration Flake
-
-This flake contains a simple neovim configuration using Nixvim. With modularity in mind, some of the thought process behind it is based on
-[this post](https://juuso.dev/blogPosts/modular-neovim/modular-neovim-with-nix.html).
-
-# Usage
-
-To run the basic neovim configuration directly from github, you can use
-```
-nix run github:AlejandroGomezFrieiro/nixvim_config     
-```
-
-# Per-project configuration
-
-The flake is built to be able to extend it for different projects, thus giving personalized neovim packages.
-
-The simplest way to extend is to generate a nix flake, importing this one. For example, to add a development shell that contains a Rust environment and its tooling (like cargo, rustc etc) and sets up rustaceanvim to handle the rust development. You can find this same flake in `examples/rust_environment/flake.nix`
-
-```nix
 
 {
   description = "A very basic flake for a rust-based development environment";
@@ -54,4 +35,3 @@ The simplest way to extend is to generate a nix flake, importing this one. For e
         };
 };
 }
-```
