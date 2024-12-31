@@ -25,7 +25,7 @@
     nixvim,
     flake-utils,
     ...
-  }:
+  }@inputs:
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
