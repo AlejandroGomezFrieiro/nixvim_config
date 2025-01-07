@@ -27,17 +27,17 @@
       ...
     }: let
       inherit (flake-parts-lib) importApply;
-      flakeModules.nixvim = importApply ./flake-module.nix {inherit withSystem moduleWithSystem;};
+      flakeModule.nixvim = importApply ./flake-module.nix {inherit withSystem moduleWithSystem;};
     in {
       imports = [
-        flakeModules.nixvim
+        flakeModule.nixvim
       ];
       systems = ["x86_64-linux" "aarch64-darwin"];
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
       };
       flake = {
-        inherit flakeModules;
+        inherit flakeModule;
       };
     });
 }
