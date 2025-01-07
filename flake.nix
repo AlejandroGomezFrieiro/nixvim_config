@@ -27,10 +27,11 @@
       ...
     }: let
       inherit (flake-parts-lib) importApply;
-      flakeModules.default = importApply ./flake-module.nix {inherit withSystem moduleWithSystem;};
+      flakeModules.nixvim = importApply ./flake-module.nix {inherit withSystem moduleWithSystem;};
+      flakeModules.default = flakeModules.nixvim;
     in {
       imports = [
-        flakeModules.default
+        flakeModules.nixvim
       ];
       systems = ["x86_64-linux" "aarch64-darwin"];
       perSystem = {pkgs, ...}: {
