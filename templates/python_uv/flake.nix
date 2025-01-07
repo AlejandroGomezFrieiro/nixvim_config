@@ -18,28 +18,18 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.devenv.flakeModule
+        # inputs.nixvim_config.nixosModules.neovim
       ];
+      # packages.nixvim = inputs.nixvim_config.packages.x86_64-linux.nixvim;
       systems = nixpkgs.lib.systems.flakeExposed;
       perSystem = {
         pkgs,
         system,
         ...
       }: {
-        checks = {
-        };
         formatter = pkgs.alejandra;
-        devenv.shells.default = let
-          neovimModule = {
-            inherit pkgs;
-            module = {
-              imports = [
-                inputs.nixvim_config.outputs.nixosModules.${system}.nvim
-              ];
-            };
-          };
-          neovim = inputs.nixvim_config.inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule neovimModule;
-        in {
-          packages = [neovim pkgs.just];
+        devenv.shells.default =           {
+            packages = [inputs.nixvim_config.packages.${system}.nixvim pkgs.just];
 
           languages.python.package = pkgs.python311;
           languages.python.enable = true;
