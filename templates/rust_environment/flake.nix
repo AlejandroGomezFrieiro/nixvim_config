@@ -28,6 +28,8 @@
         formatter = pkgs.alejandra;
         devenv.shells.default = {
             packages = [
+            pkgs.cargo
+            pkgs.rustc
               inputs.nixvim_config.packages.${system}.nixvim pkgs.just];
 
           languages.rust.enable = true;
