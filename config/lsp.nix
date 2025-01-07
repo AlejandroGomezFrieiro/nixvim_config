@@ -65,12 +65,11 @@
     };
   };
 
-  plugins.rustaceanvim.enable = true;
-  plugins.rustaceanvim.autoLoad = true;
   plugins.lsp = {
     enable = true;
     autoLoad = true;
     servers = {
+      rust-analyzer.enable = true;
       pylsp = {
         enable = true;
       };
