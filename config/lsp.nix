@@ -5,6 +5,10 @@
   inputs,
   ...
 }: {
+  extraPlugins = with pkgs.vimPlugins; [
+    markdown-nvim
+  ];
+  extraConfigLua = "require('markdown').setup()";
   plugins.lsp-format.enable = true;
   plugins = {
     gitsigns = {
@@ -69,6 +73,7 @@
     enable = true;
     autoLoad = true;
     servers = {
+      markdown_oxide.enable = true;
       rust_analyzer.enable = true;
       rust_analyzer.installRustc = true;
       rust_analyzer.installCargo = true;
