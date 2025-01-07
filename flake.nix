@@ -35,8 +35,8 @@
             description = "Rust environment";
           };
           python_uv = {
-            path = ./templates/rust_environment;
-            description = "Rust environment";
+            path = ./templates/python_uv;
+            description = "Simple Python environment";
           };
         };
       };
