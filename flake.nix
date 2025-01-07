@@ -62,6 +62,7 @@
             pkgs.zsh
             pkgs.just
             pkgs.alejandra
+            nvim
           ];
         };
       }

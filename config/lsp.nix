@@ -7,6 +7,16 @@
 }: {
   plugins.lsp-format.enable = true;
   plugins = {
+    gitsigns = {
+      enable = true;
+      settings.current_line_blame = true;
+    };
+    lspsaga = {
+      enable = true;
+      symbolInWinbar.enable = false;
+      lightbulb.sign = false; # disable bulb in status col
+      lightbulb.virtualText = true; # enable at end of line
+    };
     luasnip.enable = true;
     cmp-omni.enable = true;
     cmp-dap.enable = true;
@@ -57,7 +67,11 @@
 
   plugins.lsp = {
     enable = true;
+    autoLoad = true;
     servers = {
+      pylsp = {
+        enable = true;
+      };
       nixd = {
         enable = true;
         settings = {
@@ -68,10 +82,66 @@
         };
       };
     };
-    keymaps = {
-      lspBuf = {
-        gd = "definition";
-      };
-    };
+    # keymaps = {
+    #   lspBuf = {
+    #     gd = "definition";
+    #   };
+    # };
   };
+  keymaps = [
+    {
+      key = "<leader>lr";
+      mode = ["n"];
+      action = ":Lspsaga rename<CR>";
+      options = {
+        silent = true;
+        desc = "LSP Rename";
+      };
+    }
+    {
+      key = "<leader>la";
+      mode = ["v"];
+      action = ":<C-U>Lspsaga range_code_action<CR>";
+      options = {
+        silent = true;
+        desc = "Code Action";
+      };
+    }
+    {
+      key = "<leader>la";
+      mode = ["n"];
+      action = ":Lspsaga code_action<CR>";
+      options = {
+        silent = true;
+        desc = "Code Action";
+      };
+    }
+    {
+      key = "<leader>lK";
+      mode = ["n"];
+      action = "<Cmd>:Lspsaga hover_doc<CR>";
+      options = {
+        silent = true;
+        desc = "Goto Definition";
+      };
+    }
+    {
+      key = "gd";
+      mode = ["n"];
+      action = "<Cmd>:Lspsaga goto_definition<CR>";
+      options = {
+        silent = true;
+        desc = "Goto Definition";
+      };
+    }
+    {
+      key = "<leader>ll";
+      mode = ["n"];
+      action = "<Cmd>Lspsaga show_line_diagnostics<CR>";
+      options = {
+        silent = true;
+        desc = "Show Line Diagnostics";
+      };
+    }
+  ];
 }
