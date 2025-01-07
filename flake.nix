@@ -1,5 +1,6 @@
 {
-  description = "Nixvim setup";
+  description = "Nix flake for my custom Neovim configuration using Nixvim";
+
   nixConfig = {
     extra-substituters = [
       "https://cache.nixos.org"
@@ -12,75 +13,31 @@
       "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
     ];
   };
-
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.systems.url = "github:nix-systems/default";
-  inputs.nixvim.url = "github:nix-community/nixvim";
-  inputs.flake-parts = {
-    url = "github:hercules-ci/flake-parts";
+  inputs = {
+    nixvim.url = "github:nix-community/nixvim";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-parts,
-    nixvim,
-    ...
-  } @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = nixpkgs.lib.systems.flakeExposed;
-      flake = {
-        nixosModules.neovim = {
-          config,
-          pkgs,
-        }: {
-          inherit pkgs;
-          module = {
-            imports = [./config];
-            extraPackages = [
-              pkgs.alejandra
-              pkgs.nixd
-            ];
-          };
-          extraSpecialArgs = {};
-        };
-        templates = {
-          rust = {
-            path = ./templates/rust_environment;
-            description = "Rust environment";
-          };
-          python_uv = {
-            path = ./templates/python_uv;
-            description = "Simple Python environment";
-          };
-        };
-      };
-      perSystem = {
-        config,
-        self',
-        inputs',
-        pkgs,
-        system,
-        ...
-      }: let
-        nixvim' = nixvim.legacyPackages.${system};
-        nvim = nixvim'.makeNixvimWithModule {
-          inherit pkgs;
-          module = {
-            imports = [./config];
-            extraPackages = [
-              pkgs.alejandra
-              pkgs.nixd
-            ];
-          };
-          extraSpecialArgs = {};
-        };
-      in {
-        devShells.default = pkgs.mkShell {
-          packages = [nvim pkgs.just];
-        };
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} ({
+      withSystem,
+      flake-parts-lib,
+      moduleWithSystem,
+      ...
+    }: let
+      inherit (flake-parts-lib) importApply;
+      flakeModules.default = importApply ./flake-module.nix {inherit withSystem moduleWithSystem;};
+    in {
+      imports = [
+        flakeModules.default
+      ];
+      systems = ["x86_64-linux" "aarch64-darwin"];
+      perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
-        packages.nixvim = nvim;
       };
-    };
+      flake = {
+        inherit flakeModules;
+      };
+    });
 }
