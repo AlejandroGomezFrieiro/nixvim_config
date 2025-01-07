@@ -28,7 +28,6 @@
     }: let
       inherit (flake-parts-lib) importApply;
       flakeModules.nixvim = importApply ./flake-module.nix {inherit withSystem moduleWithSystem;};
-      flakeModules.default = flakeModules.nixvim;
     in {
       imports = [
         flakeModules.nixvim
