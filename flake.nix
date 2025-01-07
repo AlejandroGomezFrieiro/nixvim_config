@@ -29,6 +29,19 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = nixpkgs.lib.systems.flakeExposed;
       flake = {
+        nixosModules.neovim = flake-parts.localFlake.withSystem (
+          perSystem @ {pkgs}: {
+            inherit pkgs;
+            module = {
+              imports = [./config];
+              extraPackages = [
+                pkgs.alejandra
+                pkgs.nixd
+              ];
+            };
+            extraSpecialArgs = {};
+          }
+        );
         templates = {
           rust = {
             path = ./templates/rust_environment;
@@ -50,7 +63,7 @@
       }: {
         devShells.default = let
           nixvim' = nixvim.legacyPackages.${system};
-          nixvimModule = {
+          nvim = nixvim'.makeNixvimWithModule {
             inherit pkgs;
             module = {
               imports = [./config];
@@ -61,7 +74,6 @@
             };
             extraSpecialArgs = {};
           };
-          nvim = nixvim'.makeNixvimWithModule nixvimModule;
         in
           pkgs.mkShell {
             packages = [nvim pkgs.just];
