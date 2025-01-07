@@ -10,7 +10,7 @@ localFlake:
   inputs,
   ...
 }: {
-  perSystem = {system, ...}: {
+  perSystem = {system, ...}: rec {
 
     packages.nixvim = localFlake.withSystem system (
     {pkgs, ...}: let
@@ -20,7 +20,7 @@ localFlake:
         module = self.nixosModules.nixvim;
     });
     devShells.default = localFlake.withSystem system({pkgs, ...}: pkgs.mkShell {
-          packages = [ pkgs.just];
+          packages = [packages.nixvim pkgs.just];
         });
   };
   flake.nixosModules.nixvim = localFlake.moduleWithSystem (
