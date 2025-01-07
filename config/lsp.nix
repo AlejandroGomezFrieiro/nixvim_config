@@ -69,7 +69,7 @@
     enable = true;
     autoLoad = true;
     servers = {
-      rust-analyzer.enable = true;
+      rust_analyzer.enable = true;
       pylsp = {
         enable = true;
       };
