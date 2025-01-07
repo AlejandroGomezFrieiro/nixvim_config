@@ -16,55 +16,57 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.systems.url = "github:nix-systems/default";
   inputs.nixvim.url = "github:nix-community/nixvim";
-  inputs.flake-utils = {
-    url = "github:numtide/flake-utils";
-    inputs.systems.follows = "systems";
+  inputs.flake-parts = {
+    url = "github:hercules-ci/flake-parts";
   };
 
   outputs = {
-    self,
     nixpkgs,
+    flake-parts,
     nixvim,
-    flake-utils,
     ...
   } @ inputs:
-    flake-utils.lib.eachDefaultSystem (
-      system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-        nixvimLib = nixvim.lib.${system};
-        nixvim' = nixvim.legacyPackages.${system};
-        nixvimModule = {
-          inherit pkgs;
-          module = {
-            imports = [./config];
-            extraPackages = [
-              pkgs.alejandra
-              pkgs.nixd
-            ];
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = nixpkgs.lib.systems.flakeExposed;
+      flake = {
+        templates = {
+          rust = {
+            path = ./templates/rust_environment;
+            description = "Rust environment";
           };
-          extraSpecialArgs = {};
-        };
-        nvim = nixvim'.makeNixvimWithModule nixvimModule;
-      in {
-        checks = {
-          default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
-        };
-        packages = {
-          default = nvim;
-        };
-        nixosModules = {
-          nvim = {
-            imports = [./config];
+          python_uv = {
+            path = ./templates/rust_environment;
+            description = "Rust environment";
           };
         };
-        devShells.default = pkgs.mkShell {
-          packages = [
-            pkgs.zsh
-            pkgs.just
-            pkgs.alejandra
-            nvim
-          ];
-        };
-      }
-    );
+      };
+      perSystem = {
+        config,
+        self',
+        inputs',
+        pkgs,
+        system,
+        ...
+      }: {
+        devShells.default = let
+          nixvim' = nixvim.legacyPackages.${system};
+          nixvimModule = {
+            inherit pkgs;
+            module = {
+              imports = [./config];
+              extraPackages = [
+                pkgs.alejandra
+                pkgs.nixd
+              ];
+            };
+            extraSpecialArgs = {};
+          };
+          nvim = nixvim'.makeNixvimWithModule nixvimModule;
+        in
+          pkgs.mkShell {
+            packages = [nvim pkgs.just];
+          };
+        formatter = pkgs.alejandra;
+      };
+    };
 }
