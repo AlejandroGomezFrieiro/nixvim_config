@@ -1,5 +1,5 @@
 {
-  description = "Basic flake for working with EXA";
+  description = "Basic flake to work with Rust";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -27,7 +27,8 @@
       }: {
         formatter = pkgs.alejandra;
         devenv.shells.default = {
-          packages = [inputs.nixvim_config.packages.${system}.nixvim pkgs.just];
+            packages = [
+              inputs.nixvim_config.packages.${system}.nixvim pkgs.just];
 
           languages.rust.enable = true;
 

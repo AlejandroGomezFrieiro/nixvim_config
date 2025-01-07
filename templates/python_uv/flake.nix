@@ -1,5 +1,5 @@
 {
-  description = "Basic flake for working with EXA";
+  description = "Basic flake to work with Python";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -18,9 +18,7 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.devenv.flakeModule
-        # inputs.nixvim_config.nixosModules.neovim
       ];
-      # packages.nixvim = inputs.nixvim_config.packages.x86_64-linux.nixvim;
       systems = nixpkgs.lib.systems.flakeExposed;
       perSystem = {
         pkgs,
@@ -34,7 +32,7 @@
           languages.python.package = pkgs.python311;
           languages.python.enable = true;
           languages.python.uv.enable = true;
-          # languages.python.uv.sync = true;
+          languages.python.uv.sync = true;
           languages.python.venv.enable = true;
 
           pre-commit = {
