@@ -28,8 +28,8 @@
         ...
       }: {
         formatter = pkgs.alejandra;
-        devenv.shells.default =           {
-            packages = [inputs.nixvim_config.packages.${system}.nixvim pkgs.just];
+        devenv.shells.default = {
+          packages = [inputs.nixvim_config.packages.${system}.nixvim pkgs.just];
 
           languages.python.package = pkgs.python311;
           languages.python.enable = true;

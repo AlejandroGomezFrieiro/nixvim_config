@@ -11,17 +11,19 @@ localFlake:
   ...
 }: {
   perSystem = {system, ...}: rec {
-
     packages.nixvim = localFlake.withSystem system (
-    {pkgs, ...}: let
+      {pkgs, ...}: let
         nixvim' = inputs.nixvim.legacyPackages.${system};
-    in nixvim'.makeNixvimWithModule {
-        inherit pkgs;
-        module = self.nixosModules.nixvim;
-    });
-    devShells.default = localFlake.withSystem system({pkgs, ...}: pkgs.mkShell {
-          packages = [packages.nixvim pkgs.just];
-        });
+      in
+        nixvim'.makeNixvimWithModule {
+          inherit pkgs;
+          module = self.nixosModules.nixvim;
+        }
+    );
+    devShells.default = localFlake.withSystem system ({pkgs, ...}:
+      pkgs.mkShell {
+        packages = [packages.nixvim pkgs.just];
+      });
   };
   flake.nixosModules.nixvim = localFlake.moduleWithSystem (
     perSystem @ {config}: {
