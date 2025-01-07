@@ -30,7 +30,7 @@ localFlake:
       imports = [./config];
     }
   );
-  flake.templates = localFlake {
+  flake.templates = {
     rust = {
       path = ./templates/rust_environment;
       description = "Rust environment";
