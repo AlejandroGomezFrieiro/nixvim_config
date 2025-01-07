@@ -21,6 +21,7 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
     flake-parts,
     nixvim,
@@ -29,19 +30,20 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = nixpkgs.lib.systems.flakeExposed;
       flake = {
-        nixosModules.neovim = flake-parts.localFlake.withSystem (
-          perSystem @ {pkgs}: {
-            inherit pkgs;
-            module = {
-              imports = [./config];
-              extraPackages = [
-                pkgs.alejandra
-                pkgs.nixd
-              ];
-            };
-            extraSpecialArgs = {};
-          }
-        );
+        nixosModules.neovim = {
+          config,
+          pkgs,
+        }: {
+          inherit pkgs;
+          module = {
+            imports = [./config];
+            extraPackages = [
+              pkgs.alejandra
+              pkgs.nixd
+            ];
+          };
+          extraSpecialArgs = {};
+        };
         templates = {
           rust = {
             path = ./templates/rust_environment;
@@ -60,25 +62,25 @@
         pkgs,
         system,
         ...
-      }: {
-        devShells.default = let
-          nixvim' = nixvim.legacyPackages.${system};
-          nvim = nixvim'.makeNixvimWithModule {
-            inherit pkgs;
-            module = {
-              imports = [./config];
-              extraPackages = [
-                pkgs.alejandra
-                pkgs.nixd
-              ];
-            };
-            extraSpecialArgs = {};
+      }: let
+        nixvim' = nixvim.legacyPackages.${system};
+        nvim = nixvim'.makeNixvimWithModule {
+          inherit pkgs;
+          module = {
+            imports = [./config];
+            extraPackages = [
+              pkgs.alejandra
+              pkgs.nixd
+            ];
           };
-        in
-          pkgs.mkShell {
-            packages = [nvim pkgs.just];
-          };
+          extraSpecialArgs = {};
+        };
+      in {
+        devShells.default = pkgs.mkShell {
+          packages = [nvim pkgs.just];
+        };
         formatter = pkgs.alejandra;
+        packages.nixvim = nvim;
       };
     };
 }
