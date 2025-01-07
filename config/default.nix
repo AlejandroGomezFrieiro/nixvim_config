@@ -9,6 +9,7 @@
     ./autopairs.nix
     ./comments.nix
     ./lsp.nix
+    ./markdown.nix
     ./nvim-tree.nix
     ./neogen.nix
     ./telescope.nix
