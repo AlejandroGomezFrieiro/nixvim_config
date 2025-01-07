@@ -65,6 +65,7 @@
     };
   };
 
+  plugins.rustaceanvim.enable = true;
   plugins.lsp = {
     enable = true;
     autoLoad = true;
