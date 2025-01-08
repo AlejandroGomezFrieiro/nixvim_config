@@ -78,9 +78,9 @@
       rust_analyzer.installRustc = true;
       rust_analyzer.installCargo = true;
       ruff.enable = true;
-      # pylsp = {
-      #   enable = true;
-      # };
+      pylsp = {
+        enable = true;
+      };
       nixd = {
         enable = true;
         settings = {
