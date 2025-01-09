@@ -32,7 +32,6 @@
           languages.python.package = pkgs.python311;
           languages.python.enable = true;
           languages.python.uv.enable = true;
-          languages.python.uv.sync = true;
           languages.python.venv.enable = true;
 
           pre-commit = {
