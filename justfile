@@ -1,14 +1,12 @@
 [group('test')]
 test:
-    nix flake check .
+    nix flake check
 
 [group('test')]
 test_rust:
     nix flake check ./examples/rust_environment
 
-lint:
-    alejandra -c .
-
+[group('test')]
 develop_rust:
     nix develop ./examples/rust_environment/
 
