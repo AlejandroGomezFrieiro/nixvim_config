@@ -23,27 +23,12 @@ For standalone usage, the default package will run my neovim configuration.
 ```bash
 nix run github:AlejandroGomezFrieiro/nixvim_config
 ```
-<!---->
-<!-- # Usage -->
-<!---->
-<!-- To run the basic neovim configuration directly from github, you can use -->
-<!-- ``` -->
-<!-- nix run github:AlejandroGomezFrieiro/nixvim_config -->
-<!-- ``` -->
-<!---->
-<!-- # Per-project configuration -->
-<!---->
-<!-- Provided templates: -->
-<!---->
-<!-- ## Python -->
-<!---->
-<!-- ``` -->
-<!-- nix flake init --template github:AlejandroGomezFrieiro/nixvim_config#python_uv -->
-<!-- ``` -->
-<!---->
-<!-- ## Rust -->
-<!---->
-<!-- ``` -->
-<!-- nix flake init --template github:AlejandroGomezFrieiro/nixvim_config#rust -->
-<!-- ``` -->
-<!---->
+
+# Templates
+
+This repository also comes with two development templates, called `python_uv` and `rust`. To generate a flake from the template:
+
+```bash
+nix flake init --template github:AlejandroGomezFrieiro/nixvim_config#<TEMPLATE_NAME>
+```
+
