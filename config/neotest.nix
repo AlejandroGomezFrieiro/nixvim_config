@@ -6,7 +6,19 @@
   ...
 }: {
   plugins.neotest = {
+    # TODO: Neotest does not seem to be working properly...
     enable = true;
+    luaConfig = ''
+      require("neotest").setup(
+      {
+        adapters = {
+          require("neotest-python")({}),
+        },
+      }
+      )
+    '';
+
+    autoLoad = true;
     adapters.python.enable = true;
     # lazyLoad.enable = true;
     #
