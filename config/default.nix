@@ -11,6 +11,7 @@
     ./lsp.nix
     ./nvim-tree.nix
     ./neogen.nix
+    ./neotest.nix
     ./telescope.nix
     ./treesitter.nix
     ./whichkey.nix

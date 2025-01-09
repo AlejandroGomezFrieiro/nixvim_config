@@ -10,6 +10,7 @@
   ];
   extraConfigLua = "require('markdown').setup()";
   plugins.lsp-format.enable = true;
+  plugins.lsp-format.lspServersToEnable = ["pylsp"];
   plugins = {
     gitsigns = {
       enable = true;
