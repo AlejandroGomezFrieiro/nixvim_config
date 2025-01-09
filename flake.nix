@@ -31,17 +31,26 @@
       ];
       systems = ["x86_64-linux" "aarch64-darwin"];
       flake.templates = {
-          python_uv = {
-              path = ./templates/python_uv;
-              description = "A basic python environment with UV";
-          };
-          rust = {
-              path = ./templates/rust_environment;
-              description = "A basic rust environment";
-          };
+        python_uv = {
+          path = ./templates/python_uv;
+          description = "A basic python environment with UV";
+        };
+        rust = {
+          path = ./templates/rust_environment;
+          description = "A basic rust environment";
+        };
       };
-      perSystem = {pkgs, ...}: {
+      perSystem = {system, pkgs, self',lib,...}: {
+        
         formatter = pkgs.alejandra;
+        devShells.default = pkgs.mkShell {
+            nativeBuildInputs = [
+                pkgs.alejandra
+                self'.packages.nixvim
+                # self'.${system}.packages.${system}.nixvim
+            ];
+
+        };
       };
     });
 }
