@@ -5,6 +5,13 @@
   inputs,
   ...
 }: {
+  plugins.codesnap = {
+    enable = true;
+    lazyLoad = {
+      enable = true;
+      settings.cmd = "Codesnap";
+    };
+  };
   plugins.noice = {
     enable = true;
   };
@@ -45,6 +52,14 @@
   '';
 
   keymaps = [
+    {
+      key = "<leader>cs";
+      action = "<cmd>Codesnap<cr>";
+      options = {
+        silent = true;
+        desc = "Code Snap";
+      };
+    }
     {
       key = "<leader>h";
       action = "<cmd>Alpha<cr>";

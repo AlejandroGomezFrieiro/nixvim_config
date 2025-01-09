@@ -55,6 +55,11 @@
   };
   keymaps = [
     {
+      key = "<ESC>";
+      mode = ["t"];
+      action = "<C-\\><C-n>";
+    }
+    {
       key = "U";
       mode = ["n" "v"];
       action = "<cmd>redo<cr>";

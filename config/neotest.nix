@@ -9,17 +9,19 @@
     enable = true;
     adapters.python.enable = true;
     lazyLoad.enable = true;
-
+    #
     lazyLoad.settings = {
-      __unkeyed-1 = "<leader>tr";
-      __unkeyed-2 = "<leader>tt";
+      cmd = "Neotest";
+    #   __unkeyed-1 = "<leader>tr";
+    #   __unkeyed-2 = "<leader>tt";
     };
   };
   keymaps = [
     {
       mode = "n";
       key = "<leader>tr";
-      action.__raw = ''function() require("neotest").run.run() end'';
+      action = ":Neotest run<CR>";
+      # action.__raw = ''function() require("neotest").run.run() end'';
       options.desc = "Test Nearest";
     }
     {

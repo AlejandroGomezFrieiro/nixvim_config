@@ -7,6 +7,10 @@
 }: {
   plugins.telescope = {
     enable = true;
+    extensions = {
+      frecency.enable = true;
+      manix.enable = true;
+    };
     lazyLoad.enable = true;
     lazyLoad.settings.cmd = "Telescope";
     settings = {
@@ -14,6 +18,26 @@
     };
   };
   keymaps = [
+    {
+      key = "<leader>fm";
+      mode = ["n" "v"];
+      action = ":Telescope manix";
+      # action.__raw = ''function() require("telescope.builtin").() end'';
+      options = {
+        silent = true;
+        desc = "Find nix doc";
+      };
+    }
+    {
+      key = "<leader>fr";
+      mode = ["n" "v"];
+      action = ":Telescope frecency";
+      # action.__raw = ''function() require("telescope.builtin").() end'';
+      options = {
+        silent = true;
+        desc = "Find (f)recency";
+      };
+    }
     {
       key = "<leader>ff";
       mode = ["n" "v"];

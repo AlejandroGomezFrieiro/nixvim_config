@@ -5,6 +5,7 @@
   inputs,
   ...
 }: {
+  plugins.oil.enable = true;
   plugins.nvim-tree = {
     enable = true;
     openOnSetupFile = true;
