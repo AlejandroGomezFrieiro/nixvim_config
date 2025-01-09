@@ -10,7 +10,8 @@
     system,
     ...
   }: {
-    packages = {
+    packages = rec {
+      default = nixvim;
       nixvim = inputs'.nixvim.legacyPackages.makeNixvimWithModule {
         module = {
           imports = [./config/default.nix];
