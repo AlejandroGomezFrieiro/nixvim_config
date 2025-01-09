@@ -25,19 +25,13 @@
       flake-parts-lib,
       moduleWithSystem,
       ...
-    }: let
-      inherit (flake-parts-lib) importApply;
-      flakeModule.nixvim = importApply ./flake-module.nix {inherit withSystem moduleWithSystem;};
-    in {
+    }: {
       imports = [
-        flakeModule.nixvim
+        ./nixvim/pkg.nix
       ];
       systems = ["x86_64-linux" "aarch64-darwin"];
       perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
-      };
-      flake = {
-        inherit flakeModule;
       };
     });
 }

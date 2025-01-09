@@ -8,22 +8,22 @@
   plugins.neotest = {
     # TODO: Neotest does not seem to be working properly...
     enable = true;
-    luaConfig = ''
-      require("neotest").setup(
-      {
-        adapters = {
-          require("neotest-python")({}),
-        },
-      }
-      )
-    '';
+    # luaConfig = ''
+    #   require("neotest").setup(
+    #   {
+    #     adapters = {
+    #       require("neotest-python")({}),
+    #     },
+    #   }
+    #   )
+    # '';
 
     autoLoad = true;
     adapters.python.enable = true;
     # lazyLoad.enable = true;
     #
     # lazyLoad.settings = {
-      # cmd = "Neotest";
+    # cmd = "Neotest";
     #   __unkeyed-1 = "<leader>tr";
     #   __unkeyed-2 = "<leader>tt";
     # };

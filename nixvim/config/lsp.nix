@@ -10,7 +10,7 @@
   ];
   extraConfigLua = "require('markdown').setup()";
   plugins.friendly-snippets.enable = true;
-  plugins.image.enable = true;
+  # plugins.image.enable = true;
   plugins.lsp-format.enable = true;
   plugins.lsp-format.lspServersToEnable = ["pylsp"];
   plugins = {
@@ -101,7 +101,6 @@
     # };
   };
   keymaps = [
-    
     {
       key = "<leader>lr";
       mode = ["n"];

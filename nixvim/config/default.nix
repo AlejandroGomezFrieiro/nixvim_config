@@ -18,11 +18,17 @@
     ./ui.nix
     ./wezterm.nix
   ];
-  # enable = true;
+  performance = {
+    byteCompileLua = {
+      enable = true;
+      nvimRuntime = true;
+      configs = true;
+      plugins = true;
+    };
+  };
+
   plugins.zen-mode = {
     enable = true;
-    # lazyLoad.enable = true;
-    # lazyLoad.cmd = "ZenMode";
   };
   plugins.nix.enable = true;
   plugins.todo-comments.enable = true;
