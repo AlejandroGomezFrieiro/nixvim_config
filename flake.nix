@@ -40,16 +40,20 @@
           description = "A basic rust environment";
         };
       };
-      perSystem = {system, pkgs, self',lib,...}: {
-        
+      perSystem = {
+        system,
+        pkgs,
+        self',
+        lib,
+        ...
+      }: {
         formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
-            nativeBuildInputs = [
-                pkgs.alejandra
-                self'.packages.nixvim
-                # self'.${system}.packages.${system}.nixvim
-            ];
-
+          nativeBuildInputs = [
+            pkgs.alejandra
+            self'.packages.nixvim
+            # self'.${system}.packages.${system}.nixvim
+          ];
         };
       };
     });
