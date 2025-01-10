@@ -19,13 +19,13 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs @ {flake-parts, ...}:
+  outputs = inputs @ {flake-parts, nixvim, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} ({
       withSystem,
       flake-parts-lib,
       moduleWithSystem,
       ...
-    }: {
+    }: rec {
       imports = [
         ./pkg.nix
       ];
@@ -34,7 +34,7 @@
       #     perSystem@{config, pkgs}:
       #     nixos@{...}:{
       #       options = {};
-      #       config = import ./config;
+      #       config = import ./config/default.nix;
       # });
         flake.nixosModules.default = {pkgs, ...}: {
           imports = [./nixos-module.nix];
@@ -59,6 +59,19 @@
         ...
       }: {
         formatter = pkgs.alejandra;
+
+        checks.buildNeovim = inputs.nixvim.lib.${system}.check.mkTestDerivationFromNvim {
+            name = "test module";
+            nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+                module = {
+                    inherit (self'.flake.nixosModules.default);
+                    config = {
+                        plugins.image.enable = lib.mkForce false;
+                    };
+                } ;
+            };
+
+        };
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [
