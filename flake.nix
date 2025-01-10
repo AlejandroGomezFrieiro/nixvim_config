@@ -29,6 +29,16 @@
       imports = [
         ./pkg.nix
       ];
+
+      # flake.nixosModules.nixvim = moduleWithSystem (
+      #     perSystem@{config, pkgs}:
+      #     nixos@{...}:{
+      #       options = {};
+      #       config = import ./config;
+      # });
+        flake.nixosModules.default = {pkgs, ...}: {
+          imports = [./nixos-module.nix];
+        };
       systems = ["x86_64-linux" "aarch64-darwin"];
       flake.templates = {
         python_uv = {
@@ -41,6 +51,7 @@
         };
       };
       perSystem = {
+        inputs',
         system,
         pkgs,
         self',
@@ -48,11 +59,11 @@
         ...
       }: {
         formatter = pkgs.alejandra;
+
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [
             pkgs.alejandra
             self'.packages.nixvim
-            # self'.${system}.packages.${system}.nixvim
           ];
         };
       };
