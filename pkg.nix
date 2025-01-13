@@ -21,7 +21,7 @@
       default = nixvim;
       nixvim = inputs'.nixvim.legacyPackages.makeNixvimWithModule {
         module = {
-          imports = [./config/default.nix];
+          imports = [./config];
         };
         extraSpecialArgs = {
           flake = self;

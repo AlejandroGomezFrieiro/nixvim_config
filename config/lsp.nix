@@ -24,7 +24,17 @@
       lightbulb.sign = false; # disable bulb in status col
       lightbulb.virtualText = true; # enable at end of line
     };
-    luasnip.enable = true;
+    # luasnip.enable = true;
+    luasnip = {
+      enable = true;
+      # fromLua = [../snippets/lua];
+      settings = {
+        update_events = [
+          "TextChanged"
+          "TextChangedI"
+        ];
+      };
+    };
     cmp-omni.enable = true;
     cmp-dap.enable = true;
     cmp-nvim-lsp.enable = true;
@@ -64,9 +74,41 @@
           "<C-f>" = "cmp.mapping.scroll_docs(4)";
           "<C-Space>" = "cmp.mapping.complete()";
           "<C-e>" = "cmp.mapping.close()";
-          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-          "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          # "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+          # "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+          "<Tab>" = "cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.select_next_item()
+                elseif luasnip.locally_jumpable(1) then
+                  luasnip.jump(1)
+                else
+                  fallback()
+                end
+              end, { 'i', 's' })";
+
+              "<S-Tab>" = "cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.select_prev_item()
+                elseif luasnip.locally_jumpable(-1) then
+                  luasnip.jump(-1)
+                else
+                  fallback()
+                end
+              end, { 'i', 's' })";
+          "<CR>" = "cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    if luasnip.expandable() then
+                        luasnip.expand()
+                    else
+                        cmp.confirm({
+                            select = true,
+                        })
+                    end
+                else
+                    fallback()
+                end
+            end)";
+          # "<CR>" = "cmp.mapping.confirm({ select = true })";
         };
       };
     };
@@ -77,6 +119,7 @@
     autoLoad = true;
     servers = {
       markdown_oxide.enable = true;
+      nil_ls.enable = true;
       rust_analyzer.enable = true;
       rust_analyzer.installRustc = true;
       rust_analyzer.installCargo = true;

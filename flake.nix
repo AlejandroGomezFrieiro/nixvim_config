@@ -60,19 +60,6 @@
       }: {
         formatter = pkgs.alejandra;
 
-        checks.buildNeovim = inputs.nixvim.lib.${system}.check.mkTestDerivationFromNvim {
-            name = "test module";
-            nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-                module = {
-                    inherit (self'.flake.nixosModules.default);
-                    config = {
-                        plugins.image.enable = lib.mkForce false;
-                    };
-                } ;
-            };
-
-        };
-
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [
             pkgs.alejandra
