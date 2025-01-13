@@ -27,6 +27,24 @@
     };
   };
 
+  # extraPlugins = [
+  #  (pkgs.vimUtils.buildVimPlugin {
+  #   name = "ghost-text";
+  # src = pkgs.fetchFromGitHub {
+  #   owner = "wallpants";
+  #   repo = "ghost-text.nvim";
+  #   rev = "v2.0.4";
+  #   hash = "sha256-zsyB3eJpwN8+dknjRZ89RttdiC1IA2LakBfnFNudQOI=";
+  #   };
+  # })
+  # ];
+  # extraConfigLua = ''
+  #   require('ghost-text').setup({
+  #     autostart=true,
+  #     port = 4001,
+  #     log_level = nil,
+  #   })
+  # '';
   plugins.zen-mode = {
     enable = true;
   };

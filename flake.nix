@@ -19,7 +19,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs @ {flake-parts, nixvim, ...}:
+  outputs = inputs @ {
+    flake-parts,
+    nixvim,
+    ...
+  }:
     flake-parts.lib.mkFlake {inherit inputs;} ({
       withSystem,
       flake-parts-lib,
@@ -36,9 +40,9 @@
       #       options = {};
       #       config = import ./config/default.nix;
       # });
-        flake.nixosModules.default = {pkgs, ...}: {
-          imports = [./nixos-module.nix];
-        };
+      flake.nixosModules.default = {pkgs, ...}: {
+        imports = [./nixos-module.nix];
+      };
       systems = ["x86_64-linux" "aarch64-darwin"];
       flake.templates = {
         python_uv = {

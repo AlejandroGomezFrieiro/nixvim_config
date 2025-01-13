@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  helpers,
   inputs,
   ...
 }: {
@@ -59,10 +60,10 @@
       settings = {
         snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
         sources = [
-          {name = "path";}
+          {name = "luasnip";}
           {name = "nvim_lsp";}
           {name = "cmp_tabby";}
-          {name = "luasnip";}
+          {name = "path";}
           {
             name = "buffer";
             # Words from other open buffers can also be suggested.
@@ -74,41 +75,31 @@
           "<C-f>" = "cmp.mapping.scroll_docs(4)";
           "<C-Space>" = "cmp.mapping.complete()";
           "<C-e>" = "cmp.mapping.close()";
-          # "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-          # "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-          "<Tab>" = "cmp.mapping(function(fallback)
-                if cmp.visible() then
-                  cmp.select_next_item()
-                elseif luasnip.locally_jumpable(1) then
-                  luasnip.jump(1)
-                else
-                  fallback()
-                end
-              end, { 'i', 's' })";
-
-              "<S-Tab>" = "cmp.mapping(function(fallback)
-                if cmp.visible() then
-                  cmp.select_prev_item()
-                elseif luasnip.locally_jumpable(-1) then
-                  luasnip.jump(-1)
-                else
-                  fallback()
-                end
-              end, { 'i', 's' })";
-          "<CR>" = "cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    if luasnip.expandable() then
-                        luasnip.expand()
-                    else
-                        cmp.confirm({
-                            select = true,
-                        })
-                    end
-                else
-                    fallback()
-                end
-            end)";
-          # "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<C-n>" = ''
+            cmp.mapping(function(fallback)
+              local luasnip = require("luasnip")
+              if luasnip.expand_or_locally_jumpable() then
+                luasnip.expand_or_jump()
+              elseif luasnip.jumpable(1) then
+                luasnip.jump(1)
+              else
+                fallback()
+              end
+            end, { "i", "s" })
+          '';
+          "<C-p>" = ''
+            cmp.mapping(function(fallback)
+              local luasnip = require("luasnip")
+              if luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+              else
+                fallback()
+              end
+            end, { "i", "s" })
+          '';
+          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+          "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
         };
       };
     };
@@ -118,6 +109,7 @@
     enable = true;
     autoLoad = true;
     servers = {
+      lua_ls.enable = true;
       markdown_oxide.enable = true;
       nil_ls.enable = true;
       rust_analyzer.enable = true;

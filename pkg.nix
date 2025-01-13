@@ -10,7 +10,6 @@
     system,
     ...
   }: {
-
     # checks.buildWithModule = inputs'.nixvim.lib.${system}.check.mkTestDerivationFromNvim {
     #           name = "Test";
     #       nvim = inputs'.nixvim.legacyPackages.makeNixvimWithModule{
