@@ -15,7 +15,7 @@
 </div>
 </h1>
 
-This flake contains my neovim configuration, using nixvim for a reproducibility.
+This flake contains my neovim configuration, using nixvim for reproducibility.
 
 # Usage
 
@@ -23,12 +23,11 @@ For standalone usage, the default package will run my neovim configuration.
 ```bash
 nix run github:AlejandroGomezFrieiro/nixvim_config
 ```
+# Installation
 
-# Templates
-
-This repository also comes with two development templates, called `python_uv` and `rust`. To generate a flake from the template:
+## Non NixOS systems
 
 ```bash
-nix flake init --template github:AlejandroGomezFrieiro/nixvim_config#<TEMPLATE_NAME>
+nix profile install github:AlejandroGomezFrieiro/nixvim_config#nixvim
 ```
 
