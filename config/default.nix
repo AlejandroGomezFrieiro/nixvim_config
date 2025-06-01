@@ -8,6 +8,7 @@
   imports = [
     ./autopairs.nix
     ./comments.nix
+    ./codecompanion.nix
     ./lsp.nix
     ./nvim-tree.nix
     ./neogen.nix
