@@ -5,20 +5,8 @@
   inputs,
   ...
 }: {
-  imports = [
-    ./autopairs.nix
-    ./comments.nix
-    ./codecompanion.nix
-    ./lsp.nix
-    ./nvim-tree.nix
-    ./neogen.nix
-    ./neotest.nix
-    ./telescope.nix
-    ./treesitter.nix
-    ./whichkey.nix
-    ./ui.nix
-    ./wezterm.nix
-  ];
+  # Automatically import all other config files
+  imports = map (n: "${./.}/${n}") (builtins.filter (x: !(x=="default.nix")) (builtins.attrNames (builtins.readDir ./.)));
   performance = {
     byteCompileLua = {
       enable = true;
