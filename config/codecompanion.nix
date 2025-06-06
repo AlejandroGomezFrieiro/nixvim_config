@@ -26,7 +26,9 @@
                 };
                 schema = {
                   model = {
-                    default = "deepseek/deepseek-r1-0528-qwen3-8b:free",
+                    -- default = "deepseek/deepseek-r1-0528-qwen3-8b:free",
+                    default = "deepseek/deepseek-chat-v3-0324:free",
+
 
                   };
 
