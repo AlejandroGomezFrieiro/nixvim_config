@@ -67,6 +67,7 @@
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [
             pkgs.alejandra
+            pkgs.python311Packages.pylatexenc
             self'.packages.nixvim
           ];
         };
