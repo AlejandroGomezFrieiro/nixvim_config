@@ -119,6 +119,7 @@
       pylsp = {
         enable = true;
       };
+      pyright.enable = true;
       nixd = {
         enable = true;
         settings = {
