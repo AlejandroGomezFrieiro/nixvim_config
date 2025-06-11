@@ -115,10 +115,18 @@
       rust_analyzer.enable = true;
       rust_analyzer.installRustc = true;
       rust_analyzer.installCargo = true;
-      ruff.enable = true;
+      # ruff.enable = true;
+      # pylyzer.enable = true;
+      # ruff.enable = true;
       pylsp = {
         enable = true;
+        settings.plugins = {
+          pylsp_mypy.enable = true;
+          ruff.enable = true;
+
+        };
       };
+      # pyright.enable = true;
       nixd = {
         enable = true;
         settings = {
