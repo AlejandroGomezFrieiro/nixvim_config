@@ -15,6 +15,12 @@
 
   plugins.codecompanion.settings = {
     display = {
+      opts = {
+        send_code = false;
+        use_default_actions=true;
+        use_default_prompts=true;
+
+      };
       action_palette = {
         opts = {
           show_default_prompt_library = true;
