@@ -6,7 +6,7 @@
   ...
 }: {
   # Automatically import all other config files
-  imports = map (n: "${./.}/${n}") (builtins.filter (x: !(x=="default.nix")) (builtins.attrNames (builtins.readDir ./.)));
+  imports = map (n: "${./.}/${n}") (builtins.filter (x: !(x == "default.nix")) (builtins.attrNames (builtins.readDir ./.)));
   performance = {
     byteCompileLua = {
       enable = true;

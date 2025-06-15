@@ -123,7 +123,6 @@
         settings.plugins = {
           pylsp_mypy.enable = true;
           ruff.enable = true;
-
         };
       };
       # pyright.enable = true;
