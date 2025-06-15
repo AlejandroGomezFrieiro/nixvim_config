@@ -3,7 +3,20 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  # vectorcode = pkgs.vimUtils.buildVimPlugin {
+  #   name = "vectorcode";
+  #
+  #   src = pkgs.fetchFromGitHub {
+  #   owner = "Davidyz";
+  #   repo = "VectorCode";
+  #   rev = "a80509949eb8c315a9e46069a2d85fd33080249c";
+  #   hash = "sha256-8PpY64F9i/dp+c70VcsZVGEfcocD+g778bravximCzM=";
+  # };
+  # };
+in {
+  extraPlugins = [pkgs.vimPlugins.vectorcode-nvim];
+  extraConfigLua = "require('vectorcode').setup()";
   plugins.render-markdown = {
     enable = true;
     settings = {
@@ -18,6 +31,33 @@
       send_code = true;
       use_default_actions = true;
       use_default_prompts = true;
+      extensions = {
+        vectorcode = {
+          opts = {
+            add_tool = true;
+            add_slash_command = true;
+            tool_opts = {
+              max_num = {
+                chunk = -1;
+                document = -1;
+              };
+              default_num = {
+                chunk = 50;
+                document = 10;
+              };
+              include_stderr = false;
+              use_lsp = false;
+              auto_submit = {
+                ls = false;
+                query = false;
+              };
+              ls_on_start = false;
+              no_duplicate = true;
+              chunk_mode = false;
+            };
+          };
+        };
+      };
     };
     display = {
       action_palette = {
@@ -29,7 +69,31 @@
     };
     strategies = {
       agent = {adapter = "openrouter_claude";};
-      chat = {adapter = "openrouter_claude";};
+      chat = {
+        adapter = "openrouter_claude";
+        slash_commands = {
+          codebase = "require('vectorcode.integrations').codecompanion.chat.make_slash_command()";
+        };
+        tools = {
+          vectorcode = {
+            description = "Use vectorcode";
+            callback = {
+              __raw = ''
+                  function()
+                  require("vectorcode.integrations").codecompanion.chat.make_tool(
+                  ---@type VectorCode.CodeCompanion.ToolOpts
+                  {
+                    -- -- your options goes here
+                      ls_on_start = true,
+                      no_duplicate = true,
+                  }
+                );
+                end
+              '';
+            };
+          };
+        };
+      };
       inline = {adapter = "openrouter_claude";};
     };
 
@@ -125,7 +189,7 @@
 
                               You are required to write code following the instructions provided above and test the correctness by running the designated test suite. Follow these steps exactly:
 
-                              1. Update the code in #buffer using the @insert_edit_into_file tool
+                              1. Update the code in #buffer using the @editor tool
                               2. Then use the @cmd_runner tool to run the test suite with `<test_cmd>` (do this after you have updated the code)
                               3. Make sure you trigger both tools in the same response
 

@@ -21,6 +21,7 @@
       nixvim = inputs'.nixvim.legacyPackages.makeNixvimWithModule {
         module = {
           imports = [./config];
+          extraPackages = [pkgs.vectorcode];
         };
         extraSpecialArgs = {
           flake = self;

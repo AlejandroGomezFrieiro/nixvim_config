@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "name": "Nixvim Configuration",
+  "version": "1.0.0",
+  "system_prompt": "You are assisting with a Nix-based Neovim configuration using nixvim. Focus on Nix expressions, plugin integration, and Lua configuration.",
+  "groups": [
+    {
+      "name": "Core Configuration",
+      "system_prompt": "Working with core Neovim settings and basic configurations",
+      "data": [
+        "default_config",
+        "flake_config",
+        "pkg_config",
+        "nixos_module"
+      ]
+    },
+    {
+      "name": "Plugin Management",
+      "system_prompt": "Focusing on plugin declaration and configuration",
+      "data": [
+        "telescope_config",
+        "tree_config",
+        "whichkey_config",
+        "autopairs_config",
+        "comment_config",
+        "zenmode_config"
+      ]
+    },
+    {
+      "name": "Language Support",
+      "system_prompt": "Working with LSP, treesitter, and language-specific configurations",
+      "data": [
+        "lsp_config",
+        "treesitter_config",
+        "neogen_config",
+        "quarto_config",
+        "neotest_config"
+      ]
+    },
+    {
+      "name": "UI & Appearance",
+      "system_prompt": "Handling themes, statusline, and visual elements",
+      "data": [
+        "ui_config",
+        "wezterm_config"
+      ]
+    },
+    {
+      "name": "CodeCompanion Integration",
+      "system_prompt": "Configuration specific to CodeCompanion and AI tools",
+      "data": [
+        "codecompanion_config"
+      ]
+    }
+  ],
+  "data": {
+    "default_config": {
+      "type": "file",
+      "path": "config/default.nix",
+      "description": "Main default configuration with core settings"
+    },
+    "flake_config": {
+      "type": "file",
+      "path": "flake.nix",
+      "description": "Flake configuration with inputs and packages"
+    },
+    "pkg_config": {
+      "type": "file",
+      "path": "pkg.nix",
+      "description": "Package definitions and checks"
+    },
+    "nixos_module": {
+      "type": "file",
+      "path": "nixos-module.nix",
+      "description": "NixOS module configuration"
+    },
+
+    "telescope_config": {
+      "type": "file",
+      "path": "config/telescope.nix",
+      "description": "Telescope fuzzy finder configuration"
+    },
+    "tree_config": {
+      "type": "file",
+      "path": "config/nvim-tree.nix",
+      "description": "File tree explorer configuration"
+    },
+    "whichkey_config": {
+      "type": "file",
+      "path": "config/whichkey.nix",
+      "description": "Which-key keybinding helper"
+    },
+    "autopairs_config": {
+      "type": "file",
+      "path": "config/autopairs.nix",
+      "description": "Autopairs plugin configuration"
+    },
+    "comment_config": {
+      "type": "file",
+      "path": "config/comments.nix",
+      "description": "Comment plugin configuration"
+    },
+    "zenmode_config": {
+      "type": "file",
+      "path": "config/zen-mode.nix",
+      "description": "Zen mode distraction-free writing"
+    },
+
+    "lsp_config": {
+      "type": "file",
+      "path": "config/lsp.nix",
+      "description": "LSP and completion configuration"
+    },
+    "treesitter_config": {
+      "type": "file",
+      "path": "config/treesitter.nix",
+      "description": "Treesitter syntax highlighting"
+    },
+    "neogen_config": {
+      "type": "file",
+      "path": "config/neogen.nix",
+      "description": "Neogen documentation generator"
+    },
+    "quarto_config": {
+      "type": "file",
+      "path": "config/quarto.nix",
+      "description": "Quarto document support"
+    },
+    "neotest_config": {
+      "type": "file",
+      "path": "config/neotest.nix",
+      "description": "Neotest testing framework"
+    },
+
+    "ui_config": {
+      "type": "file",
+      "path": "config/ui.nix",
+      "description": "UI and theme configuration"
+    },
+    "wezterm_config": {
+      "type": "file",
+      "path": "config/wezterm.nix",
+      "description": "Wezterm terminal integration"
+    },
+
+    "codecompanion_config": {
+      "type": "file",
+      "path": "config/codecompanion.nix",
+      "description": "CodeCompanion AI assistant configuration"
+    }
+  }
+}
