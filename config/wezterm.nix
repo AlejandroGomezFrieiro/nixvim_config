@@ -6,6 +6,8 @@
   ...
 }: {
   plugins.smart-splits.enable = true;
+  plugins.smart-splits.autoLoad = true;
+  plugins.smart-splits.lazyLoad.enable = false;
   keymaps = [
     {
       mode = "n";

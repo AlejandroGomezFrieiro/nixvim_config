@@ -28,7 +28,7 @@
     # luasnip.enable = true;
     luasnip = {
       enable = true;
-      # fromLua = [../snippets/lua];
+      fromLua =  [{paths = ./luasnip_snippets;}];
       settings = {
         update_events = [
           "TextChanged"
