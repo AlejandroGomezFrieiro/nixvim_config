@@ -14,6 +14,7 @@
   # plugins.image.enable = true;
   plugins.lsp-format.enable = true;
   plugins.lsp-format.lspServersToEnable = ["pylsp"];
+  plugins.lint.lintersByFt.python = [ "pylint" ];
   plugins = {
     gitsigns = {
       enable = true;
@@ -105,6 +106,51 @@
     };
   };
 
+  plugins.remote-nvim.enable = true;
+  # plugins.lsp-lines = {
+  #   enable = true;
+  # };
+  plugins.tiny-inline-diagnostic = {
+    enable=true;
+    settings = {
+      multilines = {
+        enabled=true;
+        always_show=true;
+      };
+      show_source = {
+        enabled=true;
+      };
+      options = {
+          use_icons_from_diagnostic = true;
+        };
+      preset = "classic";
+      virt_texts = {
+        priority = 2048;
+      };
+    };
+  };
+
+  extraPackages = [ pkgs.pylint];
+  diagnostic.settings = {
+    underline=true;
+
+  };
+  plugins.bufferline = {
+      enable = true;
+      settings.options = {
+        diagnostics = "nvim_lsp";
+        mode = "buffers";
+
+        offsets = [
+          {
+            filetype = "neo-tree";
+            text = "Neo-tree";
+            highlight = "Directory";
+            text_align = "left";
+          }
+        ];
+      };
+    };
   plugins.lsp = {
     enable = true;
     autoLoad = true;
@@ -115,15 +161,15 @@
       rust_analyzer.enable = true;
       rust_analyzer.installRustc = true;
       rust_analyzer.installCargo = true;
-      # ruff.enable = true;
+      # basedpyright.enable = true;
+      ruff.enable = true;
+      # pytrouble.
       # pylyzer.enable = true;
-      # ruff.enable = true;
       pylsp = {
         enable = true;
         settings.plugins = {
           pylsp_mypy.enable = true;
           ruff.enable = true;
-
         };
       };
       # pyright.enable = true;

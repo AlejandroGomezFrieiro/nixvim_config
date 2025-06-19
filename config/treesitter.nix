@@ -5,6 +5,7 @@
   inputs,
   ...
 }: {
+  plugins.treesitter-textobjects.enable = true;
   plugins.treesitter = {
     enable = true;
     settings.indent = {
