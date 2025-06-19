@@ -25,7 +25,7 @@
     '';
   };
 in rec {
-  imports = [./prompts];
+  imports = [./codecompanion/prompts ./codecompanion/adapters];
 
   extraPlugins = [vectorcode_nvim];
   extraConfigLua = ''
