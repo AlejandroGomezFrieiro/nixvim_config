@@ -64,10 +64,10 @@ in rec {
       };
     };
     strategies = {
-      agent = {adapter = "openrouter_claude";};
+      agent = {adapter = lib.mkDefault "openrouter_claude";};
+      inline = {adapter = lib.mkDefault "openrouter_claude";};
       chat = {
-        adapter = "openrouter_claude";
-        inline = {adapter = "openrouter_claude";};
+        adapter = lib.mkDefault "openrouter_claude";
       };
     };
 
