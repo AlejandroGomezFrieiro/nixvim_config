@@ -4,9 +4,14 @@
   pkgs,
   inputs,
   ...
-}: {
+}: let
+  files = lib.fileset.toList (lib.fileset.difference ./. ./snippets);
+  # filtered_directory = (builtins.path {filter=(name: type: !(name == "snippets")); path=./.;});
+  # filtered_directory = builtins.readDir filtered_source;
+  files_in_directory = n: "${./.}/${n}";
+in {
   # Automatically import all other config files
-  imports = map (n: "${./.}/${n}") (builtins.filter (x: !(x == "default.nix")) (builtins.attrNames (builtins.readDir ./.)));
+  imports = builtins.filter (x: !(x == ./default.nix)) files;
   performance = {
     byteCompileLua = {
       enable = true;

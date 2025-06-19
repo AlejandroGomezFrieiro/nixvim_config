@@ -9,7 +9,7 @@
   extraPlugins = with pkgs.vimPlugins; [
     markdown-nvim
   ];
-  extraConfigLua = "require('markdown').setup()";
+  extraConfigLua = ''require("markdown").setup()'';
   plugins.friendly-snippets.enable = true;
   # plugins.image.enable = true;
   plugins.lsp-format.enable = true;
@@ -28,7 +28,7 @@
     # luasnip.enable = true;
     luasnip = {
       enable = true;
-      fromLua =  [{paths = ./luasnip_snippets;}];
+      fromLua = [{paths = ./snippets;}];
       settings = {
         update_events = [
           "TextChanged"

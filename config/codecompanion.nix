@@ -2,21 +2,38 @@
   config,
   lib,
   pkgs,
+  inputs',
+  system,
   ...
 }: let
-  # vectorcode = pkgs.vimUtils.buildVimPlugin {
-  #   name = "vectorcode";
-  #
-  #   src = pkgs.fetchFromGitHub {
-  #   owner = "Davidyz";
-  #   repo = "VectorCode";
-  #   rev = "a80509949eb8c315a9e46069a2d85fd33080249c";
-  #   hash = "sha256-8PpY64F9i/dp+c70VcsZVGEfcocD+g778bravximCzM=";
-  # };
-  # };
+  codecompanion = pkgs.fetchFromGitHub {
+    owner = "olimorris";
+    repo = "codecompanion.nvim";
+    rev = "e7aaef6134aa9d47e214427464867c5afc4f34fe";
+    hash = "sha256-wSK7JrWkvuFtl7kFVeW2SIw9GLD0/ijsw7FGN11el1A=";
+  };
+  vectorcode_nvim = pkgs.vimUtils.buildVimPlugin rec {
+    pname = "vectorcode.nvim";
+    version = "0.6.10";
+    buildInputs = [pkgs.vectorcode];
+    sourceRoot = "${src.name}/plugin";
+    dependencies = [pkgs.vimPlugins.plenary-nvim];
+    src = pkgs.vectorcode.src;
+    postPatch = ''
+      cp -r ../lua .
+    '';
+    # pkgs.fetchFromGitHub {
+    #   owner = "Davidyz";
+    #   repo = "VectorCode";
+    #   rev = "0ed0e2bd4f0a401bf72e1253cc91b1dee3f0f596";
+    #   hash = "sha256-tr0qhvTYugM9cdSrerwJJnOQG1NPiu9NrZrWJSHdE3E=";
+    # };
+  };
 in {
-  extraPlugins = [pkgs.vimPlugins.vectorcode-nvim];
-  extraConfigLua = "require('vectorcode').setup()";
+  extraPlugins = [vectorcode_nvim];
+  extraConfigLua = ''
+    require("vectorcode").setup({})
+  '';
   plugins.render-markdown = {
     enable = true;
     settings = {
@@ -24,40 +41,45 @@ in {
     };
   };
 
+  # plugins.codecompanion = plugins.codecompanion.overrideAtts (oldAttrs: rec {
+  #
+  # });
+  # plugins.codecompanion.overrideAttrs (
+  #   oldAttrs: rec {
+  #     settingsOptions = {
+  #       extensions = lib.nixvim.defaultNullOpts.mkAttrsOf' {
+  #       type = lib.types.anything;
+  #       };
+  #     };
+  #   };
+  # );
   plugins.codecompanion.enable = true;
+  plugins.codecompanion.package = codecompanion;
+  # plugins.codecompanion.luaConfig.pre = ''
+  #     require("codecompanion").({
+  #     extensions = {
+  #       vectorcode = {
+  #         opts = {
+  #           add_tool = true,
+  #         }
+  #       }
+  #     }
+  #   })
+  # '';
 
   plugins.codecompanion.settings = {
+    extensions = {
+      vectorcode = {
+        opts = {
+          add_tool = true;
+          add_slash_command = true;
+        };
+      };
+    };
     opts = {
       send_code = true;
       use_default_actions = true;
       use_default_prompts = true;
-      extensions = {
-        vectorcode = {
-          opts = {
-            add_tool = true;
-            add_slash_command = true;
-            tool_opts = {
-              max_num = {
-                chunk = -1;
-                document = -1;
-              };
-              default_num = {
-                chunk = 50;
-                document = 10;
-              };
-              include_stderr = false;
-              use_lsp = false;
-              auto_submit = {
-                ls = false;
-                query = false;
-              };
-              ls_on_start = false;
-              no_duplicate = true;
-              chunk_mode = false;
-            };
-          };
-        };
-      };
     };
     display = {
       action_palette = {
@@ -71,28 +93,28 @@ in {
       agent = {adapter = "openrouter_claude";};
       chat = {
         adapter = "openrouter_claude";
-        slash_commands = {
-          codebase = "require('vectorcode.integrations').codecompanion.chat.make_slash_command()";
-        };
-        tools = {
-          vectorcode = {
-            description = "Use vectorcode";
-            callback = {
-              __raw = ''
-                  function()
-                  require("vectorcode.integrations").codecompanion.chat.make_tool(
-                  ---@type VectorCode.CodeCompanion.ToolOpts
-                  {
-                    -- -- your options goes here
-                      ls_on_start = true,
-                      no_duplicate = true,
-                  }
-                );
-                end
-              '';
-            };
-          };
-        };
+        # slash_commands = {
+        #   codebase = "require('vectorcode.integrations').codecompanion.chat.make_slash_command()";
+        # };
+        # tools = {
+        #   vectorcode = {
+        #     description = "Use vectorcode";
+        #     callback = {
+        #       __raw = ''
+        #           function()
+        #           require("vectorcode.integrations").codecompanion.chat.make_tool(
+        #           ---@type VectorCode.CodeCompanion.ToolOpts
+        #           {
+        #             -- -- your options goes here
+        #               ls_on_start = true,
+        #               no_duplicate = true,
+        #           }
+        #         );
+        #         end
+        #       '';
+        #     };
+        #   };
+        # };
       };
       inline = {adapter = "openrouter_claude";};
     };
@@ -298,4 +320,7 @@ in {
       };
     };
   };
+  plugins.codecompanion.settings.luaConfig.post = ''
+
+  '';
 }

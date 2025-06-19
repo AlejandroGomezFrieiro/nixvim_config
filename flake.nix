@@ -15,10 +15,13 @@
   };
   inputs = {
     nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # Use vectorcode == 0.6.7, otherwise chromadb is not working properly
+    nixpkgs.url = "github:NixOS/nixpkgs/d202f48f1249f013aa2660c6733e251c85712cbe";
+  };
   outputs = inputs @ {
     flake-parts,
     nixvim,
@@ -60,6 +63,7 @@
         pkgs,
         self',
         lib,
+        config,
         ...
       }: {
         formatter = pkgs.alejandra;
@@ -68,7 +72,7 @@
           nativeBuildInputs = [
             pkgs.alejandra
             pkgs.python311Packages.pylatexenc
-            self'.packages.nixvim
+            pkgs.vectorcode
           ];
         };
       };
