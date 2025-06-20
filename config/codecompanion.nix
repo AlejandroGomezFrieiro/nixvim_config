@@ -32,35 +32,35 @@ in rec {
     require("vectorcode").setup({})
   '';
   plugins.render-markdown = {
-    enable = true;
+    enable = lib.mkDefault true;
     settings = {
-      file_types = ["markdown" "codecompanion" "quarto"];
+      file_types = lib.mkDefault ["markdown" "codecompanion" "quarto"];
     };
   };
-  plugins.codecompanion.enable = true;
+  plugins.codecompanion.enable = lib.mkDefault true;
   plugins.codecompanion.package = codecompanion;
 
   plugins.codecompanion.settings = {
     extensions = {
       vectorcode = {
         opts = {
-          add_tool = true;
-          add_slash_command = true;
+          add_tool = lib.mkDefault true;
+          add_slash_command = lib.mkDefault true;
         };
       };
     };
     opts = {
-      log_level = "TRACE";
-      send_code = true;
-      use_default_actions = true;
-      use_default_prompts = true;
+      log_level = lib.mkDefault "TRACE";
+      send_code = lib.mkDefault true;
+      use_default_actions = lib.mkDefault true;
+      use_default_prompts = lib.mkDefault true;
     };
     display = {
       action_palette = {
         opts = {
-          show_default_prompt_library = true;
+          show_default_prompt_library = lib.mkDefault true;
         };
-        provider = "telescope";
+        provider = lib.mkDefault "telescope";
       };
     };
     strategies = {

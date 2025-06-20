@@ -8,6 +8,12 @@
   plugins.telescope = {
     enable = true;
     extensions = {
+      ui-select = {
+        enable = true;
+        settings = {
+        };
+      };
+      fzf-native.enable = true;
       frecency.enable = true;
       manix.enable = true;
     };
