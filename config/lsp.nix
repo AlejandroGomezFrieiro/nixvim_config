@@ -1,50 +1,46 @@
 {
-  config,
   lib,
   pkgs,
-  helpers,
-  inputs,
   ...
 }: {
   extraPlugins = with pkgs.vimPlugins; [
     markdown-nvim
   ];
   extraConfigLua = ''require("markdown").setup()'';
-  plugins.friendly-snippets.enable = true;
-  # plugins.image.enable = true;
-  plugins.lsp-format.enable = true;
-  plugins.lsp-format.lspServersToEnable = ["pylsp"];
+  plugins.friendly-snippets.enable = lib.mkDefault true;
+  plugins.lsp-format.enable = lib.mkDefault true;
+  plugins.lsp-format.lspServersToEnable = lib.mkDefault ["pylsp"];
   plugins = {
     gitsigns = {
-      enable = true;
-      settings.current_line_blame = true;
+      enable = lib.mkDefault true;
+      settings.current_line_blame = lib.mkDefault true;
     };
     lspsaga = {
-      enable = true;
-      symbolInWinbar.enable = false;
-      lightbulb.sign = false; # disable bulb in status col
-      lightbulb.virtualText = true; # enable at end of line
+      enable = lib.mkDefault true;
+      symbolInWinbar.enable = lib.mkDefault false;
+      lightbulb.sign = lib.mkDefault false; # disable bulb in status col
+      lightbulb.virtualText = lib.mkDefault true; # enable at end of line
     };
     # luasnip.enable = true;
     luasnip = {
-      enable = true;
-      fromLua = [{paths = ./snippets;}];
+      enable = lib.mkDefault true;
+      fromLua = lib.mkDefault [{paths = ./snippets;}];
       settings = {
-        update_events = [
+        update_events = lib.mkDefault [
           "TextChanged"
           "TextChangedI"
         ];
       };
     };
-    cmp-omni.enable = true;
-    cmp-dap.enable = true;
-    cmp-nvim-lsp.enable = true;
+    cmp-omni.enable = lib.mkDefault true;
+    cmp-dap.enable = lib.mkDefault true;
+    cmp-nvim-lsp.enable = lib.mkDefault true;
     lspkind = {
-      enable = true;
+      enable = lib.mkDefault true;
 
       cmp = {
-        enable = true;
-        menu = {
+        enable = lib.mkDefault true;
+        menu = lib.mkDefault {
           nvim_lsp = "[LSP]";
           nvim_lua = "[api]";
           path = "[path]";
@@ -56,10 +52,10 @@
       };
     };
     cmp = {
-      enable = true;
+      enable = lib.mkDefault true;
       settings = {
-        snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
-        sources = [
+        snippet.expand = lib.mkDefault "function(args) require('luasnip').lsp_expand(args.body) end";
+        sources = lib.mkDefault [
           {name = "luasnip";}
           {name = "nvim_lsp";}
           {name = "cmp_tabby";}
@@ -70,7 +66,7 @@
             option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
           }
         ];
-        mapping = {
+        mapping = lib.mkDefault {
           "<C-d>" = "cmp.mapping.scroll_docs(-4)";
           "<C-f>" = "cmp.mapping.scroll_docs(4)";
           "<C-Space>" = "cmp.mapping.complete()";
@@ -106,41 +102,32 @@
   };
 
   plugins.lsp = {
-    enable = true;
-    autoLoad = true;
+    enable = lib.mkDefault true;
+    autoLoad = lib.mkDefault true;
     servers = {
-      lua_ls.enable = true;
-      markdown_oxide.enable = true;
-      nil_ls.enable = true;
-      rust_analyzer.enable = true;
-      rust_analyzer.installRustc = true;
-      rust_analyzer.installCargo = true;
-      # ruff.enable = true;
-      # pylyzer.enable = true;
-      # ruff.enable = true;
+      lua_ls.enable = lib.mkDefault true;
+      markdown_oxide.enable = lib.mkDefault true;
+      nil_ls.enable = lib.mkDefault true;
+      rust_analyzer.enable = lib.mkDefault true;
+      rust_analyzer.installRustc = lib.mkDefault true;
+      rust_analyzer.installCargo = lib.mkDefault true;
       pylsp = {
-        enable = true;
+        enable = lib.mkDefault true;
         settings.plugins = {
-          pylsp_mypy.enable = true;
-          ruff.enable = true;
+          pylsp_mypy.enable = lib.mkDefault true;
+          ruff.enable = lib.mkDefault true;
         };
       };
-      # pyright.enable = true;
       nixd = {
-        enable = true;
+        enable = lib.mkDefault true;
         settings = {
-          formatting.command = ["alejandra"];
+          formatting.command = lib.mkDefault ["alejandra"];
           nixpkgs = {
-            expr = "import <nixpkgs> { }";
+            expr = lib.mkDefault "import <nixpkgs> { }";
           };
         };
       };
     };
-    # keymaps = {
-    #   lspBuf = {
-    #     gd = "definition";
-    #   };
-    # };
   };
   keymaps = [
     {

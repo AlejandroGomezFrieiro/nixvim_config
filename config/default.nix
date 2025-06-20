@@ -14,14 +14,13 @@ in {
   imports = builtins.filter (x: !(x == ./default.nix)) files;
   performance = {
     byteCompileLua = {
-      enable = true;
+      enable = lib.mkDefault true;
       nvimRuntime = true;
       configs = true;
       plugins = true;
     };
   };
 
-  # extraPlugins = [
   #  (pkgs.vimUtils.buildVimPlugin {
   #   name = "ghost-text";
   # src = pkgs.fetchFromGitHub {
@@ -40,36 +39,36 @@ in {
   #   })
   # '';
   plugins.zen-mode = {
-    enable = true;
+    enable = lib.mkDefault true;
   };
-  plugins.nix.enable = true;
-  plugins.todo-comments.enable = true;
-  plugins.lualine.enable = true;
-  plugins.lz-n.enable = true;
-  plugins.web-devicons.enable = true;
-  colorschemes.catppuccin.enable = true;
+  plugins.nix.enable = lib.mkDefault true;
+  plugins.todo-comments.enable = lib.mkDefault true;
+  plugins.lualine.enable = lib.mkDefault true;
+  plugins.lz-n.enable = lib.mkDefault true;
+  plugins.web-devicons.enable = lib.mkDefault true;
+  colorschemes.catppuccin.enable = lib.mkDefault true;
   opts = {
-    showmatch = true;
-    ignorecase = true;
-    hlsearch = true;
-    title = true;
-    si = true;
-    smarttab = true;
-    smartindent = true;
-    incsearch = true;
-    tabstop = 2;
-    shiftwidth = 2;
-    softtabstop = 2;
-    conceallevel = 0;
-    termguicolors = true;
-    number = true;
-    relativenumber = true;
-    autoindent = true;
-    clipboard = "unnamedplus";
-    cursorline = true;
-    list = true;
-    expandtab = true;
-    shiftround = true;
+    showmatch = lib.mkDefault true;
+    ignorecase = lib.mkDefault true;
+    hlsearch = lib.mkDefault true;
+    title = lib.mkDefault true;
+    si = lib.mkDefault true;
+    smarttab = lib.mkDefault true;
+    smartindent = lib.mkDefault true;
+    incsearch = lib.mkDefault true;
+    tabstop = lib.mkDefault 2;
+    shiftwidth = lib.mkDefault 2;
+    softtabstop = lib.mkDefault 2;
+    conceallevel = lib.mkDefault 0;
+    termguicolors = lib.mkDefault true;
+    number = lib.mkDefault true;
+    relativenumber = lib.mkDefault true;
+    autoindent = lib.mkDefault true;
+    clipboard = lib.mkDefault "unnamedplus";
+    cursorline = lib.mkDefault true;
+    list = lib.mkDefault true;
+    expandtab = lib.mkDefault true;
+    shiftround = lib.mkDefault true;
   };
   keymaps = [
     {
