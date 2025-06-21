@@ -2,8 +2,6 @@
   config,
   lib,
   pkgs,
-  system,
-  options,
   ...
 }: let
   codecompanion = pkgs.fetchFromGitHub {
@@ -26,7 +24,7 @@
 in rec {
   imports = [./codecompanion/prompts ./codecompanion/adapters];
 
-  extraPlugins = [vectorcode_nvim];
+  extraPlugins = [vectorcode_nvim pkgs.mcphub];
   extraConfigLua = ''
     require("vectorcode").setup({})
   '';

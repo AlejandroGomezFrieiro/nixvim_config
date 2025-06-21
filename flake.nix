@@ -18,75 +18,93 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
+    systems.url = "systems";
     # Fix a specific commit of nixpkgs for reproducibility.
     nixpkgs.url = "github:NixOS/nixpkgs/d202f48f1249f013aa2660c6733e251c85712cbe";
   };
 
   outputs = inputs @ {nixpkgs, ...}: let
-    lib = nixpkgs.lib;
-    supportedSystems = ["x86_64-linux" "aarch64-darwin"];
+      lib = nixpkgs.lib;
+      eachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
+    in
+    {
+      checks.launch-neovim = eachSystem (system:
+          let
+            pkgs = import inputs.nixpkgs {
+              inherit system;
+              overlays = [ (final: prev: { mcphub = inputs.mcphub-nvim.packages.${system}.default; }) ];
+            };
+            nixvimConfigurationSet = {
+              pkgs = pkgs;
+              module = { pkgs, ... }: {
+                imports = [./config];
+                extraPackages = [pkgs.vectorcode pkgs.mcphub];
+              };
+            };
+          in
+          inputs.nixvim.lib.${system}.check.mkTestDerivationFromNvim nixvimConfigurationSet
+      );
 
-    # A function to get pkgs for a specific system
-    getPkgsForSystem = system: import inputs.nixpkgs {inherit system;};
+      packages = eachSystem (system:
+          let
+            pkgs = import inputs.nixpkgs {
+              inherit system;
+              overlays = [ (final: prev: { mcphub = inputs.mcphub-nvim.packages.${system}.default; }) ];
+            };
+            nixvimConfigurationSet = {
+              pkgs = pkgs;
+              module = { pkgs, ... }: {
+                imports = [./config];
+                extraPackages = [pkgs.vectorcode pkgs.mcphub];
+              };
+            };
+            nixvim = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule nixvimConfigurationSet;
+        in
+        {
+          default = nixvim;
+          nixvim = nixvim;
+        }
+      );
 
-    # An attribute set where keys are systems and values are their respective pkgs sets
-    pkgsFor = lib.genAttrs supportedSystems getPkgsForSystem;
-
-    nixvim-module-for-system = (system: {
-          module = {
-            imports = [./config];
-            extraPackages = [pkgsFor.${system}.vectorcode];
+      devShells = eachSystem (system:
+          let
+            pkgs = import inputs.nixpkgs {
+              inherit system;
+              overlays = [ (final: prev: { mcphub = inputs.mcphub-nvim.packages.${system}.default; }) ];
+            };
+        in
+          {
+          default = pkgs.mkShell {
+            nativeBuildInputs = [
+                pkgs.alejandra
+                pkgs.python311Packages.pylatexenc
+                pkgs.vectorcode
+                pkgs.nurl
+            ];
           };
-        });
-  in rec
-  {
-    checks.launch-neovim = lib.genAttrs supportedSystems (system:
-      inputs.nixvim.lib.${system}.check.mkTestDerivationFromNvim (nixvim-module-for-system system));
-    # Define devShells for each system
-    packages = lib.genAttrs supportedSystems (
-      system: let
-        nixvim = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule (nixvim-module-for-system system); in {
-        default = nixvim;
-        nixvim = nixvim;
-      }
-    );
-    devShells = lib.genAttrs supportedSystems (
-      system: let
-        pkgs = pkgsFor.${system};
-      in {
-        default = pkgs.mkShell {
-          nativeBuildInputs = [
-            pkgs.alejandra
-            pkgs.python311Packages.pylatexenc
-            pkgs.vectorcode
-            pkgs.nurl
-          ];
+        }
+      );
+
+      formatter = eachSystem (system:
+          let
+            pkgs = import inputs.nixpkgs {
+              inherit system;
+              overlays = [ (final: prev: { mcphub = inputs.mcphub-nvim.packages.${system}.default; }) ];
+            };
+          in
+          pkgs.alejandra
+      );
+
+      nixosModules.default = import ./config;
+      templates = {
+        python_uv = {
+          path = ./templates/python_uv;
+          description = "A basic python environment with UV";
         };
-      }
-    );
-
-    # Define formatter for each system
-    formatter = lib.genAttrs supportedSystems (
-      system: let
-        pkgs = pkgsFor.${system};
-      in
-        pkgs.alejandra
-    );
-
-    # Other existing outputs that were correctly placed
-    nixosModules.default = {pkgs, ...}: {
-      config = import ./config;
-    };
-    templates = {
-      python_uv = {
-        path = ./templates/python_uv;
-        description = "A basic python environment with UV";
-      };
-      rust = {
-        path = ./templates/rust_environment;
-        description = "A basic rust environment";
+        rust = {
+          path = ./templates/rust_environment;
+          description = "A basic rust environment";
+        };
       };
     };
-  };
 }
