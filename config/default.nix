@@ -2,13 +2,9 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }: let
   files = lib.fileset.toList (lib.fileset.difference ./. ./snippets);
-  # filtered_directory = (builtins.path {filter=(name: type: !(name == "snippets")); path=./.;});
-  # filtered_directory = builtins.readDir filtered_source;
-  files_in_directory = n: "${./.}/${n}";
 in {
   # Automatically import all other config files
   imports = builtins.filter (x: !(x == ./default.nix)) files;
@@ -21,23 +17,6 @@ in {
     };
   };
 
-  #  (pkgs.vimUtils.buildVimPlugin {
-  #   name = "ghost-text";
-  # src = pkgs.fetchFromGitHub {
-  #   owner = "wallpants";
-  #   repo = "ghost-text.nvim";
-  #   rev = "v2.0.4";
-  #   hash = "sha256-zsyB3eJpwN8+dknjRZ89RttdiC1IA2LakBfnFNudQOI=";
-  #   };
-  # })
-  # ];
-  # extraConfigLua = ''
-  #   require('ghost-text').setup({
-  #     autostart=true,
-  #     port = 4001,
-  #     log_level = nil,
-  #   })
-  # '';
   plugins.zen-mode = {
     enable = lib.mkDefault true;
   };
@@ -69,6 +48,7 @@ in {
     list = lib.mkDefault true;
     expandtab = lib.mkDefault true;
     shiftround = lib.mkDefault true;
+    spell = lib.mkDefault true;
   };
   keymaps = [
     {

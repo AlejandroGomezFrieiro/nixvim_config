@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs',
   system,
   options,
   ...
@@ -37,7 +36,7 @@ in rec {
       file_types = lib.mkDefault ["markdown" "codecompanion" "quarto"];
     };
   };
-  plugins.codecompanion.enable = lib.mkDefault true;
+  plugins.codecompanion.enable = true;
   plugins.codecompanion.package = codecompanion;
 
   plugins.codecompanion.settings = {
