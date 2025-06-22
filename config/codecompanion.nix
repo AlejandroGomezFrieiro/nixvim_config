@@ -24,9 +24,10 @@
 in rec {
   imports = [./codecompanion/prompts ./codecompanion/adapters];
 
-  extraPlugins = [vectorcode_nvim pkgs.mcphub];
+  extraPlugins = [vectorcode_nvim pkgs.mcphub-nvim];
   extraConfigLua = ''
     require("vectorcode").setup({})
+    require("mcphub").setup()
   '';
   plugins.render-markdown = {
     enable = lib.mkDefault true;
@@ -39,6 +40,14 @@ in rec {
 
   plugins.codecompanion.settings = {
     extensions = {
+      mcphub = {
+          callback = "mcphub.extensions.codecompanion";
+          opts = {
+            show_result_in_chat = true;
+            make_vars = true;
+            make_slash_commands = true;
+          };
+        };
       vectorcode = {
         opts = {
           add_tool = lib.mkDefault true;

@@ -17,6 +17,7 @@
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
+    mcp-hub.url = "github:ravitemer/mcp-hub";
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "systems";
     # Fix a specific commit of nixpkgs for reproducibility.
@@ -32,13 +33,16 @@
           let
             pkgs = import inputs.nixpkgs {
               inherit system;
-              overlays = [ (final: prev: { mcphub = inputs.mcphub-nvim.packages.${system}.default; }) ];
+          overlays = [ 
+            (final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; }) 
+            (final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; }) 
+          ];
             };
             nixvimConfigurationSet = {
               pkgs = pkgs;
               module = { pkgs, ... }: {
                 imports = [./config];
-                extraPackages = [pkgs.vectorcode pkgs.mcphub];
+                extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub];
               };
             };
           in
@@ -49,13 +53,16 @@
           let
             pkgs = import inputs.nixpkgs {
               inherit system;
-              overlays = [ (final: prev: { mcphub = inputs.mcphub-nvim.packages.${system}.default; }) ];
+          overlays = [
+            (final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; }) 
+            (final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; }) 
+          ];
             };
             nixvimConfigurationSet = {
               pkgs = pkgs;
               module = { pkgs, ... }: {
                 imports = [./config];
-                extraPackages = [pkgs.vectorcode pkgs.mcphub];
+                extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.mcphub pkgs.uv pkgs.docker];
               };
             };
             nixvim = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule nixvimConfigurationSet;
@@ -70,7 +77,11 @@
           let
             pkgs = import inputs.nixpkgs {
               inherit system;
-              overlays = [ (final: prev: { mcphub = inputs.mcphub-nvim.packages.${system}.default; }) ];
+          overlays = [
+            (final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; }) 
+
+            (final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; }) 
+          ];
             };
         in
           {
@@ -80,6 +91,8 @@
                 pkgs.python311Packages.pylatexenc
                 pkgs.vectorcode
                 pkgs.nurl
+                pkgs.mcphub
+                pkgs.docker
             ];
           };
         }
@@ -89,7 +102,7 @@
           let
             pkgs = import inputs.nixpkgs {
               inherit system;
-              overlays = [ (final: prev: { mcphub = inputs.mcphub-nvim.packages.${system}.default; }) ];
+              overlays = [ (final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; }) ];
             };
           in
           pkgs.alejandra

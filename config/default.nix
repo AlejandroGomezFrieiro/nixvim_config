@@ -11,9 +11,11 @@ in {
   performance = {
     byteCompileLua = {
       enable = lib.mkDefault true;
-      nvimRuntime = true;
-      configs = true;
-      plugins = true;
+      nvimRuntime = lib.mkDefault true;
+      configs = lib.mkDefault true;
+      initLua = lib.mkDefault true;
+      luaLib = lib.mkDefault true;
+      plugins = lib.mkDefault true;
     };
   };
 
