@@ -105,6 +105,7 @@
     enable = lib.mkDefault true;
     autoLoad = lib.mkDefault true;
     servers = {
+      teal_ls.enable = lib.mkDefault true;
       lua_ls.enable = lib.mkDefault true;
       markdown_oxide.enable = lib.mkDefault true;
       nil_ls.enable = lib.mkDefault true;
