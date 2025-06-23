@@ -101,43 +101,12 @@
     };
   };
 
-  plugins.lsp = let
-  teal-language-server=pkgs.luaPackages.buildLuarocksPackage rec {
-      pname = "teal-language-server";
-      version = "0.1.1";
-      knownRockspec = (builtins.fetchurl {
-          url = "https://github.com/teal-language/teal-language-server/blob/main/teal-language-server-0.1.1-1.rockspec";
-          sha256 = "sha256-iU3NUmbpJkHQJbbP9nfJfmNdTpu/W2bAiP7cxyVTD7I=";
-        });
-      src = pkgs.fetchFromGitHub {
-        owner = "teal-language";
-        repo = "teal-language-server";
-        rev = "67b5d7cad60b9df472851a2c61591f2aab97da47";
-        hash = "sha256-fUuOjJrwpLU1YoJm3yn+X15ioRf4GZoi6323On1W2Io=";
-      };
-
-      propagatedBuildInputs = with pkgs.luaPackages; [
-        cyan
-        dkjson
-        luafilesystem
-        cjson
-        lua-cjson
-      ];
-
-      meta = {
-        homepage = "https://github.com/teal-language/teal-language-server";
-        description = "A language server for the Teal language";
-        license.fullName = "MIT";
-      };
-    };
-
-  in {
+  plugins.lsp = {
     enable = lib.mkDefault true;
     autoLoad = lib.mkDefault true;
     servers = {
       teal_ls = {
-        enable = lib.mkDefault true;
-        package = teal-language-server;
+        enable = lib.mkDefault false;
         filetypes = ["teal"];
       };
 
