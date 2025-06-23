@@ -105,7 +105,12 @@
     enable = lib.mkDefault true;
     autoLoad = lib.mkDefault true;
     servers = {
-      teal_ls.enable = lib.mkDefault true;
+      teal_ls = {
+        enable = lib.mkDefault true;
+        package = pkgs.luajitPackages.teal-language-server;
+        filetypes = ["teal"];
+      };
+
       lua_ls.enable = lib.mkDefault true;
       markdown_oxide.enable = lib.mkDefault true;
       nil_ls.enable = lib.mkDefault true;
