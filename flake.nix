@@ -30,6 +30,12 @@
       
       mcphub-nvim-overlay = eachSystem(system: final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; } );
       mcphub-overlay = eachSystem(system: final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; });
+      nixvim_module = {pkgs, ...}:
+      {
+        imports = [./config];
+        extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.mcphub pkgs.uv pkgs.docker];
+      };
+
     in
     rec
     {
@@ -64,10 +70,7 @@
             };
             nixvimConfigurationSet = {
               pkgs = pkgs;
-              module = { pkgs, ... }: {
-                imports = [./config];
-                extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.mcphub pkgs.uv pkgs.docker];
-              };
+              module = nixvim_module;
             };
             nixvim = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule nixvimConfigurationSet;
         in
@@ -110,6 +113,7 @@
           in
           pkgs.alejandra
       );
+    nixosModules.default = nixvim_module;
     overlays.default = {
       mcphub-nvim = mcphub-nvim-overlay;
       mcphub = mcphub-overlay;
