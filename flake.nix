@@ -52,7 +52,7 @@
               pkgs = pkgs;
               module = { pkgs, ... }: {
                 imports = [./config];
-                extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub];
+                # extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub];
               };
             };
           in
