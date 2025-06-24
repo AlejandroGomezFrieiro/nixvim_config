@@ -77,6 +77,8 @@
         {
           default = nixvim;
           nixvim = nixvim;
+          mcphub-nvim = pkgs.mcphub-nvim;
+          mcphub = pkgs.mcphub;
         }
       );
 
