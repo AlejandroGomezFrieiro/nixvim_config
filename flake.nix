@@ -27,7 +27,11 @@
   outputs = inputs @ {nixpkgs, ...}: let
       lib = nixpkgs.lib;
       eachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
+      
+      mcphub-nvim-overlay = eachSystem(system: final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; } );
+      mcphub-overlay = eachSystem(system: final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; });
     in
+    rec
     {
       checks.launch-neovim = eachSystem (system:
           let
@@ -102,13 +106,15 @@
           let
             pkgs = import inputs.nixpkgs {
               inherit system;
-              overlays = [ (final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; }) ];
             };
           in
           pkgs.alejandra
       );
+    overlays.default = {
+      mcphub-nvim = mcphub-nvim-overlay;
+      mcphub = mcphub-overlay;
+      };
 
-      nixosModules.default = import ./config;
       templates = {
         python_uv = {
           path = ./templates/python_uv;
