@@ -21,11 +21,13 @@
       cp -r ../lua .
     '';
   };
+  mcphub-nvim-exists = (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs));
+
 in rec {
   imports = [./codecompanion/prompts ./codecompanion/adapters];
 
-  extraPlugins = [vectorcode_nvim pkgs.mcphub-nvim];
-  extraConfigLua = ''
+  extraPlugins = lib.mkIf mcphub-nvim-exists [vectorcode_nvim pkgs.mcphub-nvim];
+  extraConfigLua = lib.mkIf mcphub-nvim-exists ''
     require("vectorcode").setup({})
     require("mcphub").setup()
   '';
@@ -39,7 +41,7 @@ in rec {
   plugins.codecompanion.package = codecompanion;
 
   plugins.codecompanion.settings = {
-    extensions = {
+    extensions = lib.mkIf mcphub-nvim-exists{
       mcphub = {
           callback = "mcphub.extensions.codecompanion";
           opts = {

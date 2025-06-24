@@ -52,7 +52,7 @@
               pkgs = pkgs;
               module = { pkgs, ... }: {
                 imports = [./config];
-                # extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub];
+                extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub];
               };
             };
           in
@@ -100,7 +100,7 @@
                 pkgs.python311Packages.pylatexenc
                 pkgs.vectorcode
                 pkgs.nurl
-                pkgs.mcphub
+                # pkgs.mcphub
                 pkgs.docker
             ];
           };
@@ -117,8 +117,8 @@
       );
     nixosModules.default = nixvim_module;
     overlays.default = {
-      mcphub-nvim = mcphub-nvim-overlay;
-      mcphub = mcphub-overlay;
+      # mcphub-nvim = mcphub-nvim-overlay;
+      # mcphub = mcphub-overlay;
       };
 
       templates = {
