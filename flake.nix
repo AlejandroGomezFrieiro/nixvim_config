@@ -33,7 +33,7 @@
       nixvim_module = {pkgs, ...}:
       {
         imports = [./config];
-        extraPackages = if (builtins.elem "mcphub-nvim" pkgs) then [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub] else [];
+        extraPackages = if (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs)) then [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub] else [];
       };
 
     in
@@ -52,7 +52,7 @@
               pkgs = pkgs;
               module = { pkgs, ... }: {
                 imports = [./config];
-                extraPackages = if (builtins.elem "mcphub-nvim" pkgs) then [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub] else [];
+        extraPackages = if (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs)) then [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub] else [];
               };
             };
           in
