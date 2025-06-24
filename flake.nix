@@ -52,7 +52,7 @@
               pkgs = pkgs;
               module = { pkgs, ... }: {
                 imports = [./config];
-                extraPackages = [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub];
+                extraPackages = lib.mkIf (builtins.elem "mcphub-nvim" pkgs) [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub];
               };
             };
           in
