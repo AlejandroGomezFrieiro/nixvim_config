@@ -4,12 +4,12 @@
   pkgs,
   ...
 }: let
-  codecompanion = pkgs.fetchFromGitHub {
-    owner = "olimorris";
-    repo = "codecompanion.nvim";
-    rev = "e7aaef6134aa9d47e214427464867c5afc4f34fe";
-    hash = "sha256-wSK7JrWkvuFtl7kFVeW2SIw9GLD0/ijsw7FGN11el1A=";
-  };
+  # codecompanion = pkgs.fetchFromGitHub {
+  #   owner = "olimorris";
+  #   repo = "codecompanion.nvim";
+  #   rev = "e7aaef6134aa9d47e214427464867c5afc4f34fe";
+  #   hash = "sha256-wSK7JrWkvuFtl7kFVeW2SIw9GLD0/ijsw7FGN11el1A=";
+  # };
   vectorcode_nvim = pkgs.vimUtils.buildVimPlugin rec {
     pname = "vectorcode.nvim";
     version = "0.6.10";
@@ -38,7 +38,7 @@ in rec {
     };
   };
   plugins.codecompanion.enable = true;
-  plugins.codecompanion.package = codecompanion;
+  # plugins.codecompanion.package = codecompanion;
 
   plugins.codecompanion.settings = {
     extensions = lib.mkIf mcphub-nvim-exists{
