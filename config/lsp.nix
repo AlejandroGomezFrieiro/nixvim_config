@@ -40,7 +40,8 @@
 
       cmp = {
         enable = lib.mkDefault true;
-        menu = lib.mkDefault {
+      };
+      settings.cmp.menu = lib.mkDefault {
           nvim_lsp = "[LSP]";
           nvim_lua = "[api]";
           path = "[path]";
@@ -49,7 +50,6 @@
           neorg = "[neorg]";
           cmp_tabby = "[Tabby]";
         };
-      };
     };
     cmp = {
       enable = lib.mkDefault true;
