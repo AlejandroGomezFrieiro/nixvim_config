@@ -10,25 +10,24 @@
   #   rev = "e7aaef6134aa9d47e214427464867c5afc4f34fe";
   #   hash = "sha256-wSK7JrWkvuFtl7kFVeW2SIw9GLD0/ijsw7FGN11el1A=";
   # };
-  vectorcode_nvim = pkgs.vimUtils.buildVimPlugin rec {
-    pname = "vectorcode.nvim";
-    version = "0.6.10";
-    buildInputs = [pkgs.vectorcode];
-    sourceRoot = "${src.name}/plugin";
-    dependencies = [pkgs.vimPlugins.plenary-nvim];
-    src = pkgs.vectorcode.src;
-    postPatch = ''
-      cp -r ../lua .
-    '';
-  };
+  # vectorcode_nvim = pkgs.vimUtils.buildVimPlugin rec {
+  #   pname = "vectorcode.nvim";
+  #   version = "0.6.10";
+  #   buildInputs = [pkgs.vectorcode];
+  #   sourceRoot = "${src.name}/plugin";
+  #   dependencies = [pkgs.vimPlugins.plenary-nvim];
+  #   src = pkgs.vectorcode.src;
+  #   postPatch = ''
+  #     cp -r ../lua .
+  #   '';
+  # };
   mcphub-nvim-exists = (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs));
 
 in rec {
   imports = [./codecompanion/prompts ./codecompanion/adapters];
 
-  extraPlugins = lib.mkIf mcphub-nvim-exists [vectorcode_nvim pkgs.mcphub-nvim];
+  extraPlugins = lib.mkIf mcphub-nvim-exists [pkgs.mcphub-nvim];
   extraConfigLua = lib.mkIf mcphub-nvim-exists ''
-    require("vectorcode").setup({})
     require("mcphub").setup()
   '';
   plugins.render-markdown = {
@@ -50,12 +49,12 @@ in rec {
             make_slash_commands = true;
           };
         };
-      vectorcode = {
-        opts = {
-          add_tool = lib.mkDefault true;
-          add_slash_command = lib.mkDefault true;
-        };
-      };
+      # vectorcode = {
+      #   opts = {
+      #     add_tool = lib.mkDefault true;
+      #     add_slash_command = lib.mkDefault true;
+      #   };
+      # };
     };
     opts = {
       log_level = lib.mkDefault "TRACE";

@@ -4,5 +4,5 @@
   pkgs,
   ...
 }: {
-  plugins.quarto.enable = true;
+  plugins.quarto.enable = false;
 }

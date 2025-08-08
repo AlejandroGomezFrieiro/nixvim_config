@@ -21,7 +21,7 @@
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "systems";
     # Fix a specific commit of nixpkgs for reproducibility.
-    nixpkgs.url = "github:NixOS/nixpkgs/d202f48f1249f013aa2660c6733e251c85712cbe";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
   outputs = inputs @ {nixpkgs, ...}: let
@@ -98,7 +98,7 @@
             nativeBuildInputs = [
                 pkgs.alejandra
                 pkgs.python311Packages.pylatexenc
-                pkgs.vectorcode
+                # pkgs.vectorcode
                 pkgs.nurl
                 # pkgs.mcphub
                 pkgs.docker
