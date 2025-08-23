@@ -6,7 +6,7 @@
 }: {
   plugins.neotest = {
     # TODO: Neotest does not seem to be working properly...
-    enable = true;
+    enable = false;
     # luaConfig = ''
     #   require("neotest").setup(
     #   {
