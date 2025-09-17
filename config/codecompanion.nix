@@ -49,12 +49,12 @@ in rec {
             make_slash_commands = true;
           };
         };
-      # vectorcode = {
-      #   opts = {
-      #     add_tool = lib.mkDefault true;
-      #     add_slash_command = lib.mkDefault true;
-      #   };
-      # };
+    # vectorcode = {
+    #   opts = {
+    #     add_tool = lib.mkDefault false;
+    #     add_slash_command = lib.mkDefault false;
+    #   };
+    # };
     };
     opts = {
       log_level = lib.mkDefault "TRACE";

@@ -98,7 +98,7 @@
             nativeBuildInputs = [
                 pkgs.alejandra
                 pkgs.python311Packages.pylatexenc
-                # pkgs.vectorcode
+                pkgs.vectorcode
                 pkgs.nurl
                 # pkgs.mcphub
                 pkgs.docker
@@ -116,10 +116,10 @@
           pkgs.alejandra
       );
     nixosModules.default = nixvim_module;
-    overlays.default = {
+    overlays.default = final: prev: {
       # mcphub-nvim = mcphub-nvim-overlay;
       # mcphub = mcphub-overlay;
-      };
+    };
 
       templates = {
         python_uv = {
