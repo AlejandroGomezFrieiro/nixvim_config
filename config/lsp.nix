@@ -17,9 +17,14 @@
     };
     lspsaga = {
       enable = lib.mkDefault true;
-      symbolInWinbar.enable = lib.mkDefault false;
-      lightbulb.sign = lib.mkDefault false; # disable bulb in status col
-      lightbulb.virtualText = lib.mkDefault true; # enable at end of line
+      settings = {
+        # Needed because lspsaga's implement module depends on winbar symbols
+        symbol_in_winbar.enable = lib.mkDefault true;
+        lightbulb = {
+          sign = lib.mkDefault false;        # disable bulb in status col
+          virtual_text = lib.mkDefault true; # enable at end of line
+        };
+      };
     };
     # luasnip.enable = true;
     luasnip = {
