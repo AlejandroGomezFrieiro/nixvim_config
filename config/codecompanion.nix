@@ -71,10 +71,10 @@ in rec {
       };
     };
     strategies = {
-      agent = {adapter = lib.mkDefault "gemini";};
-      inline = {adapter = lib.mkDefault "gemini";};
+      agent = {adapter = lib.mkDefault "copilot";};
+      inline = {adapter = lib.mkDefault "copilot";};
       chat = {
-        adapter = lib.mkDefault "gemini";
+        adapter = lib.mkDefault "copilot";
       };
     };
 
