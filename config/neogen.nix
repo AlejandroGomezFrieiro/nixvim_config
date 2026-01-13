@@ -6,7 +6,7 @@
 }: {
   plugins.neogen = {
     enable = true;
-    languages.python = {
+    settings.languages.python = {
       annotation_convention = "google_docstrings";
     };
   };
