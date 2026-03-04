@@ -1,14 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{lib, ...}: {
   plugins.treesitter = {
-    enable = true;
-    settings.indent = {
-      enable = true;
-    };
-    settings.highlight.enable = true;
+    enable = lib.mkDefault true;
+    settings.indent.enable = lib.mkDefault true;
+    settings.highlight.enable = lib.mkDefault true;
   };
 }

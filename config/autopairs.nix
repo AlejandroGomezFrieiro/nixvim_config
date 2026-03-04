@@ -1,10 +1,3 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
-  plugins.nvim-autopairs = {
-    enable = true;
-  };
+{lib, ...}: {
+  plugins.nvim-autopairs.enable = lib.mkDefault true;
 }

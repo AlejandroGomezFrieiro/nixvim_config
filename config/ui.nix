@@ -3,18 +3,19 @@
   lib,
   pkgs,
   ...
-}: {
-  plugins.image.enable = true;
+}: let
+  cfg = config.nixvim-config;
+in {
+  plugins.image.enable = lib.mkDefault cfg.ui.image.enable;
   plugins.codesnap = {
-    enable = true;
+    enable = lib.mkDefault true;
     lazyLoad = {
-      enable = true;
-      settings.cmd = "Codesnap";
+      enable = lib.mkDefault true;
+      settings.cmd = lib.mkDefault "Codesnap";
     };
   };
-  plugins.noice = {
-    enable = true;
-  };
+  plugins.noice.enable = lib.mkDefault cfg.ui.noice.enable;
+
   extraPlugins = with pkgs.vimPlugins; [alpha-nvim];
   extraConfigLua = ''
        local alpha = require("alpha")
@@ -36,7 +37,6 @@
 
        -- Set menu
        dashboard.section.buttons.val = {
-           -- dashboard.button( "<leader>n", "  > New file" , ":ene <BAR> startinsert <CR>"),
            dashboard.button( "<leader>ff", "> Find file", "<cmd>lua Snacks.picker.files()<CR>"),
            dashboard.button( "<leader>fr", "> Recent"   , "<cmd>lua Snacks.picker.recent()<CR>"),
            dashboard.button( "q", "> Quit NVIM", ":qa<CR>"),

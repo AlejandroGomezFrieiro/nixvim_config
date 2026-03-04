@@ -1,10 +1,3 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
-  plugins.comment = {
-    enable = true;
-  };
+{lib, ...}: {
+  plugins.comment.enable = lib.mkDefault true;
 }

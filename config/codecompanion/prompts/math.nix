@@ -1,8 +1,7 @@
-{...}: {
-  plugins.codecompanion.settings.prompt_library."Ask Mathematician" = {
+{lib, ...}: {
+  plugins.codecompanion.settings.prompt_library."Ask Mathematician" = lib.mkDefault {
     description = "Consult an expert mathematician by asking questions in a loop";
     opts = {
-      # index = 6;
       short_name = "math";
     };
     strategy = "chat";
@@ -19,16 +18,11 @@
         };
         opts = {
           tag = "system_tag";
-          # visible = false;
         };
         role = "system";
       }
       {
         content = "Explain the following mathematical concept: ";
-        opts = {
-          # tag = "system_tag";
-          # visible = true;
-        };
         role = "user";
       }
     ];

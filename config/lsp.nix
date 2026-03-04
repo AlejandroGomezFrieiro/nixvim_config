@@ -1,8 +1,15 @@
 {
+  config,
   lib,
   pkgs,
   ...
-}: {
+}: let
+  cfg = config.nixvim-config;
+  # Built-in snippets plus any extras declared by the consumer.
+  allSnippetPaths =
+    [{paths = ./snippets;}]
+    ++ map (p: {paths = p;}) cfg.lsp.extraSnippetPaths;
+in {
   extraPlugins = with pkgs.vimPlugins; [
     markdown-nvim
   ];
@@ -18,18 +25,16 @@
     lspsaga = {
       enable = lib.mkDefault true;
       settings = {
-        # Needed because lspsaga's implement module depends on winbar symbols
         symbol_in_winbar.enable = lib.mkDefault true;
         lightbulb = {
-          sign = lib.mkDefault false;        # disable bulb in status col
-          virtual_text = lib.mkDefault true; # enable at end of line
+          sign = lib.mkDefault false;
+          virtual_text = lib.mkDefault true;
         };
       };
     };
-    # luasnip.enable = true;
     luasnip = {
       enable = lib.mkDefault true;
-      fromLua = lib.mkDefault [{paths = ./snippets;}];
+      fromLua = lib.mkDefault allSnippetPaths;
       settings = {
         update_events = lib.mkDefault [
           "TextChanged"
@@ -42,19 +47,16 @@
     cmp-nvim-lsp.enable = lib.mkDefault true;
     lspkind = {
       enable = lib.mkDefault true;
-
-      cmp = {
-        enable = lib.mkDefault true;
-      };
+      cmp.enable = lib.mkDefault true;
       settings.cmp.menu = lib.mkDefault {
-          nvim_lsp = "[LSP]";
-          nvim_lua = "[api]";
-          path = "[path]";
-          luasnip = "[snip]";
-          buffer = "[buffer]";
-          neorg = "[neorg]";
-          cmp_tabby = "[Tabby]";
-        };
+        nvim_lsp = "[LSP]";
+        nvim_lua = "[api]";
+        path = "[path]";
+        luasnip = "[snip]";
+        buffer = "[buffer]";
+        neorg = "[neorg]";
+        cmp_tabby = "[Tabby]";
+      };
     };
     cmp = {
       enable = lib.mkDefault true;
@@ -67,7 +69,6 @@
           {name = "path";}
           {
             name = "buffer";
-            # Words from other open buffers can also be suggested.
             option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
           }
         ];
@@ -114,7 +115,6 @@
         enable = lib.mkDefault false;
         filetypes = ["teal"];
       };
-
       lua_ls.enable = lib.mkDefault true;
       markdown_oxide.enable = lib.mkDefault true;
       nil_ls.enable = lib.mkDefault true;
@@ -132,9 +132,7 @@
         enable = lib.mkDefault true;
         settings = {
           formatting.command = lib.mkDefault ["alejandra"];
-          nixpkgs = {
-            expr = lib.mkDefault "import <nixpkgs> { }";
-          };
+          nixpkgs.expr = lib.mkDefault "import <nixpkgs> { }";
         };
       };
     };

@@ -1,13 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{lib, ...}: {
   plugins.neogen = {
-    enable = true;
+    enable = lib.mkDefault true;
     settings.languages.python = {
-      annotation_convention = "google_docstrings";
+      annotation_convention = lib.mkDefault "google_docstrings";
     };
   };
   keymaps = [

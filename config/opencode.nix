@@ -1,10 +1,9 @@
 {
   config,
   lib,
-  pkgs,
   ...
-}:
-{
-  plugins.opencode.enable = lib.mkDefault true;
-
+}: let
+  cfg = config.nixvim-config;
+in {
+  plugins.opencode.enable = lib.mkDefault cfg.ai.enable;
 }

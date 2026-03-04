@@ -1,5 +1,5 @@
-{...}: {
-  plugins.codecompanion.settings.adapters.chutes_ai = {
+{lib, ...}: {
+  plugins.codecompanion.settings.adapters.chutes_ai = lib.mkDefault {
     __raw = ''
       function()
         return require("codecompanion.adapters").extend("openai_compatible", {

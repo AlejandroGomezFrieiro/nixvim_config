@@ -4,60 +4,20 @@
   pkgs,
   ...
 }: let
-  # codecompanion = pkgs.fetchFromGitHub {
-  #   owner = "olimorris";
-  #   repo = "codecompanion.nvim";
-  #   rev = "e7aaef6134aa9d47e214427464867c5afc4f34fe";
-  #   hash = "sha256-wSK7JrWkvuFtl7kFVeW2SIw9GLD0/ijsw7FGN11el1A=";
-  # };
-  # vectorcode_nvim = pkgs.vimUtils.buildVimPlugin rec {
-  #   pname = "vectorcode.nvim";
-  #   version = "0.6.10";
-  #   buildInputs = [pkgs.vectorcode];
-  #   sourceRoot = "${src.name}/plugin";
-  #   dependencies = [pkgs.vimPlugins.plenary-nvim];
-  #   src = pkgs.vectorcode.src;
-  #   postPatch = ''
-  #     cp -r ../lua .
-  #   '';
-  # };
-  # mcphub-nvim-exists = (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs));
-
-
-in rec {
+  cfg = config.nixvim-config;
+in {
   imports = [./codecompanion/prompts ./codecompanion/adapters];
 
-  # extraPlugins = lib.mkIf mcphub-nvim-exists [pkgs.mcphub-nvim];
-  # extraConfigLua = lib.mkIf mcphub-nvim-exists ''
-  #   require("mcphub").setup()
-  # '';
   plugins.render-markdown = {
     enable = lib.mkDefault true;
     settings = {
       file_types = lib.mkDefault ["markdown" "codecompanion" "quarto"];
     };
   };
-  plugins.codecompanion.enable = true;
-  # plugins.codecompanion.package = codecompanion;
+
+  plugins.codecompanion.enable = lib.mkDefault cfg.ai.enable;
 
   plugins.codecompanion.settings = {
-    # extensions = lib.mkIf mcphub-nvim-exists{
-    #   mcphub = {
-    #       callback = "mcphub.extensions.codecompanion";
-    #       opts = {
-    #         show_result_in_chat = true;
-    #         make_vars = true;
-    #         make_slash_commands = true;
-    #       };
-    #     };
-    # vectorcode = {
-    #   opts = {
-    #     add_tool = lib.mkDefault false;
-    #     add_slash_command = lib.mkDefault false;
-    #   };
-    # };
-    # };
-
     opts = {
       log_level = lib.mkDefault "TRACE";
       send_code = lib.mkDefault true;
@@ -75,18 +35,11 @@ in rec {
     strategies = {
       agent = {adapter = lib.mkDefault "copilot";};
       inline = {adapter = lib.mkDefault "copilot";};
-      chat = {
-        adapter = lib.mkDefault "copilot";
-      };
+      chat = {adapter = lib.mkDefault "copilot";};
     };
-
     adapters = {
-      http = {
-        opts.show_presets = lib.mkDefault false;
-      };
-      acp = {
-        opts.show_presets = lib.mkDefault false;
-      };
+      http.opts.show_presets = lib.mkDefault false;
+      acp.opts.show_presets = lib.mkDefault false;
       openrouter_claude = {
         __raw = ''
           function()
@@ -98,7 +51,6 @@ in rec {
               };
               schema = {
                 model = {
-                  -- default = "deepseek/deepseek-r1-0528-qwen3-8b:free",
                   default = "deepseek/deepseek-chat-v3-0324:free",
                 };
               };

@@ -1,42 +1,31 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{lib, ...}: {
   globals.mapleader = " ";
   plugins.which-key = {
-    enable = true;
-    settings.spec = [
+    enable = lib.mkDefault true;
+    settings.spec = lib.mkDefault [
       {
         __unkeyed-1 = "<leader>g";
         group = "Git";
-        icon = " ";
+        icon = " ";
       }
       {
         __unkeyed-1 = "<leader>f";
         group = "Find";
-        icon = " ";
+        icon = " ";
       }
       {
         __unkeyed-1 = "<leader>l";
         group = "LSP";
-        icon = " ";
+        icon = " ";
       }
       {
         __unkeyed-1 = "<leader>c";
         group = "Code";
-        # icon = " ";
       }
       {
         __unkeyed-1 = "<leader>t";
         group = "Test";
-        # icon = " ";
       }
-      # "<leader>g" = " Git"
-      # "<leader>f" = " Files"
-      # "<leader>l" = " LSP"
-      # "<leader>c" = "Code"
     ];
   };
 }
