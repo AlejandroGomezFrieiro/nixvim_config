@@ -21,15 +21,16 @@
   #     cp -r ../lua .
   #   '';
   # };
-  mcphub-nvim-exists = (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs));
+  # mcphub-nvim-exists = (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs));
+
 
 in rec {
   imports = [./codecompanion/prompts ./codecompanion/adapters];
 
-  extraPlugins = lib.mkIf mcphub-nvim-exists [pkgs.mcphub-nvim];
-  extraConfigLua = lib.mkIf mcphub-nvim-exists ''
-    require("mcphub").setup()
-  '';
+  # extraPlugins = lib.mkIf mcphub-nvim-exists [pkgs.mcphub-nvim];
+  # extraConfigLua = lib.mkIf mcphub-nvim-exists ''
+  #   require("mcphub").setup()
+  # '';
   plugins.render-markdown = {
     enable = lib.mkDefault true;
     settings = {
@@ -40,22 +41,23 @@ in rec {
   # plugins.codecompanion.package = codecompanion;
 
   plugins.codecompanion.settings = {
-    extensions = lib.mkIf mcphub-nvim-exists{
-      mcphub = {
-          callback = "mcphub.extensions.codecompanion";
-          opts = {
-            show_result_in_chat = true;
-            make_vars = true;
-            make_slash_commands = true;
-          };
-        };
+    # extensions = lib.mkIf mcphub-nvim-exists{
+    #   mcphub = {
+    #       callback = "mcphub.extensions.codecompanion";
+    #       opts = {
+    #         show_result_in_chat = true;
+    #         make_vars = true;
+    #         make_slash_commands = true;
+    #       };
+    #     };
     # vectorcode = {
     #   opts = {
     #     add_tool = lib.mkDefault false;
     #     add_slash_command = lib.mkDefault false;
     #   };
     # };
-    };
+    # };
+
     opts = {
       log_level = lib.mkDefault "TRACE";
       send_code = lib.mkDefault true;
@@ -67,7 +69,7 @@ in rec {
         opts = {
           show_default_prompt_library = lib.mkDefault true;
         };
-        provider = lib.mkDefault "telescope";
+        provider = lib.mkDefault "snacks";
       };
     };
     strategies = {

@@ -16,8 +16,8 @@
   inputs = {
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
-    mcp-hub.url = "github:ravitemer/mcp-hub";
+    # mcphub-nvim.url = "github:ravitemer/mcphub.nvim";
+    # mcp-hub.url = "github:ravitemer/mcp-hub";
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "systems";
     # Fix a specific commit of nixpkgs for reproducibility.
@@ -28,12 +28,12 @@
       lib = nixpkgs.lib;
       eachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
       
-      mcphub-nvim-overlay = eachSystem(system: final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; } );
-      mcphub-overlay = eachSystem(system: final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; });
+      # mcphub-nvim-overlay = eachSystem(system: final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; } );
+      # mcphub-overlay = eachSystem(system: final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; });
       nixvim_module = {pkgs, ...}:
       {
         imports = [./config];
-        extraPackages = if (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs)) then [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub] else [];
+        # # extraPackages = if (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs)) then [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub] else [];
       };
 
     in
@@ -43,7 +43,11 @@
           let
             pkgs = import inputs.nixpkgs {
               inherit system;
-          overlays = [ 
+overlays = [
+  # (final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; }) 
+  # (final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; })
+
+
             (final: prev: { mcphub-nvim = inputs.mcphub-nvim.packages.${system}.default; }) 
             (final: prev: { mcphub = inputs.mcp-hub.packages.${system}.default; }) 
           ];
@@ -52,7 +56,7 @@
               pkgs = pkgs;
               module = { pkgs, ... }: {
                 imports = [./config];
-        extraPackages = if (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs)) then [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub] else [];
+        # # extraPackages = if (builtins.elem "mcphub-nvim" (pkgs.lib.attrNames pkgs)) then [pkgs.vectorcode pkgs.mcphub-nvim pkgs.uv pkgs.mcphub] else [];
               };
             };
           in
@@ -77,8 +81,8 @@
         {
           default = nixvim;
           nixvim = nixvim;
-          mcphub-nvim = pkgs.mcphub-nvim;
-          mcphub = pkgs.mcphub;
+          # mcphub-nvim = pkgs.mcphub-nvim;
+          # mcphub = pkgs.mcphub;
         }
       );
 

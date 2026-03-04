@@ -19,6 +19,10 @@ in {
     };
   };
 
+  plugins.snacks.enable = lib.mkDefault true;
+  plugins.snacks.autoLoad = lib.mkDefault true;
+  plugins.snacks.settings.input.enabled = lib.mkDefault true;
+  plugins.snacks.settings.picker.enabled = lib.mkDefault true;
   plugins.zen-mode = {
     enable = lib.mkDefault true;
   };

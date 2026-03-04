@@ -16,8 +16,8 @@
       frecency.enable = true;
       manix.enable = true;
     };
-    lazyLoad.enable = true;
-    lazyLoad.settings.cmd = "Telescope";
+    # lazyLoad.enable = false;
+    # lazyLoad.settings.cmd = "Telescope";
     settings = {
       pickers.colorscheme.enable_preview = true;
     };
