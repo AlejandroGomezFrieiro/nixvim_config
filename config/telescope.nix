@@ -4,49 +4,11 @@
   pkgs,
   ...
 }: {
-  plugins.telescope = {
-    enable = true;
-    extensions = {
-      ui-select = {
-        enable = true;
-        settings = {
-        };
-      };
-      fzf-native.enable = true;
-      frecency.enable = true;
-      manix.enable = true;
-    };
-    # lazyLoad.enable = false;
-    # lazyLoad.settings.cmd = "Telescope";
-    settings = {
-      pickers.colorscheme.enable_preview = true;
-    };
-  };
   keymaps = [
-    {
-      key = "<leader>fm";
-      mode = ["n" "v"];
-      action = ":Telescope manix";
-      # action.__raw = ''function() require("telescope.builtin").() end'';
-      options = {
-        silent = true;
-        desc = "Find nix doc";
-      };
-    }
-    {
-      key = "<leader>fr";
-      mode = ["n" "v"];
-      action = ":Telescope frecency";
-      # action.__raw = ''function() require("telescope.builtin").() end'';
-      options = {
-        silent = true;
-        desc = "Find (f)recency";
-      };
-    }
     {
       key = "<leader>ff";
       mode = ["n" "v"];
-      action.__raw = ''function() require("telescope.builtin").find_files() end'';
+      action.__raw = ''function() Snacks.picker.files() end'';
       options = {
         silent = true;
         desc = "Find Files";
@@ -55,22 +17,34 @@
     {
       key = "<leader>fk";
       mode = ["n" "v"];
-      action.__raw = ''function() require("telescope.builtin").keymaps() end'';
+      action.__raw = ''function() Snacks.picker.keymaps() end'';
       options = {
         silent = true;
         desc = "Find keymaps";
       };
     }
     {
-      mode = "n";
       key = "<leader>fg";
-      action = "<cmd>Telescope live_grep<cr>";
-      options.desc = "Find Grep";
+      mode = ["n" "v"];
+      action.__raw = ''function() Snacks.picker.grep() end'';
+      options = {
+        silent = true;
+        desc = "Find Grep";
+      };
+    }
+    {
+      key = "<leader>fr";
+      mode = ["n" "v"];
+      action.__raw = ''function() Snacks.picker.recent() end'';
+      options = {
+        silent = true;
+        desc = "Find Recent";
+      };
     }
     {
       key = "<leader>lD";
       mode = ["n" "v"];
-      action.__raw = ''function() require("telescope.builtin").diagnostics() end'';
+      action.__raw = ''function() Snacks.picker.diagnostics() end'';
       options = {
         silent = true;
         desc = "Search diagnostics";
@@ -79,7 +53,7 @@
     {
       key = "<leader>gb";
       mode = ["n" "v"];
-      action.__raw = ''function() require("telescope.builtin").git_branches() end'';
+      action.__raw = ''function() Snacks.picker.git_branches() end'';
       options = {
         silent = true;
         desc = "Git branches";
@@ -88,7 +62,7 @@
     {
       key = "<leader>gt";
       mode = ["n" "v"];
-      action.__raw = ''function() require("telescope.builtin").git_status() end'';
+      action.__raw = ''function() Snacks.picker.git_status() end'';
       options = {
         silent = true;
         desc = "Git status";

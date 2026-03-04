@@ -81,6 +81,12 @@ in rec {
     };
 
     adapters = {
+      http = {
+        opts.show_presets = lib.mkDefault false;
+      };
+      acp = {
+        opts.show_presets = lib.mkDefault false;
+      };
       openrouter_claude = {
         __raw = ''
           function()

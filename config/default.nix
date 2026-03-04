@@ -23,6 +23,8 @@ in {
   plugins.snacks.autoLoad = lib.mkDefault true;
   plugins.snacks.settings.input.enabled = lib.mkDefault true;
   plugins.snacks.settings.picker.enabled = lib.mkDefault true;
+  plugins.snacks.settings.picker.ui_select = lib.mkDefault true;
+  plugins.snacks.settings.picker.matcher.frecency = lib.mkDefault true;
   plugins.zen-mode = {
     enable = lib.mkDefault true;
   };

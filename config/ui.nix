@@ -37,8 +37,8 @@
        -- Set menu
        dashboard.section.buttons.val = {
            -- dashboard.button( "<leader>n", "  > New file" , ":ene <BAR> startinsert <CR>"),
-           dashboard.button( "<leader>ff", "> Find file", ":Telescope find_files<CR>"),
-           dashboard.button( "<leader>fr", "> Recent"   , ":Telescope frecency<CR>"),
+           dashboard.button( "<leader>ff", "> Find file", "<cmd>lua Snacks.picker.files()<CR>"),
+           dashboard.button( "<leader>fr", "> Recent"   , "<cmd>lua Snacks.picker.recent()<CR>"),
            dashboard.button( "q", "> Quit NVIM", ":qa<CR>"),
        }
        local fortune = require("alpha.fortune")
