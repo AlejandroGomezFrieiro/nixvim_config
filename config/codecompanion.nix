@@ -32,10 +32,21 @@ in {
         provider = lib.mkDefault "snacks";
       };
     };
-    strategies = {
+    interactions = {
       agent = {adapter = lib.mkDefault "copilot";};
       inline = {adapter = lib.mkDefault "copilot";};
       chat = {adapter = lib.mkDefault "copilot";};
+      cli = lib.mkDefault {
+        agent = "claude_code";
+        agents = {
+          claude_code = {
+            cmd = "claude";
+            args = {};
+            description = "Claude Code CLI";
+            provider = "terminal";
+          };
+        };
+      };
     };
     adapters = {
       http.opts.show_presets = lib.mkDefault false;
