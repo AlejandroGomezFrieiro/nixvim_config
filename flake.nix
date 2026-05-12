@@ -24,11 +24,59 @@
   outputs = inputs @ {nixpkgs, ...}: let
     eachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
 
+    overlay = final: prev: {
+      vimPlugins = prev.vimPlugins.extend (_: prevVimPlugins: {
+        jupynvim-core = final.rustPlatform.buildRustPackage rec {
+          pname = "jupynvim-core";
+          version = "unstable-2026-05-11";
+
+          src = final.fetchFromGitHub {
+            owner = "sheng-tse";
+            repo = "jupynvim";
+            rev = "2ffb8e81eec5c90d1b3c23a97e5d7245964a5148";
+            hash = "sha256-U4o/6mdVvkU4QfPg0L63Abg+O2afYXc/SxSFgl2AX2E=";
+          };
+
+          sourceRoot = "${src.name}/core";
+          cargoLock.lockFile = ./pkgs/jupynvim-core/Cargo.lock;
+
+          meta = {
+            description = "Native Rust backend for jupynvim";
+            homepage = "https://github.com/sheng-tse/jupynvim";
+            license = final.lib.licenses.mit;
+            mainProgram = "jupynvim-core";
+          };
+        };
+
+        jupynvim = final.vimUtils.buildVimPlugin {
+          pname = "jupynvim";
+          version = "unstable-2026-05-11";
+          src = final.fetchFromGitHub {
+            owner = "sheng-tse";
+            repo = "jupynvim";
+            rev = "2ffb8e81eec5c90d1b3c23a97e5d7245964a5148";
+            hash = "sha256-U4o/6mdVvkU4QfPg0L63Abg+O2afYXc/SxSFgl2AX2E=";
+          };
+          dependencies = [prevVimPlugins.jupynvim-core];
+
+          meta = {
+            description = "Jupyter notebook editor and executor for Neovim";
+            homepage = "https://github.com/sheng-tse/jupynvim";
+            license = final.lib.licenses.mit;
+          };
+        };
+      });
+    };
+
     nixvim_module = {pkgs, ...}: {
+      nixpkgs.overlays = [overlay];
       imports = [./config];
     };
 
-    mkPkgs = system: import inputs.nixpkgs {inherit system;};
+    mkPkgs = system: import inputs.nixpkgs {
+      inherit system;
+      overlays = [overlay];
+    };
   in {
     checks = eachSystem (system: let
       pkgs = mkPkgs system;
@@ -71,7 +119,7 @@
     formatter = eachSystem (system: (mkPkgs system).alejandra);
 
     nixosModules.default = nixvim_module;
-    overlays.default = final: prev: {};
+    overlays.default = overlay;
 
     templates = {
       python_uv = {
