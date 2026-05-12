@@ -9,7 +9,7 @@
     require("jupynvim").setup({
       log_level = "info",
       image_renderer = "placeholder",
-      core_path = "${lib.getExe pkgs.vimPlugins.jupynvim-core}",
+      core_path = "${lib.getExe pkgs.jupynvim-core}",
     })
   '';
 }
