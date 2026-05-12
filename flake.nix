@@ -25,29 +25,29 @@
     eachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
 
     overlay = final: prev: {
-      vimPlugins = prev.vimPlugins.extend (_: prevVimPlugins: {
-        jupynvim-core = final.rustPlatform.buildRustPackage rec {
-          pname = "jupynvim-core";
-          version = "unstable-2026-05-11";
+      jupynvim-core = final.rustPlatform.buildRustPackage rec {
+        pname = "jupynvim-core";
+        version = "unstable-2026-05-11";
 
-          src = final.fetchFromGitHub {
-            owner = "sheng-tse";
-            repo = "jupynvim";
-            rev = "2ffb8e81eec5c90d1b3c23a97e5d7245964a5148";
-            hash = "sha256-U4o/6mdVvkU4QfPg0L63Abg+O2afYXc/SxSFgl2AX2E=";
-          };
-
-          sourceRoot = "${src.name}/core";
-          cargoLock.lockFile = ./pkgs/jupynvim-core/Cargo.lock;
-
-          meta = {
-            description = "Native Rust backend for jupynvim";
-            homepage = "https://github.com/sheng-tse/jupynvim";
-            license = final.lib.licenses.mit;
-            mainProgram = "jupynvim-core";
-          };
+        src = final.fetchFromGitHub {
+          owner = "sheng-tse";
+          repo = "jupynvim";
+          rev = "2ffb8e81eec5c90d1b3c23a97e5d7245964a5148";
+          hash = "sha256-U4o/6mdVvkU4QfPg0L63Abg+O2afYXc/SxSFgl2AX2E=";
         };
 
+        sourceRoot = "${src.name}/core";
+        cargoLock.lockFile = ./pkgs/jupynvim-core/Cargo.lock;
+
+        meta = {
+          description = "Native Rust backend for jupynvim";
+          homepage = "https://github.com/sheng-tse/jupynvim";
+          license = final.lib.licenses.mit;
+          mainProgram = "jupynvim-core";
+        };
+      };
+
+      vimPlugins = prev.vimPlugins.extend (_: _: {
         jupynvim = final.vimUtils.buildVimPlugin {
           pname = "jupynvim";
           version = "unstable-2026-05-11";
@@ -57,7 +57,7 @@
             rev = "2ffb8e81eec5c90d1b3c23a97e5d7245964a5148";
             hash = "sha256-U4o/6mdVvkU4QfPg0L63Abg+O2afYXc/SxSFgl2AX2E=";
           };
-          dependencies = [prevVimPlugins.jupynvim-core];
+          dependencies = [final.jupynvim-core];
 
           meta = {
             description = "Jupyter notebook editor and executor for Neovim";
