@@ -66,6 +66,7 @@ check, and (with focus enabled) automatic `Twilight` + `Goyo`.
 | `writing.export.enable` | `true` | pandoc + `:WritingExport` (DOCX) |
 | `writing.dictionary.files` | bundled wordlist | dictionary completion sources |
 | `writing.gitDrafts.enable` | `false` | fugitive + gitsigns + diffview draft workflow |
+| `writing.storyteller.enable` | `false` | Storyteller project engine (enabled by the storytelling template) |
 
 ### Grammar checking (LTeX)
 
@@ -103,12 +104,13 @@ add project vocabulary as a Vale vocabulary under `styles/Vocab/<name>/`.
 # Storytelling project template
 
 `nix flake init -t github:AlejandroGomezFrieiro/nixvim_config#storytelling`
-scaffolds a project that mirrors the Scrivener / Kindling workflow without
-custom software: outline beat sheets (Three-Act, Hero's Journey, Save the Cat,
-Story Circle), reference cards for characters/locations/items/organizations,
-chapter scaffolding, a 1-page treatment, project vocabulary dictionary, and a
-`justfile` (`just draft`, `just words`, `just export`). See the template's
-`README.md` for the full command map.
+scaffolds a project with Storyteller enabled: outline beat sheets, reference
+cards, chapter scaffolding, a treatment, project vocabulary, and a `justfile`.
+Storyteller adds the project-aware layer: chapter outline, two-way
+Scrivenings, reference detection, corkboard, collections, targets, snapshots,
+and Pandoc manuscript export. See the template README or the
+[Storyteller user guide](https://github.com/AlejandroGomezFrieiro/storytelling.nvim/blob/main/docs/user-guide.md)
+for the workflow.
 
 Both storytelling and a plain-prose sibling are available as templates, and
 each ships with nix-direnv (`.envrc`) plus an auto-provisioned Vale setup
@@ -262,4 +264,3 @@ plugins.codecompanion.settings.prompt_library."Ask Mathematician" = {
   # ... replacement definition
 };
 ```
-

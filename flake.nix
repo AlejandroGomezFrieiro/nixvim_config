@@ -19,6 +19,8 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "systems";
+    storyteller.url = "github:AlejandroGomezFrieiro/storytelling.nvim";
+    storyteller.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {nixpkgs, ...}: let
@@ -90,11 +92,12 @@
       imports = [./config];
     };
 
-    # Standalone creative-writing derivation. Takes no imports from ./config so
-    # it stays deliberately minimal; opt into extras via the `writing.*` options.
+    # Standalone creative-writing derivation. It has no imports from ./config;
+    # Storyteller is available as an opt-in writing.* feature.
     writing_module = {pkgs, ...}: {
       nixpkgs.overlays = [overlay];
       imports = [./writing];
+      writing.storyteller.package = inputs.storyteller.packages.${pkgs.system}.default;
     };
 
     mkPkgs = system:

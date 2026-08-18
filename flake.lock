@@ -63,7 +63,28 @@
       "inputs": {
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
+        "storyteller": "storyteller",
         "systems": "systems_2"
+      }
+    },
+    "storyteller": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787073814,
+        "narHash": "sha256-sZ5bKGLWV11jM6NVABgRcmLHP/lofBG+x81PdkB7I4w=",
+        "owner": "AlejandroGomezFrieiro",
+        "repo": "storytelling.nvim",
+        "rev": "1a273c6a8ebc051db607d591139bd8936badf45e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AlejandroGomezFrieiro",
+        "repo": "storytelling.nvim",
+        "type": "github"
       }
     },
     "systems": {

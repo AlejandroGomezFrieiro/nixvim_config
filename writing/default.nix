@@ -43,6 +43,22 @@ in {
 
     gitDrafts.enable =
       lib.mkEnableOption "git-based draft branches (fugitive + gitsigns + diffview)" // {default = false;};
+
+    storyteller = {
+      enable = lib.mkEnableOption "Storyteller novel-writing engine" // {default = false;};
+
+      package = lib.mkOption {
+        type = lib.types.nullOr lib.types.package;
+        default = null;
+        description = "Storyteller plugin package supplied by the consuming flake.";
+      };
+
+      settings = lib.mkOption {
+        type = lib.types.attrs;
+        default = {};
+        description = "Options passed to storyteller.setup({...}).";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -162,6 +178,8 @@ in {
       ++ lib.optional cfg.vale.enable pkgs.vale
     );
 
+    extraPlugins = lib.optional (cfg.storyteller.enable && cfg.storyteller.package != null) cfg.storyteller.package;
+
     opts = {
       number = lib.mkDefault true;
       expandtab = lib.mkDefault true;
@@ -219,6 +237,10 @@ in {
             vim.notify("Exported to " .. dir .. "/" .. fname .. ".docx", vim.log.levels.INFO)
           end
         end, { desc = "Export current markdown to DOCX" })
+      ''
+      + lib.optionalString (cfg.storyteller.enable && cfg.storyteller.package != null) ''
+        -- Storyteller is the project-aware layer over the writing defaults.
+        require("storyteller").setup(${builtins.toJSON cfg.storyteller.settings})
       '';
 
     keymaps = [

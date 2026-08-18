@@ -36,6 +36,8 @@
           imports = [nixvim_config.nixosModules.writing];
           writing.grammar.enable = true;
           writing.vale.enable = true;
+          writing.storyteller.enable = true;
+          writing.dictionary.files = [./words/dictionary.txt];
         };
       };
 
