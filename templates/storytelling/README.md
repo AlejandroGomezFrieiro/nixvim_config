@@ -36,6 +36,11 @@ words/dictionary.txt       project vocabulary and names
 The source of truth is the Markdown. `build/`, `progress.log`, and Vale's
 generated configuration are derived or project-local support files.
 
+`.storyteller` marks the root explicitly. The starter chapter and public-domain
+Odysseus/Ithaca cards form a working example: open the chapter, run
+`:StoryCorkboard`, `:StoryContinuity`, or `:StoryDetectScene`, then replace the
+sample with your own story.
+
 ## Responsibilities
 
 The template provides the project layout, Neovim environment, snippets,
@@ -107,6 +112,19 @@ Storyteller also understands chapter frontmatter for shared planning state,
 targets, tags, and links. Reference cards live in their type-specific
 directory; add a `names:` list when a character has aliases. `:StoryDetectScene`
 can then add links to scene metadata.
+
+## Snippets
+
+The writing configuration ships both prose and Storyteller-specific snippets:
+
+| Trigger | Creates |
+| --- | --- |
+| `chapter` | Chapter frontmatter, target, goals, and closing hook. |
+| `scene` | A scene heading plus canonical `storyteller: scene` YAML. |
+| `scenemeta` | Scene YAML block for an existing heading. |
+| `char`, `place`, `item`, `org` | Reference card with detection aliases. |
+| `idea` | A discovery task collected by `:StoryDiscoveries`. |
+| `beat` | An outline checkbox. |
 
 Files and directories beginning with `_` are ignored. Use that convention for
 unused scenes and reference templates.

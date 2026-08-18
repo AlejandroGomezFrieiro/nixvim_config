@@ -1,0 +1,5 @@
+build/
+progress.log
+.ltex/
+.vale.ini
+styles/

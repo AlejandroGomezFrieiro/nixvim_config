@@ -34,5 +34,6 @@
 
 ## Beats in prose
 
-Open `chapters/`, expand the `scene` snippet (`scene` + `<Tab>`) for each beat,
-and tick the `- [ ]` boxes here as they land.
+Open `chapters/`, expand the `scene` snippet for each beat, and fill the
+scene-local YAML block with POV, location, time, goal, conflict, outcome, and
+status. Use `:StoryContinuity` to review those fields across the manuscript.

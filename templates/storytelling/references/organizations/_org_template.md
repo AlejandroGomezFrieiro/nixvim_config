@@ -1,5 +1,10 @@
 > Copy this file to `references/organizations/<name>.md` (or expand `char`/`place` nearby).
 
+---
+names:
+  - Name
+---
+
 ## Name — Organization
 
 - **Type:** (guild, family, cult, company, secret society)

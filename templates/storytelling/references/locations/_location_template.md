@@ -1,5 +1,10 @@
 > Copy this file to `references/locations/<name>.md` (or expand `place` in a new buffer).
 
+---
+names:
+  - Name
+---
+
 ## Name — Location
 
 - **Region / realm:** 

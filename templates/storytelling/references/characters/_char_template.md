@@ -2,6 +2,11 @@
 >
 > Fill one file per character: `references/characters/odysseus.md`.
 
+---
+names:
+  - Name
+---
+
 ## Name — Role
 
 - **Age / appearance:** 

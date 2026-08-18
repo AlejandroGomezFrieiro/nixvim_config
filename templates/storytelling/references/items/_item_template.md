@@ -1,5 +1,10 @@
 > Copy this file to `references/items/<name>.md` (or expand `item` in a new buffer).
 
+---
+names:
+  - Name
+---
+
 ## Name — Object
 
 - **Type:** (artifact, weapon, letter, macguffin, Macbook)
