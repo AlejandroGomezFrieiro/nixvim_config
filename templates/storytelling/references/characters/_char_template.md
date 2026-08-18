@@ -1,6 +1,6 @@
 > Copy this file (Ctrl+Shift+c then write it elsewhere, or expand `char` in a new buffer).
 >
-> Fill one file per character: `references/characters/adam-vale.md`.
+> Fill one file per character: `references/characters/odysseus.md`.
 
 ## Name — Role
 
