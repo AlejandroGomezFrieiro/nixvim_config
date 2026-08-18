@@ -57,8 +57,8 @@ Goyo and `<leader>t` for Twilight when you want them; they do not interfere
 with Oil or normal project navigation.
 
 The writing build uses Oil for binder navigation. Both `<leader>e` and
-`<leader>n` open the file tree; the latter matches the main profile's familiar
-file-tree shortcut.
+`<leader>n` toggle a reusable left-side file-tree split; the latter matches the
+main profile's familiar file-tree shortcut.
 
 ## Feature flags (`writing.*`)
 

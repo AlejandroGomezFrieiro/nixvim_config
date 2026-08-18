@@ -88,6 +88,16 @@ in {
       telescope.enable = lib.mkDefault true;
       web-devicons.enable = lib.mkDefault true;
       which-key.enable = lib.mkDefault true;
+      lspsaga = {
+        enable = lib.mkDefault true;
+        settings = {
+          symbol_in_winbar.enable = lib.mkDefault true;
+          lightbulb = {
+            sign = lib.mkDefault false;
+            virtual_text = lib.mkDefault true;
+          };
+        };
+      };
 
       # ---- Completion (blink.cmp) ----
       blink-cmp = {
@@ -216,6 +226,20 @@ in {
             vim.opt_local.colorcolumn = "80"
           end,
         })
+
+        -- Keep the binder as a left-side Oil split. Repeating the mapping
+        -- closes the existing sidebar, matching the main config's tree toggle.
+        vim.api.nvim_create_user_command("WritingOil", function()
+          for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == "oil" then
+              vim.api.nvim_win_close(win, true)
+              return
+            end
+          end
+          vim.cmd("leftabove vsplit")
+          vim.cmd("Oil")
+        end, { desc = "Toggle writing binder" })
       ''
       + lib.optionalString cfg.export.enable ''
         -- :WritingExport — compile the current markdown to build/<name>.docx
@@ -274,20 +298,20 @@ in {
       # ---- Binder / file tree ----
       {
         key = "<leader>e";
-        action = "<cmd>Oil<cr>";
+        action = "<cmd>WritingOil<cr>";
         options = {
           silent = true;
-          desc = "File tree";
+          desc = "Toggle file tree";
         };
       }
       # Keep the main nixvim profile's familiar file-tree shortcut. The
       # writing build uses Oil rather than Fyler, but both keys open the binder.
       {
         key = "<leader>n";
-        action = "<cmd>Oil<cr>";
+        action = "<cmd>WritingOil<cr>";
         options = {
           silent = true;
-          desc = "File tree";
+          desc = "Toggle file tree";
         };
       }
 
@@ -346,6 +370,59 @@ in {
           desc = "Export to DOCX";
         };
       }
+
+      # ---- LSP / diagnostics ----
+      {
+        key = "<leader>lr";
+        action = "<cmd>Lspsaga rename<cr>";
+        options = {silent = true; desc = "LSP rename";};
+      }
+      {
+        key = "<leader>la";
+        action = "<cmd>Lspsaga code_action<cr>";
+        options = {silent = true; desc = "Code action";};
+      }
+      {
+        key = "<leader>la";
+        mode = "v";
+        action = "<cmd><C-U>Lspsaga range_code_action<cr>";
+        options = {silent = true; desc = "Range code action";};
+      }
+      {
+        key = "<leader>lK";
+        action = "<cmd>Lspsaga hover_doc<cr>";
+        options = {silent = true; desc = "Hover documentation";};
+      }
+      {
+        key = "<leader>ll";
+        action = "<cmd>Lspsaga show_line_diagnostics<cr>";
+        options = {silent = true; desc = "Line diagnostics";};
+      }
+      {
+        key = "<leader>lq";
+        action = "<cmd>lua vim.diagnostic.setqflist()<cr>";
+        options = {silent = true; desc = "Diagnostics quickfix";};
+      }
+      {
+        key = "<leader>lf";
+        action = "<cmd>lua vim.lsp.buf.format({ async = true })<cr>";
+        options = {silent = true; desc = "Format buffer";};
+      }
+      {
+        key = "<leader>ls";
+        action = "<cmd>Telescope lsp_document_symbols<cr>";
+        options = {silent = true; desc = "Document symbols";};
+      }
+      {
+        key = "gr";
+        action = "<cmd>Telescope lsp_references<cr>";
+        options = {silent = true; desc = "LSP references";};
+      }
+      {
+        key = "gd";
+        action = "<cmd>Lspsaga goto_definition<cr>";
+        options = {silent = true; desc = "Goto definition";};
+      }
     ];
 
     plugins.which-key.settings.spec = lib.mkDefault [
@@ -364,6 +441,10 @@ in {
       {
         __unkeyed-1 = "<leader>w";
         group = "Writing";
+      }
+      {
+        __unkeyed-1 = "<leader>l";
+        group = "LSP";
       }
     ];
   };
