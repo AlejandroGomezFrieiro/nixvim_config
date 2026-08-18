@@ -32,10 +32,18 @@ ls.add_snippets("markdown", {
       [[
 ## Scene {} — {}
 
-- **POV:** {}
-- **Location:** {}
-- **Time:** {}
-- **Beat:** {}
+```yaml
+storyteller: scene
+status: {}
+planning: {}
+pov: {}
+location: {}
+time: {}
+goal: {}
+conflict: {}
+outcome: {}
+beat: {}
+```
 
 ### Enter
 {}
@@ -49,13 +57,18 @@ ls.add_snippets("markdown", {
       {
         i(1, "N"),
         i(2, "Title"),
-        i(3, "character"),
-        i(4, "place"),
-        i(5, "day/time"),
-        i(6, "scene goal"),
+        i(3, "outline"),
+        i(4, "flexible"),
+        i(5, "character"),
+        i(6, "place"),
+        i(7, "day/time"),
+        i(8, "scene goal"),
+        i(9, "what blocks or twists the goal"),
+        i(10, "what changes by the end"),
+        i(11, "one-sentence emotional turn"),
         i(0, "strike a changed image / next domino to tip"),
-        i(7, "what blocks or twists the goal"),
-        i(8, "echo of the beat / new question"),
+        i(12, "what blocks or twists the goal"),
+        i(13, "echo of the beat / new question"),
       }
     )
   ),

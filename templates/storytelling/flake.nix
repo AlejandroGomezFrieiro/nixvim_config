@@ -44,6 +44,8 @@
           writing.markdownOxide.enable = true;
           plugins.lsp.enable = true;
           plugins.blink-cmp.enable = true;
+          plugins.luasnip.enable = true;
+          plugins.blink-cmp.settings.sources.default = ["lsp" "path" "snippets" "buffer" "spell" "dictionary"];
           writing.dictionary.files = [./words/dictionary.txt];
 
           # The template owns setup so Storyteller works with released

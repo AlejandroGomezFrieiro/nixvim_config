@@ -41,6 +41,8 @@
           writing.markdownOxide.enable = true;
           plugins.lsp.enable = true;
           plugins.blink-cmp.enable = true;
+          plugins.luasnip.enable = true;
+          plugins.blink-cmp.settings.sources.default = ["lsp" "path" "snippets" "buffer" "spell" "dictionary"];
         };
       };
 

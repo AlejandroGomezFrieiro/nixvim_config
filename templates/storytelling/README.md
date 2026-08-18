@@ -75,6 +75,10 @@ for each writing feature.
 | `:StorySnapshot [message]` | Create a safety snapshot |
 | `:StoryTemplate` | Apply a story structure |
 | `:StoryExport [format]` | Export the manuscript |
+| `:StoryContinuity [field=value]` | Review scene POV, place, time, and state |
+| `:StoryRevision [git-ref]` | Review revision scenes, tasks, and changed files |
+| `:StoryContext` | Open drafting context beside prose |
+| `:StoryIdea` / `:StoryDiscoveries` | Capture and review discovery ideas |
 
 See the [Storyteller user guide](https://github.com/AlejandroGomezFrieiro/storytelling.nvim/blob/main/docs/user-guide.md)
 for the complete `<leader>s` mapping table. The existing writing mappings for
@@ -83,20 +87,26 @@ unchanged.
 
 ## Metadata And References
 
-Scenes can use inline fields compatible with the snippets:
+New scenes created by the `scene` snippet use a YAML block immediately after
+the heading:
 
-```markdown
+````markdown
 ## Scene 1 — The harbor
 
-- **POV:** Odysseus
-- **Location:** Ithaca
-- **Beat:** A warning arrives too late
+```yaml
+storyteller: scene
+status: draft
+pov: Odysseus
+location: Ithaca
+beat: A warning arrives too late
+```
+````
 ```
 
-Storyteller also understands frontmatter for status, planning state, targets,
-tags, and links. Reference cards live in their type-specific directory; add a
-`names:` list when a character has aliases. `:StoryDetectScene` can then add
-links to the scene metadata.
+Storyteller also understands chapter frontmatter for shared planning state,
+targets, tags, and links. Reference cards live in their type-specific
+directory; add a `names:` list when a character has aliases. `:StoryDetectScene`
+can then add links to scene metadata.
 
 Files and directories beginning with `_` are ignored. Use that convention for
 unused scenes and reference templates.
