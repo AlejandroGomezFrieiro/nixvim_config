@@ -64,6 +64,11 @@ vocabulary under `styles/Vocab/<name>/`.
 | `<leader>fg`| grep the project                    |
 | `<leader>o` | document outline (headings)         |
 | `<leader>e` | toggle left-side Oil file tree      |
+| `<C-h/j/k/l>`| move between splits               |
+| `<A-h/j/k/l>`| resize splits                     |
+| `gd`        | go to definition (LSP)              |
+| `gr`        | references (LSP)                    |
+| `<leader>l` | LSP + diagnostics                   |
 | `<leader>z` | toggle Goyo (focus)                 |
 | `<leader>t` | toggle Twilight (dim inactive text) |
 | `<leader>mp`| toggle live browser preview         |

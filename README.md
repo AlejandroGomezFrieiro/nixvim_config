@@ -48,6 +48,11 @@ nix run github:AlejandroGomezFrieiro/nixvim_config#writing
 | blink-cmp-spell / -dictionary | spelling fixes + project vocabulary autocomplete |
 | luasnip | story snippets (`chapter`, `scene`, `char`, `place`, `item`, `beat`, `tonemeter`) |
 | oil | file tree / binder-style navigation |
+| smart-splits | move/resize across binder, prose, and context splits |
+| nvim-autopairs | auto-close brackets, quotes, and wikilinks |
+| comment | toggle comments with `gc` |
+| todo-comments | surface `TODO` / `IDEA` / `NOTE` in notes and beats |
+| lspsaga | LSP diagnostics, actions, and hover |
 | which-key | keybinding discoverability |
 | catppuccin | colorscheme |
 

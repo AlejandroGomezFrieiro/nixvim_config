@@ -85,6 +85,19 @@ in {
       # File tree / binder-style navigation
       oil.enable = lib.mkDefault true;
 
+      # Window navigation across the binder, context, and prose splits
+      # (ported from the main profile's WezTerm integration).
+      smart-splits.enable = lib.mkDefault true;
+
+      # Auto-close brackets, quotes, and wikilinks like `[[Name]]`
+      nvim-autopairs.enable = lib.mkDefault true;
+
+      # Toggle comments with `gc` in notes and outlines
+      comment.enable = lib.mkDefault true;
+
+      # Surface TODO / IDEA / NOTE markers in research and scene beats
+      todo-comments.enable = lib.mkDefault true;
+
       telescope.enable = lib.mkDefault true;
       web-devicons.enable = lib.mkDefault true;
       which-key.enable = lib.mkDefault true;
@@ -313,6 +326,48 @@ in {
           silent = true;
           desc = "Toggle file tree";
         };
+      }
+
+      # ---- Window navigation (smart-splits) ----
+      {
+        key = "<C-h>";
+        action = "<cmd>lua require('smart-splits').move_cursor_left()<cr>";
+        options = {silent = true; desc = "Move to left split";};
+      }
+      {
+        key = "<C-j>";
+        action = "<cmd>lua require('smart-splits').move_cursor_down()<cr>";
+        options = {silent = true; desc = "Move to split below";};
+      }
+      {
+        key = "<C-k>";
+        action = "<cmd>lua require('smart-splits').move_cursor_up()<cr>";
+        options = {silent = true; desc = "Move to split above";};
+      }
+      {
+        key = "<C-l>";
+        action = "<cmd>lua require('smart-splits').move_cursor_right()<cr>";
+        options = {silent = true; desc = "Move to right split";};
+      }
+      {
+        key = "<A-h>";
+        action = "<cmd>lua require('smart-splits').resize_left()<cr>";
+        options = {silent = true; desc = "Resize split left";};
+      }
+      {
+        key = "<A-j>";
+        action = "<cmd>lua require('smart-splits').resize_down()<cr>";
+        options = {silent = true; desc = "Resize split down";};
+      }
+      {
+        key = "<A-k>";
+        action = "<cmd>lua require('smart-splits').resize_up()<cr>";
+        options = {silent = true; desc = "Resize split up";};
+      }
+      {
+        key = "<A-l>";
+        action = "<cmd>lua require('smart-splits').resize_right()<cr>";
+        options = {silent = true; desc = "Resize split right";};
       }
 
       # ---- Outline (markdown-oxide document symbols) ----
