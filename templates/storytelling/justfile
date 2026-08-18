@@ -1,39 +1,12 @@
 default: draft
-alias w := words
-alias x := export
 
 # Open Neovim on the outline
 draft:
 	@nvim outline/overview.md
 
-# Total words across the manuscript (chapters only)
-words:
-	@find chapters -type f -name '*.md' ! -path '*/_*' -print0 | xargs -0 wc -w | tail -n 1
-
 # Prose lint with Vale (proselint, alex, write-good, readability)
 lint:
 	@vale outline chapters treatment
-
-# Export the outline overview to build/overview.docx.
-# Use :StoryExport for the complete manuscript.
-export:
-	@mkdir -p build
-	@pandoc outline/overview.md --from=markdown+smart --to=docx --standalone --output=build/overview.docx
-	@echo "build/overview.docx"
-
-# Print the binder tree
-tree:
-	@find outline references chapters research treatment words -type f | sort
-
-# Compile all chapters to a Markdown manuscript for quick inspection.
-manuscript:
-	@mkdir -p build
-	@{ find chapters -type f -name '*.md' ! -path '*/_*' -print | sort | while IFS= read -r f; do printf '\n\n'; cat "$f"; done; } > build/manuscript.md
-	@echo "build/manuscript.md"
-
-# Print the Storyteller command reminder without opening Neovim.
-story:
-	@printf '%s\n' ':StoryOutline  :StoryScrivenings  :StoryCorkboard  :StoryTargets  :StoryExport'
 
 # New draft branch for a revision pass
 draft-new name='act-2':

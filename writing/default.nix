@@ -139,13 +139,10 @@ in {
 
       # ---- Optional: grammar checking (LTeX / LanguageTool) ----
       lsp.enable = lib.mkDefault (cfg.grammar.enable || cfg.markdownOxide.enable || cfg.vale.enable);
-      ltex-extra = lib.mkDefault {
-        enable = cfg.grammar.enable;
-        settings = {
-          path = ".ltex";
-          load_langs = ["en-US"];
-        };
-      };
+      # ltex-extra races LTeX client attachment under current Neovim/Nixvim
+      # and emits startup errors. The LTeX server below provides grammar and
+      # diagnostics without that wrapper.
+      ltex-extra.enable = lib.mkDefault false;
       lsp.servers.ltex = lib.mkDefault {
         enable = cfg.grammar.enable;
         settings.ltex = {

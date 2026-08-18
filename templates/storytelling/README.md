@@ -36,6 +36,15 @@ words/dictionary.txt       project vocabulary and names
 The source of truth is the Markdown. `build/`, `progress.log`, and Vale's
 generated configuration are derived or project-local support files.
 
+## Responsibilities
+
+The template provides the project layout, Neovim environment, snippets,
+dictionary, Vale configuration, `just draft`, `just lint`, and an optional git
+branch helper. Storyteller provides all story-aware behavior: outline and word
+targets, Scrivenings, reference detection, corkboard, collections, sessions,
+snapshots, templates, and export. This keeps one command surface authoritative
+for each writing feature.
+
 ## Writing Workflow
 
 1. Edit `outline/overview.md` or choose a structure with `:StoryTemplate`.
@@ -67,9 +76,10 @@ generated configuration are derived or project-local support files.
 | `:StoryTemplate` | Apply a story structure |
 | `:StoryExport [format]` | Export the manuscript |
 
-The `<leader>s` mappings are listed in the plugin's
-The existing writing mappings for focus mode, preview, file navigation,
-snippets, grammar, and Vale remain unchanged.
+See the [Storyteller user guide](https://github.com/AlejandroGomezFrieiro/storytelling.nvim/blob/main/docs/user-guide.md)
+for the complete `<leader>s` mapping table. The existing writing mappings for
+focus mode, preview, file navigation, snippets, grammar, and Vale remain
+unchanged.
 
 ## Metadata And References
 

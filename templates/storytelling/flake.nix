@@ -8,6 +8,9 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim_config.url = "github:AlejandroGomezFrieiro/nixvim_config";
     nixvim_config.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim_config.inputs.nixvim.follows = "nixvim";
+    nixvim_config.inputs.systems.follows = "systems";
+    nixvim_config.inputs.storyteller.follows = "storyteller";
     storyteller.url = "github:AlejandroGomezFrieiro/storytelling.nvim";
     storyteller.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -38,10 +41,13 @@
           imports = [nixvim_config.nixosModules.writing];
           writing.grammar.enable = true;
           writing.vale.enable = true;
+          writing.markdownOxide.enable = true;
+          plugins.lsp.enable = true;
+          plugins.blink-cmp.enable = true;
           writing.dictionary.files = [./words/dictionary.txt];
 
-          # The template owns this dependency so Storyteller works with the
-          # currently released nixvim_config writing module as well.
+          # The template owns setup so Storyteller works with released
+          # nixvim_config revisions as well as newer writing modules.
           extraPlugins = [inputs.storyteller.packages.${system}.default];
           extraConfigLua = ''
             require("storyteller").setup({})

@@ -75,7 +75,7 @@ file-tree shortcut.
 ### Grammar checking (LTeX)
 
 Enabled with `writing.grammar.enable = true`. Uses `ltex-ls` over LSP with
-picky style rules and a `.ltex` directory for personal dictionaries — see
+picky style rules. Add project dictionaries through LTeX settings as needed — see
 <https://dzfrias.dev/blog/neovim-writing-setup/> for the approach.
 
 Disabled via `nixosModules.writing` in a downstream flake:
@@ -158,7 +158,12 @@ without touching this repo.
 
   outputs = { nixpkgs, nixvim, nixvim_config, ... }: let
     system = "x86_64-linux";
-    pkgs   = import nixpkgs { inherit system; };
+    pkgs = import nixpkgs {
+      inherit system;
+      # The base config enables blink-cmp-spell, the one non-free plugin.
+      config.allowUnfreePredicate = pkg:
+        builtins.elem (pkg.pname or pkg.name) [ "blink-cmp-spell" ];
+    };
     nvim   = nixvim.legacyPackages.${system}.makeNixvimWithModule {
       inherit pkgs;
       module = {
