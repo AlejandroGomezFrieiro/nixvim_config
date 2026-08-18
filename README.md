@@ -47,7 +47,7 @@ nix run github:AlejandroGomezFrieiro/nixvim_config#writing
 | blink.cmp | completion: LSP, path, buffers, spelling, dictionary |
 | blink-cmp-spell / -dictionary | spelling fixes + project vocabulary autocomplete |
 | luasnip | story snippets (`chapter`, `scene`, `char`, `place`, `item`, `beat`, `tonemeter`) |
-| oil | file tree / binder-style navigation |
+| fyler | left-side file tree / binder navigation |
 | smart-splits | move/resize across binder, prose, and context splits |
 | nvim-autopairs | auto-close brackets, quotes, and wikilinks |
 | comment | toggle comments with `gc` |
@@ -59,11 +59,10 @@ nix run github:AlejandroGomezFrieiro/nixvim_config#writing
 Opening a `.md` file enters **writing mode**: word wrap, `linebreak`, spell
 check, and prose-friendly indentation. With focus enabled, use `<leader>z` for
 Goyo and `<leader>t` for Twilight when you want them; they do not interfere
-with Oil or normal project navigation.
+with the file tree or normal project navigation.
 
-The writing build uses Oil for binder navigation. Both `<leader>e` and
-`<leader>n` toggle a reusable left-side file-tree split; the latter matches the
-main profile's familiar file-tree shortcut.
+The writing build uses Fyler for binder navigation with the same nvim-tree-like
+left-side toggle as the main profile. Both `<leader>e` and `<leader>n` toggle it.
 
 ## Feature flags (`writing.*`)
 

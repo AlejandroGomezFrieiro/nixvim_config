@@ -63,7 +63,7 @@ vocabulary under `styles/Vocab/<name>/`.
 | `<leader>ff`| find files                          |
 | `<leader>fg`| grep the project                    |
 | `<leader>o` | document outline (headings)         |
-| `<leader>e` | toggle left-side Oil file tree      |
+| `<leader>e` | toggle left-side file tree         |
 | `<C-h/j/k/l>`| move between splits               |
 | `<A-h/j/k/l>`| resize splits                     |
 | `gd`        | go to definition (LSP)              |

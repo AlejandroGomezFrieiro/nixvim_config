@@ -82,8 +82,10 @@ in {
       # Auto-continue numbered/bulleted lists while writing prose
       bullets.enable = lib.mkDefault true;
 
-      # File tree / binder-style navigation
-      oil.enable = lib.mkDefault true;
+      # File tree / binder-style navigation.
+      # The main profile uses Fyler as a left-side sidebar; match it so the
+      # same toggle behaviour works for writers. Fyler is supplied as a raw
+      # vim plugin (see extraPlugins) and its keymaps below.
 
       # Window navigation across the binder, context, and prose splits
       # (ported from the main profile's WezTerm integration).
@@ -202,7 +204,8 @@ in {
       ++ lib.optional cfg.vale.enable pkgs.vale
     );
 
-    extraPlugins = lib.optional (cfg.storyteller.enable && cfg.storyteller.package != null) cfg.storyteller.package;
+    extraPlugins = [pkgs.vimPlugins.fyler-nvim]
+      ++ lib.optional (cfg.storyteller.enable && cfg.storyteller.package != null) cfg.storyteller.package;
 
     opts = {
       number = lib.mkDefault true;
@@ -240,19 +243,21 @@ in {
           end,
         })
 
-        -- Keep the binder as a left-side Oil split. Repeating the mapping
-        -- closes the existing sidebar, matching the main config's tree toggle.
-        vim.api.nvim_create_user_command("WritingOil", function()
-          for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-            local buf = vim.api.nvim_win_get_buf(win)
-            if vim.bo[buf].filetype == "oil" then
-              vim.api.nvim_win_close(win, true)
-              return
-            end
-          end
-          vim.cmd("leftabove vsplit")
-          vim.cmd("Oil")
-        end, { desc = "Toggle writing binder" })
+        -- Left-side file tree, matching the main profile's Fyler sidebar.
+        require("fyler").setup({
+          integrations = {
+            icon = "nvim_web_devicons",
+          },
+          views = {
+            finder = {
+              default_explorer = true,
+              close_on_select = false,
+              win = {
+                kind = "split_left_most",
+              },
+            },
+          },
+        })
       ''
       + lib.optionalString cfg.export.enable ''
         -- :WritingExport — compile the current markdown to build/<name>.docx
@@ -311,17 +316,17 @@ in {
       # ---- Binder / file tree ----
       {
         key = "<leader>e";
-        action = "<cmd>WritingOil<cr>";
+        action.__raw = "function() require('fyler').toggle() end";
         options = {
           silent = true;
           desc = "Toggle file tree";
         };
       }
-      # Keep the main nixvim profile's familiar file-tree shortcut. The
-      # writing build uses Oil rather than Fyler, but both keys open the binder.
+      # The main profile's familiar file-tree shortcut, now using the same
+      # Fyler sidebar for a consistent nvim-tree-like toggle.
       {
         key = "<leader>n";
-        action = "<cmd>WritingOil<cr>";
+        action.__raw = "function() require('fyler').toggle() end";
         options = {
           silent = true;
           desc = "Toggle file tree";
