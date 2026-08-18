@@ -54,6 +54,10 @@ nix run github:AlejandroGomezFrieiro/nixvim_config#writing
 Opening a `.md` file enters **writing mode**: word wrap, `linebreak`, spell
 check, and (with focus enabled) automatic `Twilight` + `Goyo`.
 
+The writing build uses Oil for binder navigation. Both `<leader>e` and
+`<leader>n` open the file tree; the latter matches the main profile's familiar
+file-tree shortcut.
+
 ## Feature flags (`writing.*`)
 
 | Option | Default | Controls |

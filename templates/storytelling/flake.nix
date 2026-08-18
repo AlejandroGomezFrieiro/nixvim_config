@@ -8,6 +8,8 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim_config.url = "github:AlejandroGomezFrieiro/nixvim_config";
     nixvim_config.inputs.nixpkgs.follows = "nixpkgs";
+    storyteller.url = "github:AlejandroGomezFrieiro/storytelling.nvim";
+    storyteller.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs @ {
     nixpkgs,
@@ -36,8 +38,14 @@
           imports = [nixvim_config.nixosModules.writing];
           writing.grammar.enable = true;
           writing.vale.enable = true;
-          writing.storyteller.enable = true;
           writing.dictionary.files = [./words/dictionary.txt];
+
+          # The template owns this dependency so Storyteller works with the
+          # currently released nixvim_config writing module as well.
+          extraPlugins = [inputs.storyteller.packages.${system}.default];
+          extraConfigLua = ''
+            require("storyteller").setup({})
+          '';
         };
       };
 

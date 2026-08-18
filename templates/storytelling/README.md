@@ -15,7 +15,9 @@ just draft
 
 `just draft` opens `outline/overview.md` in the writing Neovim build. The first
 development-shell activation provides the configured Neovim, Pandoc, Just,
-Vale, LTeX, Markdown Oxide, and Storyteller.
+Vale, LTeX, Markdown Oxide, and Storyteller. The template pins Storyteller
+directly, so its project commands do not depend on a future `nixvim_config`
+release.
 
 ## Layout
 
