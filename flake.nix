@@ -143,6 +143,8 @@
       nixvim = nixvim;
       # Creative writing edition: minimal, prose-focused.
       writing = writing;
+      # Default Vale `.vale.ini` + styles to copy into a project root.
+      writing-vale = import ./writing/vale.nix {inherit pkgs;};
     });
 
     devShells = eachSystem (system: let
@@ -177,6 +179,10 @@
       storytelling = {
         path = ./templates/storytelling;
         description = "Creative writing project: outline, beat sheets, references, and a distraction-free Neovim prose environment";
+      };
+      writing = {
+        path = ./templates/writing;
+        description = "Plain Markdown prose project with a distraction-free Neovim prose environment and prose linting (LTeX + Vale)";
       };
     };
   };

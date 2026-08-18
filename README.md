@@ -60,6 +60,7 @@ check, and (with focus enabled) automatic `Twilight` + `Goyo`.
 |---|---|---|
 | `writing.focus.enable` | `true` | goyo + twilight, auto-enabled on markdown |
 | `writing.grammar.enable` | `false` | LTeX (LanguageTool) grammar checking via LSP |
+| `writing.vale.enable` | `false` | Vale prose linting via LSP (`vale-ls`) |
 | `writing.markdownOxide.enable` | `true` | markdown-oxide LSP |
 | `writing.preview.enable` | `true` | markdown-preview browser preview |
 | `writing.export.enable` | `true` | pandoc + `:WritingExport` (DOCX) |
@@ -80,6 +81,25 @@ writing.grammar.enable = true;
 writing.gitDrafts.enable = true;
 ```
 
+### Prose linting (Vale)
+
+Enabled with `writing.vale.enable = true`. Runs `vale-ls` (with the `vale`
+CLI on `PATH`) alongside LTeX for style linting: **proselint**, **alex**,
+**write-good**, and **readability** — the same default set as
+[the setup described by Scott Lowe](https://blog.scottlowe.org/2024/07/29/using-vale-to-improve-my-writing/).
+
+Vale needs a `.vale.ini` + `styles/` directory in a project root. A ready-made
+bundle ships with this config; build it and copy it into your story project:
+
+```bash
+nix build github:AlejandroGomezFrieiro/nixvim_config#writing-vale
+cp -r result/. /path/to/story-project/
+```
+
+The default `.vale.ini` lives at `writing/vale/.vale.ini` and applies the four
+styles above to `*.md` files. Tweak it (or the bundled styles) per project, or
+add project vocabulary as a Vale vocabulary under `styles/Vocab/<name>/`.
+
 # Storytelling project template
 
 `nix flake init -t github:AlejandroGomezFrieiro/nixvim_config#storytelling`
@@ -89,6 +109,19 @@ Story Circle), reference cards for characters/locations/items/organizations,
 chapter scaffolding, a 1-page treatment, project vocabulary dictionary, and a
 `justfile` (`just draft`, `just words`, `just export`). See the template's
 `README.md` for the full command map.
+
+Both storytelling and a plain-prose sibling are available as templates, and
+each ships with nix-direnv (`.envrc`) plus an auto-provisioned Vale setup
+(LTeX grammar + Vale styles) turned on.
+
+# Writing project template
+
+`nix flake init -t github:AlejandroGomezFrieiro/nixvim_config#writing`
+scaffolds a minimal plain-Markdown prose workspace (`manuscript/`, `notes/`,
+`research/`, `words/`) with the same distraction-free Neovim prose environment
+and prose linting (LTeX + Vale) as storytelling, but without the outline /
+beat-sheet machinery — for essays, non-fiction, and novels that don't need
+planning cards.
 
 # Installation
 

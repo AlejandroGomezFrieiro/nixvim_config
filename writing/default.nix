@@ -19,6 +19,9 @@ in {
     grammar.enable =
       lib.mkEnableOption "LTeX (LanguageTool) grammar checking over LSP" // {default = false;};
 
+    vale.enable =
+      lib.mkEnableOption "Vale prose linting (vale-ls, proselint/alex/write-good/readability styles)" // {default = false;};
+
     markdownOxide.enable =
       lib.mkEnableOption "markdown-oxide LSP (notes, links, tags, outline)" // {default = true;};
 
@@ -119,7 +122,7 @@ in {
       markdown-preview.enable = lib.mkDefault cfg.preview.enable;
 
       # ---- Optional: grammar checking (LTeX / LanguageTool) ----
-      lsp.enable = lib.mkDefault (cfg.grammar.enable || cfg.markdownOxide.enable);
+      lsp.enable = lib.mkDefault (cfg.grammar.enable || cfg.markdownOxide.enable || cfg.vale.enable);
       ltex-extra = lib.mkDefault {
         enable = cfg.grammar.enable;
         settings = {
@@ -135,6 +138,12 @@ in {
         };
       };
 
+      # ---- Optional: Vale prose linting (vale-ls) ----
+      lsp.servers.vale_ls = lib.mkDefault {
+        enable = cfg.vale.enable;
+        package = pkgs.vale-ls;
+      };
+
       # ---- markdown-oxide LSP (notes, links, tags, outline) ----
       lsp.servers.markdown_oxide = lib.mkDefault {
         enable = cfg.markdownOxide.enable;
@@ -147,8 +156,11 @@ in {
       diffview.enable = lib.mkDefault cfg.gitDrafts.enable;
     };
 
-    # pandoc powers the manuscript/export commands.
-    extraPackages = lib.mkDefault (lib.optional cfg.export.enable pkgs.pandoc);
+    # pandoc powers the manuscript/export commands; vale is the vale-ls CLI.
+    extraPackages = lib.mkDefault (
+      (lib.optional cfg.export.enable pkgs.pandoc)
+      ++ lib.optional cfg.vale.enable pkgs.vale
+    );
 
     opts = {
       number = lib.mkDefault true;
@@ -214,62 +226,92 @@ in {
       {
         key = "<leader>ff";
         action = "<cmd>Telescope find_files<cr>";
-        options = {silent = true; desc = "Find file";};
+        options = {
+          silent = true;
+          desc = "Find file";
+        };
       }
       {
         key = "<leader>fg";
         action = "<cmd>Telescope live_grep<cr>";
-        options = {silent = true; desc = "Grep text";};
+        options = {
+          silent = true;
+          desc = "Grep text";
+        };
       }
       {
         key = "<leader>fb";
         action = "<cmd>Telescope buffers<cr>";
-        options = {silent = true; desc = "Switch buffer";};
+        options = {
+          silent = true;
+          desc = "Switch buffer";
+        };
       }
 
       # ---- Binder / file tree ----
       {
         key = "<leader>e";
         action = "<cmd>Oil<cr>";
-        options = {silent = true; desc = "File tree";};
+        options = {
+          silent = true;
+          desc = "File tree";
+        };
       }
 
       # ---- Outline (markdown-oxide document symbols) ----
       {
         key = "<leader>o";
         action = "<cmd>Telescope lsp_document_symbols<cr>";
-        options = {silent = true; desc = "Document outline";};
+        options = {
+          silent = true;
+          desc = "Document outline";
+        };
       }
 
       # ---- Focus ----
       {
         key = "<leader>z";
         action = "<cmd>Goyo<cr>";
-        options = {silent = true; desc = "Toggle Goyo";};
+        options = {
+          silent = true;
+          desc = "Toggle Goyo";
+        };
       }
       {
         key = "<leader>t";
         action = "<cmd>Twilight<cr>";
-        options = {silent = true; desc = "Toggle Twilight";};
+        options = {
+          silent = true;
+          desc = "Toggle Twilight";
+        };
       }
 
       # ---- Preview ----
       {
         key = "<leader>mp";
         action = "<cmd>MarkdownPreviewToggle<cr>";
-        options = {silent = true; desc = "Toggle markdown preview";};
+        options = {
+          silent = true;
+          desc = "Toggle markdown preview";
+        };
       }
 
       # ---- Writing helpers ----
       {
         key = "<leader>wc";
         action = "<cmd>lua print('words: ' .. vim.fn.wordcount().words)<cr>";
-        options = {silent = true; desc = "Word count";};
+        options = {
+          silent = true;
+          desc = "Word count";
+        };
       }
       {
         key = "<leader>ex";
         action = "<cmd>WritingExport<cr>";
-        options = {silent = true; desc = "Export to DOCX";};
+        options = {
+          silent = true;
+          desc = "Export to DOCX";
+        };
       }
     ];
 

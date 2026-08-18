@@ -1,0 +1,21 @@
+default: draft
+alias w := words
+alias x := export
+
+# Open Neovim on the first manuscript chapter
+draft:
+	@nvim manuscript/01_first_draft.md
+
+# Total words across the manuscript
+words:
+	@wc -w manuscript/*.md | tail -n 1
+
+# Prose lint with Vale (proselint, alex, write-good, readability)
+lint:
+	@vale manuscript
+
+# Export the manuscript to build/manuscript.docx
+export:
+	@mkdir -p build
+	@pandoc manuscript/*.md --from=markdown+smart --to=docx --standalone --output=build/manuscript.docx
+	@echo "build/manuscript.docx"

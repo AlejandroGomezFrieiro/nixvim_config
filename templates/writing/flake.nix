@@ -1,5 +1,5 @@
 {
-  description = "Storytelling project: outline, references, and distraction-free prose in Neovim, with prose linting (LTeX + Vale).";
+  description = "Writing project: distraction-free prose in Neovim, with prose linting (LTeX + Vale).";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";

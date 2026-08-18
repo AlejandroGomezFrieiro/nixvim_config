@@ -10,6 +10,10 @@ draft:
 words:
 	@wc -w chapters/**/*.md | tail -n 1
 
+# Prose lint with Vale (proselint, alex, write-good, readability)
+lint:
+	@vale outline chapters treatment
+
 # Export the outline's overview to build/overview.docx
 export:
 	@mkdir -p build
@@ -21,5 +25,5 @@ tree:
 	@find outline references chapters research treatment words -type f | sort
 
 # New draft branch for a revision pass
-draft-new name=act-2:
+draft-new name='act-2':
 	git switch -c draft/{{name}}
