@@ -279,6 +279,16 @@ in {
           desc = "File tree";
         };
       }
+      # Keep the main nixvim profile's familiar file-tree shortcut. The
+      # writing build uses Oil rather than Fyler, but both keys open the binder.
+      {
+        key = "<leader>n";
+        action = "<cmd>Oil<cr>";
+        options = {
+          silent = true;
+          desc = "File tree";
+        };
+      }
 
       # ---- Outline (markdown-oxide document symbols) ----
       {

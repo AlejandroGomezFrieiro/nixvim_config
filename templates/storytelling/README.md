@@ -38,8 +38,8 @@ generated configuration are derived or project-local support files.
 
 1. Edit `outline/overview.md` or choose a structure with `:StoryTemplate`.
 2. Draft in `chapters/`, using the `chapter` and `scene` snippets.
-3. Use `<leader>so` for the outline, `<leader>sb` for the corkboard, and
-   `<leader>st` for targets.
+3. Use `<leader>n` for the file tree, `<leader>so` for the outline,
+   `<leader>sb` for the corkboard, and `<leader>st` for targets.
 4. Run `:StorySessionStart` and `:StorySessionEnd` when tracking a writing
    session.
 5. Run `:StorySnapshot before-revision` before a structural rewrite.
