@@ -90,10 +90,21 @@
       imports = [./config];
     };
 
+    # Standalone creative-writing derivation. Takes no imports from ./config so
+    # it stays deliberately minimal; opt into extras via the `writing.*` options.
+    writing_module = {pkgs, ...}: {
+      nixpkgs.overlays = [overlay];
+      imports = [./writing];
+    };
+
     mkPkgs = system:
       import inputs.nixpkgs {
         inherit system;
         overlays = [overlay];
+        # blink-cmp-spell (spelling suggestions as completions) is licensed
+        # under a non-free license, so opt in to exactly that one package.
+        config.allowUnfreePredicate = pkg:
+          builtins.elem (pkg.pname or pkg.name) ["blink-cmp-spell"];
       };
   in {
     checks = eachSystem (system: let
@@ -102,10 +113,18 @@
         inherit pkgs;
         module = nixvim_module;
       };
+      writing = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule {
+        inherit pkgs;
+        module = writing_module;
+      };
     in {
       launch-neovim = inputs.nixvim.lib.${system}.check.mkTestDerivationFromNvim {
         name = "launch-neovim";
         nvim = nvim;
+      };
+      launch-writing = inputs.nixvim.lib.${system}.check.mkTestDerivationFromNvim {
+        name = "launch-writing";
+        nvim = writing;
       };
     });
 
@@ -115,9 +134,15 @@
         inherit pkgs;
         module = nixvim_module;
       };
+      writing = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule {
+        inherit pkgs;
+        module = writing_module;
+      };
     in {
       default = nixvim;
       nixvim = nixvim;
+      # Creative writing edition: minimal, prose-focused.
+      writing = writing;
     });
 
     devShells = eachSystem (system: let
@@ -137,6 +162,7 @@
     formatter = eachSystem (system: (mkPkgs system).alejandra);
 
     nixosModules.default = nixvim_module;
+    nixosModules.writing = writing_module;
     overlays.default = overlay;
 
     templates = {
@@ -147,6 +173,10 @@
       rust = {
         path = ./templates/rust_environment;
         description = "A basic rust environment";
+      };
+      storytelling = {
+        path = ./templates/storytelling;
+        description = "Creative writing project: outline, beat sheets, references, and a distraction-free Neovim prose environment";
       };
     };
   };

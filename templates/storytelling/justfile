@@ -1,0 +1,25 @@
+default: draft
+alias w := words
+alias x := export
+
+# Open Neovim on the outline
+draft:
+	@nvim outline/overview.md
+
+# Total words across the manuscript (chapters only)
+words:
+	@wc -w chapters/**/*.md | tail -n 1
+
+# Export the outline's overview to build/overview.docx
+export:
+	@mkdir -p build
+	@pandoc outline/overview.md --from=markdown+smart --to=docx --standalone --output=build/overview.docx
+	@echo "build/overview.docx"
+
+# Print the binder tree
+tree:
+	@find outline references chapters research treatment words -type f | sort
+
+# New draft branch for a revision pass
+draft-new name=act-2:
+	git switch -c draft/{{name}}

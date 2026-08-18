@@ -24,6 +24,72 @@ For standalone usage, the default package will run my neovim configuration.
 nix run github:AlejandroGomezFrieiro/nixvim_config
 ```
 
+# Creative writing edition
+
+A separate, deliberately minimal derivation for prose writing. It shares the
+repo's base (overlay, colorscheme) but pulls in **no** plugins from
+`./config` — it only enables what prose needs. Run it with:
+
+```bash
+nix run github:AlejandroGomezFrieiro/nixvim_config#writing
+```
+
+## Included (always on)
+
+| Plugin | Purpose |
+|---|---|
+| treesitter | `markdown` + `markdown_inline` highlighting |
+| render-markdown | in-buffer rendering of headings, bullets, code |
+| bullets | auto-continue numbered/bulleted lists |
+| goyo + twilight | distraction-free focus |
+| markdown-oxide (LSP) | notes, links, tags, outlines |
+| telescope | find files / grep / buffers / outline |
+| blink.cmp | completion: LSP, path, buffers, spelling, dictionary |
+| blink-cmp-spell / -dictionary | spelling fixes + project vocabulary autocomplete |
+| luasnip | story snippets (`chapter`, `scene`, `char`, `place`, `item`, `beat`, `tonemeter`) |
+| oil | file tree / binder-style navigation |
+| which-key | keybinding discoverability |
+| catppuccin | colorscheme |
+
+Opening a `.md` file enters **writing mode**: word wrap, `linebreak`, spell
+check, and (with focus enabled) automatic `Twilight` + `Goyo`.
+
+## Feature flags (`writing.*`)
+
+| Option | Default | Controls |
+|---|---|---|
+| `writing.focus.enable` | `true` | goyo + twilight, auto-enabled on markdown |
+| `writing.grammar.enable` | `false` | LTeX (LanguageTool) grammar checking via LSP |
+| `writing.markdownOxide.enable` | `true` | markdown-oxide LSP |
+| `writing.preview.enable` | `true` | markdown-preview browser preview |
+| `writing.export.enable` | `true` | pandoc + `:WritingExport` (DOCX) |
+| `writing.dictionary.files` | bundled wordlist | dictionary completion sources |
+| `writing.gitDrafts.enable` | `false` | fugitive + gitsigns + diffview draft workflow |
+
+### Grammar checking (LTeX)
+
+Enabled with `writing.grammar.enable = true`. Uses `ltex-ls` over LSP with
+picky style rules and a `.ltex` directory for personal dictionaries — see
+<https://dzfrias.dev/blog/neovim-writing-setup/> for the approach.
+
+Disabled via `nixosModules.writing` in a downstream flake:
+
+```nix
+imports = [ inputs.nixvim_config.nixosModules.writing ];
+writing.grammar.enable = true;
+writing.gitDrafts.enable = true;
+```
+
+# Storytelling project template
+
+`nix flake init -t github:AlejandroGomezFrieiro/nixvim_config#storytelling`
+scaffolds a project that mirrors the Scrivener / Kindling workflow without
+custom software: outline beat sheets (Three-Act, Hero's Journey, Save the Cat,
+Story Circle), reference cards for characters/locations/items/organizations,
+chapter scaffolding, a 1-page treatment, project vocabulary dictionary, and a
+`justfile` (`just draft`, `just words`, `just export`). See the template's
+`README.md` for the full command map.
+
 # Installation
 
 ## Non NixOS systems
