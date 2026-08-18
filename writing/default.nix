@@ -94,6 +94,10 @@ in {
         enable = lib.mkDefault true;
         setupLspCapabilities = lib.mkDefault true;
         settings.keymap = lib.mkDefault {preset = "super-tab";};
+        # LuaSnip owns the writing templates (`chapter`, `scene`, `char`,
+        # etc.). Blink's default preset only expands native snippets, so make
+        # the completion source use the same engine that loads our snippets.
+        settings.snippets.preset = lib.mkDefault "luasnip";
         settings.sources = {
           default = lib.mkDefault ["lsp" "path" "snippets" "buffer" "spell" "dictionary"];
           providers = {
@@ -179,6 +183,16 @@ in {
 
     opts = {
       number = lib.mkDefault true;
+      relativenumber = lib.mkDefault true;
+      cursorline = lib.mkDefault true;
+      showmatch = lib.mkDefault true;
+      ignorecase = lib.mkDefault true;
+      smartcase = lib.mkDefault true;
+      hlsearch = lib.mkDefault true;
+      incsearch = lib.mkDefault true;
+      autoindent = lib.mkDefault true;
+      smartindent = lib.mkDefault true;
+      shiftround = lib.mkDefault true;
       expandtab = lib.mkDefault true;
       shiftwidth = lib.mkDefault 4;
       tabstop = lib.mkDefault 4;
@@ -200,16 +214,6 @@ in {
             vim.opt_local.spell = true
             vim.opt_local.spelllang = { "en_us" }
             vim.opt_local.colorcolumn = "80"
-          end,
-        })
-      ''
-      + lib.optionalString cfg.focus.enable ''
-        -- Extend writing mode with distraction-free focus
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = { "markdown" },
-          callback = function()
-            vim.cmd("TwilightEnable")
-            vim.cmd("Goyo")
           end,
         })
       ''

@@ -36,10 +36,9 @@ linting is live immediately.
 
 ## Writing loop
 
-1. **Draft** — `just draft` drops you in Neovim. Opening any `.md` file
-   auto-enters writing mode: word wrap, spell check, Twilight + Goyo so the
-   page is all you see. Typing `chapter`, `scene`, and `beat` then `<Tab>`
-   expands a card.
+1. **Draft** — `just draft` drops you in Neovim with word wrap and spell check.
+   Use `<leader>z` for Goyo and `<leader>t` for Twilight when you want focus
+   mode. Typing `chapter`, `scene`, and `beat` then `<Tab>` expands a card.
 2. **Track** — `<leader>wc` word count, `<leader>mp` browser preview.
 3. **Lint** — grammar (LTeX) and style (Vale) run as you type; `just lint`
    runs Vale across the manuscript from the shell.

@@ -52,7 +52,9 @@ nix run github:AlejandroGomezFrieiro/nixvim_config#writing
 | catppuccin | colorscheme |
 
 Opening a `.md` file enters **writing mode**: word wrap, `linebreak`, spell
-check, and (with focus enabled) automatic `Twilight` + `Goyo`.
+check, and prose-friendly indentation. With focus enabled, use `<leader>z` for
+Goyo and `<leader>t` for Twilight when you want them; they do not interfere
+with Oil or normal project navigation.
 
 The writing build uses Oil for binder navigation. Both `<leader>e` and
 `<leader>n` open the file tree; the latter matches the main profile's familiar
@@ -62,7 +64,7 @@ file-tree shortcut.
 
 | Option | Default | Controls |
 |---|---|---|
-| `writing.focus.enable` | `true` | goyo + twilight, auto-enabled on markdown |
+| `writing.focus.enable` | `true` | Goyo + Twilight, available through focus mappings |
 | `writing.grammar.enable` | `false` | LTeX (LanguageTool) grammar checking via LSP |
 | `writing.vale.enable` | `false` | Vale prose linting via LSP (`vale-ls`) |
 | `writing.markdownOxide.enable` | `true` | markdown-oxide LSP |
