@@ -69,7 +69,7 @@ vocabulary under `styles/Vocab/<name>/`.
 | `<leader>t` | toggle Twilight (dim inactive text) |
 | `<leader>mp`| toggle live browser preview         |
 | `<leader>wc`| word count                          |
-| `<leader>ex`| export current file to DOCX         |
+| `<leader>we`| export current file to DOCX         |
 | `just lint`  | Vale lint all prose from the shell |
 
 Completion: spelling fixes and project vocabulary autocomplete from

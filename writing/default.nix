@@ -338,7 +338,7 @@ in {
         };
       }
       {
-        key = "<leader>ex";
+        key = "<leader>we";
         action = "<cmd>WritingExport<cr>";
         options = {
           silent = true;
