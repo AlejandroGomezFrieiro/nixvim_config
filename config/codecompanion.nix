@@ -12,6 +12,19 @@ in {
     enable = lib.mkDefault true;
     settings = {
       file_types = lib.mkDefault ["markdown" "codecompanion" "quarto"];
+      latex.enabled = lib.mkDefault false;
+      anti_conceal.enabled = lib.mkDefault false;
+      render_modes = lib.mkDefault true;
+      win_options = {
+        conceallevel = {
+          default = lib.mkDefault 2;
+          rendered = lib.mkDefault 2;
+        };
+        concealcursor = {
+          default = lib.mkDefault "";
+          rendered = lib.mkDefault "";
+        };
+      };
     };
   };
 

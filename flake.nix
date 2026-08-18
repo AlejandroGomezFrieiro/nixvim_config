@@ -65,6 +65,23 @@
             license = final.lib.licenses.mit;
           };
         };
+
+        math-conceal-nvim = final.vimUtils.buildVimPlugin {
+          pname = "math-conceal.nvim";
+          version = "unstable-2026-05-21";
+          src = final.fetchFromGitHub {
+            owner = "pxwg";
+            repo = "math-conceal.nvim";
+            rev = "28bb79004d0570211f1ae21295dbb3435520af56";
+            hash = "sha256-/9yqaJnLp/C+kepQEvBB9cGeAdIzeOsptFgzDXss2xc=";
+          };
+
+          meta = {
+            description = "Fast LaTeX and Typst conceal for Neovim";
+            homepage = "https://github.com/pxwg/math-conceal.nvim";
+            license = final.lib.licenses.mit;
+          };
+        };
       });
     };
 
@@ -73,10 +90,11 @@
       imports = [./config];
     };
 
-    mkPkgs = system: import inputs.nixpkgs {
-      inherit system;
-      overlays = [overlay];
-    };
+    mkPkgs = system:
+      import inputs.nixpkgs {
+        inherit system;
+        overlays = [overlay];
+      };
   in {
     checks = eachSystem (system: let
       pkgs = mkPkgs system;
