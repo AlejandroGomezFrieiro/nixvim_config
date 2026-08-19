@@ -41,7 +41,6 @@
           imports = [nixvim_config.nixosModules.writing];
           writing.grammar.enable = true;
           writing.vale.enable = true;
-          writing.markdownOxide.enable = true;
           plugins.lsp.enable = true;
           plugins.blink-cmp.enable = true;
           plugins.luasnip.enable = true;
@@ -53,6 +52,14 @@
           extraPlugins = [inputs.storyteller.packages.${system}.default];
           extraConfigLua = ''
             require("storyteller").setup({})
+
+            -- Prose-aware Storyteller language server (replaces markdown-oxide).
+            vim.lsp.config("storyteller", {
+              cmd = { "${nixpkgs.lib.getExe inputs.storyteller.packages.${system}.storyteller-lsp}" },
+              filetypes = { "markdown" },
+              root_markers = { ".storyteller", ".git" },
+            })
+            vim.lsp.enable("storyteller")
           '';
         };
       };

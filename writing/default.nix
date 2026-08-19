@@ -22,11 +22,8 @@ in {
     vale.enable =
       lib.mkEnableOption "Vale prose linting (vale-ls, proselint/alex/write-good/readability styles)" // {default = false;};
 
-    markdownOxide.enable =
-      lib.mkEnableOption "markdown-oxide LSP (notes, links, tags, outline)" // {default = true;};
-
     export.enable =
-      lib.mkEnableOption "pandoc export (`WritingExport` -> DOCX)" // {default = true;};
+      lib.mkEnableOption "pandoc (used by Storyteller's `:Story export`)" // {default = true;};
 
     dictionary = {
       files = lib.mkOption {
@@ -51,6 +48,12 @@ in {
         type = lib.types.nullOr lib.types.package;
         default = null;
         description = "Storyteller plugin package supplied by the consuming flake.";
+      };
+
+      lspPackage = lib.mkOption {
+        type = lib.types.nullOr lib.types.package;
+        default = null;
+        description = "Storyteller language server binary supplied by the consuming flake.";
       };
 
       settings = lib.mkOption {
@@ -103,6 +106,15 @@ in {
       telescope.enable = lib.mkDefault true;
       web-devicons.enable = lib.mkDefault true;
       which-key.enable = lib.mkDefault true;
+
+      # Live word count + target in the statusline (only when Storyteller is on).
+      lualine = {
+        enable = lib.mkDefault cfg.storyteller.enable;
+        settings.sections.lualine_x = [
+          {__raw = "require('storyteller.lualine').component()[1]";}
+        ];
+      };
+
       lspsaga = {
         enable = lib.mkDefault true;
         settings = {
@@ -167,7 +179,7 @@ in {
       markdown-preview.enable = lib.mkDefault cfg.preview.enable;
 
       # ---- Optional: grammar checking (LTeX / LanguageTool) ----
-      lsp.enable = lib.mkDefault (cfg.grammar.enable || cfg.markdownOxide.enable || cfg.vale.enable);
+      lsp.enable = lib.mkDefault (cfg.grammar.enable || cfg.vale.enable || (cfg.storyteller.enable && cfg.storyteller.lspPackage != null));
       # ltex-extra races LTeX client attachment under current Neovim/Nixvim
       # and emits startup errors. The LTeX server below provides grammar and
       # diagnostics without that wrapper.
@@ -186,12 +198,6 @@ in {
         package = pkgs.vale-ls;
       };
 
-      # ---- markdown-oxide LSP (notes, links, tags, outline) ----
-      lsp.servers.markdown_oxide = lib.mkDefault {
-        enable = cfg.markdownOxide.enable;
-        package = pkgs.markdown-oxide;
-      };
-
       # ---- Optional: git-based draft workflow ----
       fugitive.enable = lib.mkDefault cfg.gitDrafts.enable;
       gitsigns.enable = lib.mkDefault cfg.gitDrafts.enable;
@@ -205,7 +211,8 @@ in {
     );
 
     extraPlugins = [pkgs.vimPlugins.fyler-nvim]
-      ++ lib.optional (cfg.storyteller.enable && cfg.storyteller.package != null) cfg.storyteller.package;
+      ++ lib.optional (cfg.storyteller.enable && cfg.storyteller.package != null) cfg.storyteller.package
+      ++ lib.optional cfg.storyteller.enable pkgs.vimPlugins.nui-nvim;
 
     opts = {
       number = lib.mkDefault true;
@@ -259,31 +266,18 @@ in {
           },
         })
       ''
-      + lib.optionalString cfg.export.enable ''
-        -- :WritingExport — compile the current markdown to build/<name>.docx
-        vim.api.nvim_create_user_command("WritingExport", function()
-          local fname = vim.fn.expand("%:t:r")
-          if fname == "" then
-            vim.notify("No file to export.", vim.log.levels.WARN)
-            return
-          end
-          local dir = vim.fn.getcwd() .. "/build"
-          vim.fn.mkdir(dir, "p")
-          local src = vim.fn.shellescape(vim.fn.expand("%:p"))
-          local out = vim.fn.shellescape(dir .. "/" .. fname .. ".docx")
-          local cmd = "pandoc " .. src
-            .. " --from=markdown+smart --to=docx --standalone --output=" .. out
-          local ok = vim.fn.system(cmd)
-          if vim.v.shell_error ~= 0 then
-            vim.notify("Export failed: " .. ok, vim.log.levels.ERROR)
-          else
-            vim.notify("Exported to " .. dir .. "/" .. fname .. ".docx", vim.log.levels.INFO)
-          end
-        end, { desc = "Export current markdown to DOCX" })
-      ''
       + lib.optionalString (cfg.storyteller.enable && cfg.storyteller.package != null) ''
         -- Storyteller is the project-aware layer over the writing defaults.
         require("storyteller").setup(${builtins.toJSON cfg.storyteller.settings})
+      ''
+      + lib.optionalString (cfg.storyteller.enable && cfg.storyteller.lspPackage != null) ''
+        -- Prose-aware Storyteller language server (replaces markdown-oxide).
+        vim.lsp.config("storyteller", {
+          cmd = { "${lib.getExe cfg.storyteller.lspPackage}" },
+          filetypes = { "markdown" },
+          root_markers = { ".storyteller", ".git" },
+        })
+        vim.lsp.enable("storyteller")
       '';
 
     keymaps = [
@@ -375,7 +369,7 @@ in {
         options = {silent = true; desc = "Resize split right";};
       }
 
-      # ---- Outline (markdown-oxide document symbols) ----
+      # ---- Outline (Storyteller LSP document symbols) ----
       {
         key = "<leader>o";
         action = "<cmd>Telescope lsp_document_symbols<cr>";
@@ -422,15 +416,6 @@ in {
           desc = "Word count";
         };
       }
-      {
-        key = "<leader>we";
-        action = "<cmd>WritingExport<cr>";
-        options = {
-          silent = true;
-          desc = "Export to DOCX";
-        };
-      }
-
       # ---- LSP / diagnostics ----
       {
         key = "<leader>lr";
