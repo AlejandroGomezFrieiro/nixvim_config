@@ -104,11 +104,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787165982,
-        "narHash": "sha256-nvL1MMdRtVzk5nM40PfPf1vzsLuSkuwihm4+x2mMHYE=",
+        "lastModified": 1787169555,
+        "narHash": "sha256-De2tzAdm5U7VLeQgPCkZ2sLZgexeWJUPzqb/j4xYMaU=",
         "owner": "AlejandroGomezFrieiro",
         "repo": "storytelling.nvim",
-        "rev": "3fce0f03ff2c2cc2d1a0d45e6e5bd22551434c41",
+        "rev": "84dabb0e96dc863a31ceda04804f65b66d585007",
         "type": "github"
       },
       "original": {
