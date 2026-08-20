@@ -21,6 +21,30 @@
         "type": "github"
       }
     },
+    "flake-parts_2": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "nixvim_config",
+          "storyteller",
+          "nixvim_config",
+          "nixvim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785627969,
+        "narHash": "sha256-4dtXQk/NMePegK/nWp5NSeuZKLATItOq61lpEvmXqGw=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "427bf4bd9435fdf21321c8cc628c24efc14c0f7a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1787070829,
@@ -59,6 +83,31 @@
         "type": "github"
       }
     },
+    "nixvim_2": {
+      "inputs": {
+        "flake-parts": "flake-parts_2",
+        "nixpkgs": [
+          "nixvim_config",
+          "storyteller",
+          "nixvim_config",
+          "nixpkgs"
+        ],
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1787062366,
+        "narHash": "sha256-42RoRqxcuMB/MMLQU65StwyrPzdahxDXR3Sy58AzOMM=",
+        "owner": "nix-community",
+        "repo": "nixvim",
+        "rev": "fe68d88884ac91ce1d17e955ac0ae486ff8bcdf0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixvim",
+        "type": "github"
+      }
+    },
     "nixvim_config": {
       "inputs": {
         "nixpkgs": [
@@ -69,6 +118,35 @@
         ],
         "storyteller": "storyteller",
         "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787218274,
+        "narHash": "sha256-Nzjd3n5p3DWiMcinDZMRqBlUb//fNV9jXRIU1LZpOKk=",
+        "owner": "AlejandroGomezFrieiro",
+        "repo": "nixvim_config",
+        "rev": "a77fe31ec6a7b11d1a99f6b9f62a6000cbebbbd8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AlejandroGomezFrieiro",
+        "repo": "nixvim_config",
+        "type": "github"
+      }
+    },
+    "nixvim_config_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixvim_config",
+          "storyteller",
+          "nixpkgs"
+        ],
+        "nixvim": "nixvim_2",
+        "storyteller": "storyteller_2",
+        "systems": [
+          "nixvim_config",
+          "storyteller",
           "systems"
         ]
       },
@@ -91,12 +169,37 @@
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "nixvim_config": "nixvim_config",
-        "systems": "systems_2"
+        "systems": "systems_4"
       }
     },
     "storyteller": {
       "inputs": {
         "nixpkgs": [
+          "nixvim_config",
+          "nixpkgs"
+        ],
+        "nixvim_config": "nixvim_config_2",
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1787217907,
+        "narHash": "sha256-BD+usCmBQgrpLm0bUkaNgzMRL97OIruiNA+Db+DbCdk=",
+        "owner": "AlejandroGomezFrieiro",
+        "repo": "storytelling.nvim",
+        "rev": "f37088486acbc7cee26fea8a88998fbe4a9afa55",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AlejandroGomezFrieiro",
+        "repo": "storytelling.nvim",
+        "type": "github"
+      }
+    },
+    "storyteller_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixvim_config",
+          "storyteller",
           "nixvim_config",
           "nixpkgs"
         ]
@@ -133,6 +236,38 @@
       }
     },
     "systems_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774449309,
+        "narHash": "sha256-brhZ8DmuGtzkCYHJg4HEd602amKm89Y9ytsFZ5uWD1w=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "c29398b59d2048c4ab79345812849c9bd15e9150",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "ref": "future-26.11",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_4": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
