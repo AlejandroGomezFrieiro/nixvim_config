@@ -19,7 +19,7 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "systems";
-    storyteller.url = "github:AlejandroGomezFrieiro/storytelling.nvim";
+    storyteller.url = "github:AlejandroGomezFrieiro/storyteller.nvim";
     storyteller.inputs.nixpkgs.follows = "nixpkgs";
   };
 

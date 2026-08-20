@@ -147,19 +147,20 @@
           "nixpkgs"
         ],
         "nixvim_config": "nixvim_config",
+        "storyteller": "storyteller_3",
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1787217907,
-        "narHash": "sha256-BD+usCmBQgrpLm0bUkaNgzMRL97OIruiNA+Db+DbCdk=",
+        "lastModified": 1787225857,
+        "narHash": "sha256-ATApLAfEw685yV5o7pk+ocr1I55af+I9B47EzdDbLnA=",
         "owner": "AlejandroGomezFrieiro",
-        "repo": "storytelling.nvim",
-        "rev": "f37088486acbc7cee26fea8a88998fbe4a9afa55",
+        "repo": "storyteller.nvim",
+        "rev": "d8d0a6e467400a67ed0cceee841e8b6efb84755f",
         "type": "github"
       },
       "original": {
         "owner": "AlejandroGomezFrieiro",
-        "repo": "storytelling.nvim",
+        "repo": "storyteller.nvim",
         "type": "github"
       }
     },
@@ -182,6 +183,31 @@
       "original": {
         "owner": "AlejandroGomezFrieiro",
         "repo": "storytelling.nvim",
+        "type": "github"
+      }
+    },
+    "storyteller_3": {
+      "inputs": {
+        "nixpkgs": [
+          "storyteller",
+          "nixpkgs"
+        ],
+        "systems": [
+          "storyteller",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787221637,
+        "narHash": "sha256-DzToT4vdb5OzfcFeL6EgzUlogN+aoiZ+FLOzIKWMPlM=",
+        "owner": "AlejandroGomezFrieiro",
+        "repo": "storyteller",
+        "rev": "cf099d68f884e8bf6cadd5ee6083e46fe28b92b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AlejandroGomezFrieiro",
+        "repo": "storyteller",
         "type": "github"
       }
     },
