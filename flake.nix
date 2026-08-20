@@ -97,6 +97,7 @@
     writing_module = {pkgs, ...}: {
       nixpkgs.overlays = [overlay];
       imports = [./writing];
+      writing.storyteller.enable = true;
       writing.storyteller.package = inputs.storyteller.packages.${pkgs.system}.default;
       writing.storyteller.lspPackage = inputs.storyteller.packages.${pkgs.system}.storyteller-lsp;
     };

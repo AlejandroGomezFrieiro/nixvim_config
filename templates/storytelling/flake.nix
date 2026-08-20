@@ -47,20 +47,9 @@
           plugins.blink-cmp.settings.sources.default = ["lsp" "path" "snippets" "buffer" "spell" "dictionary"];
           writing.dictionary.files = [./words/dictionary.txt];
 
-          # The template owns setup so Storyteller works with released
-          # nixvim_config revisions as well as newer writing modules.
-          extraPlugins = [inputs.storyteller.packages.${system}.default];
-          extraConfigLua = ''
-            require("storyteller").setup({})
-
-            -- Prose-aware Storyteller language server (replaces markdown-oxide).
-            vim.lsp.config("storyteller", {
-              cmd = { "${nixpkgs.lib.getExe inputs.storyteller.packages.${system}.storyteller-lsp}" },
-              filetypes = { "markdown" },
-              root_markers = { ".storyteller", ".git" },
-            })
-            vim.lsp.enable("storyteller")
-          '';
+          writing.storyteller = {
+            enable = true;
+          };
         };
       };
 

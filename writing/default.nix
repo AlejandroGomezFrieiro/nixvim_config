@@ -271,7 +271,8 @@ in {
         require("storyteller").setup(${builtins.toJSON cfg.storyteller.settings})
       ''
       + lib.optionalString (cfg.storyteller.enable && cfg.storyteller.lspPackage != null) ''
-        -- Prose-aware Storyteller language server (replaces markdown-oxide).
+        -- Story-aware language server, inspired by markdown-oxide's Markdown
+        -- navigation model.
         vim.lsp.config("storyteller", {
           cmd = { "${lib.getExe cfg.storyteller.lspPackage}" },
           filetypes = { "markdown" },

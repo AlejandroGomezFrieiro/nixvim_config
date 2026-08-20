@@ -73,11 +73,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787146994,
-        "narHash": "sha256-DL9/nmtcBvgD72FZeIYTva1+HcouNAAUyV1avoYJlF4=",
+        "lastModified": 1787169567,
+        "narHash": "sha256-FbA0WdeQjtbasb9DtNzL6IZjac7e9vKdJgiPVrziENE=",
         "owner": "AlejandroGomezFrieiro",
         "repo": "nixvim_config",
-        "rev": "fb701a0dbabe005fbbe7a7b942bcfc423f4e6120",
+        "rev": "30a9e5caa75313daf42c1751f21cd55ae36f7cfe",
         "type": "github"
       },
       "original": {
@@ -102,11 +102,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787079062,
-        "narHash": "sha256-+R1jWDWYlpJXFew7QHnnJ1krw2MlE3FcAm31yAbkTDM=",
+        "lastModified": 1787169555,
+        "narHash": "sha256-De2tzAdm5U7VLeQgPCkZ2sLZgexeWJUPzqb/j4xYMaU=",
         "owner": "AlejandroGomezFrieiro",
         "repo": "storytelling.nvim",
-        "rev": "6fefe0f8dd53bc2ad52e07655be519f135939ec6",
+        "rev": "84dabb0e96dc863a31ceda04804f65b66d585007",
         "type": "github"
       },
       "original": {

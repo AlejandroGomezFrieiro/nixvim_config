@@ -42,7 +42,7 @@ nix run github:AlejandroGomezFrieiro/nixvim_config#writing
 | render-markdown | in-buffer rendering of headings, bullets, code |
 | bullets | auto-continue numbered/bulleted lists |
 | goyo + twilight | distraction-free focus |
-| markdown-oxide (LSP) | notes, links, tags, outlines |
+| storyteller.nvim + storyteller-lsp | story-aware scenes, references, and prose navigation |
 | telescope | find files / grep / buffers / outline |
 | blink.cmp | completion: LSP, path, buffers, spelling, dictionary |
 | blink-cmp-spell / -dictionary | spelling fixes + project vocabulary autocomplete |
@@ -71,12 +71,11 @@ left-side toggle as the main profile. Both `<leader>e` and `<leader>n` toggle it
 | `writing.focus.enable` | `true` | Goyo + Twilight, available through focus mappings |
 | `writing.grammar.enable` | `false` | LTeX (LanguageTool) grammar checking via LSP |
 | `writing.vale.enable` | `false` | Vale prose linting via LSP (`vale-ls`) |
-| `writing.markdownOxide.enable` | `true` | markdown-oxide LSP |
 | `writing.preview.enable` | `true` | markdown-preview browser preview |
 | `writing.export.enable` | `true` | pandoc + `:WritingExport` (DOCX) |
 | `writing.dictionary.files` | bundled wordlist | dictionary completion sources |
 | `writing.gitDrafts.enable` | `false` | fugitive + gitsigns + diffview draft workflow |
-| `writing.storyteller.enable` | `false` | Storyteller project engine (enabled by the storytelling template) |
+| `writing.storyteller.enable` | `false` in the module | Storyteller project engine; enabled by the writing package and storytelling template |
 
 ### Grammar checking (LTeX)
 

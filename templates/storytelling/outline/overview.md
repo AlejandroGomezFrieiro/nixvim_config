@@ -36,4 +36,5 @@
 
 Open `chapters/`, expand the `scene` snippet for each beat, and fill the
 scene-local YAML block with POV, location, time, goal, conflict, outcome, and
-status. Use `:StoryContinuity` to review those fields across the manuscript.
+status. Use `:Story health` to review loose ends and `:Story timeline` to review
+story-time order across the manuscript.

@@ -38,7 +38,6 @@
           imports = [nixvim_config.nixosModules.writing];
           writing.grammar.enable = true;
           writing.vale.enable = true;
-          writing.markdownOxide.enable = true;
           plugins.lsp.enable = true;
           plugins.blink-cmp.enable = true;
           plugins.luasnip.enable = true;
